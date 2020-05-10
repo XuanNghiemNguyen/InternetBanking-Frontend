@@ -1,0 +1,59 @@
+#components-layout-demo-top-side .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
+.header {
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.menuCon {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menuBar {
+  display: flex;
+}
+
+.leftMenu {
+  display: flex;
+
+}
+.ant-card-grid {
+  padding: 10px !important;
+}
+
+.bodyContent {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  background: #fff;
+  min-height: 78vh;
+}
+
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 400px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+.site-layout-background {
+  background: #fff;
+}
+.ant-layout-header {
+  background:  #fff !important;
+  padding: 0, 15px !important;
+}
+
+.ant-layout-content {
+  padding: 0, 15px !important;
+}
