@@ -14,3 +14,10 @@
 
 + type: `npm start`
 + local : http://localhost:3000
+
+### :straight_ruler:  Quy định message commit code
++ Đang làm:  `doing: ...`
++ Đã xong:   `done: ...`
++ Fix lỗi:   `fix: ...`
++ Fix vặt:   `chore: ...`
+* `Dấu ... là tiếng việt không dấu, ghi ngắn gọn và tường minh`
