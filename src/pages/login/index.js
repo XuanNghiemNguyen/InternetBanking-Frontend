@@ -1,48 +1,104 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Form, Input, Button, notification } from 'antd'
 
-export default class Login extends Component {
+const styles = {
+  login_Body: {
+    backgroundColor: 'white'
+  },
+  login_form: {
+    padding: 30,
+    borderStyle: 'outset'
+  },
+  login_frame: {
+    padding: '16vh 30vw'
+  },
+  title: {
+    fontSize: 25,
+    marginBottom: 20
+  },
+  loginForm_footer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    height: 30
+  }
+}
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 }
+}
+class LoginPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
   render() {
+    const openNotification = (status, description) => {
+      notification.info({
+        message: `Đăng nhập ${status}`,
+        description,
+        placement: 'bottomLeft',
+        duration: 1
+      })
+    }
+
+    const onFinish = (values) => {
+      try {
+        const { username, password } = values
+        console.log(username, password)
+        openNotification('thành công', '')
+      } catch (error) {
+        console.log(error)
+        openNotification('thất bại', error.toString())
+      }
+    }
+
+    const onFinishFailed = (errorInfo) => {
+      openNotification('thất bại', errorInfo.toString())
+      console.log('Failed:', errorInfo)
+    }
     return (
-      <form>
-        <h3>Sign In</h3>
-        <div className='form-group'>
-          <label>Email address</label>
-          <input
-            type='email'
-            className='form-control'
-            placeholder='Enter email'
-          />
-        </div>
+      <div style={styles.login_Body}>
+        <div style={styles.login_frame}>
+          <Form
+            {...layout}
+            name='basic'
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            style={styles.login_form}
+          >
+            <h1 style={styles.title}>Login</h1>
+            <Form.Item
+              label='Username'
+              name='username'
+              rules={[
+                { required: true, message: 'Please input your username!' }
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-        <div className='form-group'>
-          <label>Password</label>
-          <input
-            type='password'
-            className='form-control'
-            placeholder='Enter password'
-          />
+            <Form.Item
+              label='Password'
+              name='password'
+              rules={[
+                { required: true, message: 'Please input your password!' }
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <div style={styles.loginForm_footer}>
+              <Form.Item>
+                <Button type='primary' htmlType='submit'>
+                  Submit
+                </Button>
+              </Form.Item>
+            </div>
+          </Form>
         </div>
-
-        <div className='form-group'>
-          <div className='custom-control custom-checkbox'>
-            <input
-              type='checkbox'
-              className='custom-control-input'
-              id='customCheck1'
-            />
-            <label className='custom-control-label' htmlFor='customCheck1'>
-              Remember me
-            </label>
-          </div>
-        </div>
-
-        <button type='submit' className='btn btn-primary btn-block'>
-          Submit
-        </button>
-        <p className='forgot-password text-right'>
-         
-        </p>
-      </form>
+        )
+      </div>
     )
   }
 }
+export default LoginPage

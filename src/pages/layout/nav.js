@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import LeftMenu from './left.js'
 import RightMenu from './right.js'
 import { Link } from 'react-router-dom'
+import logo from './logo.png'
 
 class Navbar extends Component {
   render() {
@@ -16,7 +17,7 @@ class Navbar extends Component {
             >
               <img
                 alt='Brand'
-                src='https://www.sacombank.com.vn/Style%20Library/2018/images/logo.png'
+                src={logo}
               ></img>
             </Link>
             <LeftMenu />

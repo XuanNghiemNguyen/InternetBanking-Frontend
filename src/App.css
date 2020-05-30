@@ -5,6 +5,7 @@
   margin: 16px 28px 16px 0;
   float: left;
 }
+
 .header {
   box-shadow: 0 2px 8px #f0f1f2;
 }
@@ -21,18 +22,13 @@
 
 .leftMenu {
   display: flex;
-
 }
 .ant-card-grid {
   padding: 10px !important;
 }
 
-.bodyContent {
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-  background: #fff;
-  min-height: 78vh;
+.x-footer {
+  text-align: center;
 }
 
 .ant-carousel .slick-slide {
@@ -42,7 +38,6 @@
   background: #364d79;
   overflow: hidden;
 }
-
 .ant-carousel .slick-slide h3 {
   color: #fff;
 }
@@ -50,7 +45,7 @@
   background: #fff;
 }
 .ant-layout-header {
-  background:  #fff !important;
+  background: #fff !important;
   padding: 0, 15px !important;
 }
 

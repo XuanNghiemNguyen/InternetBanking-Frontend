@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const token = localStorage.getItem('access-token')
+const token = localStorage.getItem('access-token') || 'default'
 
 const headers = {
   'Content-Type': 'application/json',
@@ -8,7 +8,7 @@ const headers = {
 }
 
 const instance = axios.create({
-  baseURL: 'http://18.139.1.106:3000/',
+  baseURL: 'https://https://sacombank-internet-banking.herokuapp.com/',
   timeout: 5000,
   headers
 });

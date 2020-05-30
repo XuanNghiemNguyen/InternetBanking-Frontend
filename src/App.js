@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
 import HomePage from './pages/homepage'
-import { Carousel } from 'antd'
+import LoginPage from './pages/login'
 
 const { Header, Content, Footer } = Layout
 
@@ -17,41 +17,20 @@ function App() {
             <div className='logo' />
             <Navbar />
           </Header>
-          <Content>
-            <Carousel autoplay>
-              <div>
-                <img
-                  alt='khuyenmai'
-                  src='https://khuyenmai.sacombank.com/Data/Sites/1/News/3250/final_banner-khuyen-mai_1600x660px.jpg'
-                ></img>
-              </div>
-              <div>
-                <h3>2</h3>
-              </div>
-              <div>
-                <h3>3</h3>
-              </div>
-              <div>
-                <h3>4</h3>
-              </div>
-            </Carousel>
-            <div className='bodyContent'>
-              <Switch>
-                <Route path='/home'>
+          <Content >
+            <Switch>
+              <Route path='/home'>
+                <HomePage />
+              </Route>
+              {/* <Route path='/'>
                   <HomePage />
-                </Route>
-                <Route path='/login'>
-                  <HomePage />
-                </Route>
-                <Route path='/'>
-                  <HomePage />
-                </Route>
-              </Switch>
-            </div>
+                </Route> */}
+              <Route path='/login'>
+                <LoginPage />
+              </Route>
+            </Switch>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Sacombank - Internet Banking
-          </Footer>
+          <Footer className='x-footer'>Sacombank - Internet Banking</Footer>
         </Layout>
       </div>
     </Router>
