@@ -1,0 +1,22 @@
+.login_form {
+  background: white;
+  padding: 5px 30px;
+  border-style: outset;
+}
+.login_frame {
+  min-height: 90vh;
+  padding: 15vh 35.9vw;
+}
+.title {
+  color: #004997;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.loginForm_footer {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+}
+.login-form-button {
+  width: 100%;
+}

@@ -1,37 +1,17 @@
 import React from 'react'
-import { Form, Input, Button, notification } from 'antd'
+import { Link } from 'react-router-dom'
+import './index.css'
+import { Form, Input, Button, notification, Checkbox } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import ReCAPTCHA from 'react-google-recaptcha'
 
-const styles = {
-  login_Body: {
-    backgroundColor: 'white'
-  },
-  login_form: {
-    padding: 30,
-    borderStyle: 'outset'
-  },
-  login_frame: {
-    padding: '16vh 30vw'
-  },
-  title: {
-    fontSize: 25,
-    marginBottom: 20
-  },
-  loginForm_footer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    height: 30
-  }
-}
-const layout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 }
-}
+const TEST_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+const MY_KEY = '6LcaXv4UAAAAAAfBvC3Om1XKGBhwkZAlcK2dwUwO'
 class LoginPage extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
   render() {
+    const onCaptchaChange = (value) => {
+      console.log('Captcha value:', value)
+    }
     const openNotification = (status, description) => {
       notification.info({
         message: `Đăng nhập ${status}`,
@@ -56,44 +36,61 @@ class LoginPage extends React.Component {
       openNotification('thất bại', errorInfo.toString())
       console.log('Failed:', errorInfo)
     }
+
     return (
-      <div style={styles.login_Body}>
-        <div style={styles.login_frame}>
+      <div>
+        <div className='login_frame'>
           <Form
-            {...layout}
             name='basic'
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            style={styles.login_form}
+            className='login_form'
           >
-            <h1 style={styles.title}>Login</h1>
+            <h1>
+              <b className='title'>Login</b>
+            </h1>
             <Form.Item
-              label='Username'
               name='username'
               rules={[
-                { required: true, message: 'Please input your username!' }
+                { required: true, message: 'Please input your Username!' }
               ]}
             >
-              <Input />
+              <Input
+                prefix={<UserOutlined className='site-form-item-icon' />}
+                placeholder='Username'
+              />
             </Form.Item>
-
             <Form.Item
-              label='Password'
               name='password'
               rules={[
-                { required: true, message: 'Please input your password!' }
+                { required: true, message: 'Please input your Password!' }
               ]}
             >
-              <Input.Password />
+              <Input
+                prefix={<LockOutlined className='site-form-item-icon' />}
+                type='password'
+                placeholder='Password'
+              />
             </Form.Item>
-            <div style={styles.loginForm_footer}>
-              <Form.Item>
-                <Button type='primary' htmlType='submit'>
-                  Submit
-                </Button>
+            <div className='loginForm_footer'>
+              <Form.Item name='remember' valuePropName='checked' noStyle>
+                <Checkbox>Remember me</Checkbox>
               </Form.Item>
+              <Link to={'/forgot-password'}>Forgot Password</Link>
             </div>
+            <Form.Item>
+              <Form.Item name='captcha'>
+                <ReCAPTCHA sitekey={TEST_KEY} onChange={onCaptchaChange} />
+              </Form.Item>
+              <Button
+                type='primary'
+                htmlType='submit'
+                className='login-form-button'
+              >
+                Log in
+              </Button>
+            </Form.Item>
           </Form>
         </div>
         )
