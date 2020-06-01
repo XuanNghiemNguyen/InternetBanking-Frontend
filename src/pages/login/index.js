@@ -7,7 +7,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { API } from '../../config/api'
 
 const TEST_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-const MY_KEY = '6LcaXv4UAAAAAAfBvC3Om1XKGBhwkZAlcK2dwUwO'
+const MY_KEY = '6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9'
 var onProcess = false
 class LoginPage extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class LoginPage extends React.Component {
         if (!!onProcess) return
         onProcess = true
         this.setState({ isLoading: true })
+        console.log(values)
         const { email, password } = values
         const { message, success } = await API.login(email, password)
         if (success) {
@@ -85,7 +86,11 @@ class LoginPage extends React.Component {
                 placeholder='Password'
               />
             </Form.Item>
-            <Form.Item name='captcha'>
+            <Form.Item name='captcha'
+              rules={[
+                { required: true, message: 'Please verify reCaptcha!' }
+              ]}
+            >
               <ReCAPTCHA sitekey={MY_KEY} onChange={onCaptchaChange} />
             </Form.Item>
             <Form.Item>

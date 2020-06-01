@@ -23,7 +23,7 @@ class RightMenu extends Component {
           localStorage.removeItem('access-token')
           localStorage.removeItem('user-info')
           onProcess = false
-          this.props.history.push('/home')
+          this.props.history.push('/login')
           break
         default:
           break
