@@ -4,37 +4,54 @@ import './index.css'
 import { Form, Input, Button, notification, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { API } from '../../config/api'
 
 const TEST_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 const MY_KEY = '6LcaXv4UAAAAAAfBvC3Om1XKGBhwkZAlcK2dwUwO'
+var onProcess = false
 class LoginPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: false,
+    }
+  }
   render() {
     const onCaptchaChange = (value) => {
       console.log('Captcha value:', value)
     }
-    const openNotification = (status, description) => {
+    const openNotification = (message, description) => {
       notification.info({
-        message: `Đăng nhập ${status}`,
+        message,
         description,
         placement: 'bottomLeft',
         duration: 1
       })
     }
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
       try {
-        const { username, password } = values
-        console.log(username, password)
-        openNotification('thành công', '')
+        if (!!onProcess) return
+        onProcess = true
+        this.setState({ isLoading: true })
+        const { email, password } = values
+        const { message, success } = await API.login(email, password)
+        if (success) {
+          openNotification('Đăng nhập thành công!', '')
+          this.props.history.push('/home')
+        } else {
+          openNotification('Đăng nhập thất bại!', message)
+        }
       } catch (error) {
         console.log(error)
-        openNotification('thất bại', error.toString())
+        openNotification('Đăng nhập thất bại!', 'Kiểm tra cài đặt mạng')
       }
+      this.setState({ isLoading: false })
+      onProcess = false
     }
 
     const onFinishFailed = (errorInfo) => {
-      openNotification('thất bại', errorInfo.toString())
-      console.log('Failed:', errorInfo)
+      console.log(errorInfo)
     }
 
     return (
@@ -50,15 +67,10 @@ class LoginPage extends React.Component {
             <h1>
               <b className='title'>Login</b>
             </h1>
-            <Form.Item
-              name='username'
-              rules={[
-                { required: true, message: 'Please input your Username!' }
-              ]}
-            >
+            <Form.Item name='email' rules={[{ type: 'email' }]}>
               <Input
                 prefix={<UserOutlined className='site-form-item-icon' />}
-                placeholder='Username'
+                placeholder='Email'
               />
             </Form.Item>
             <Form.Item
@@ -67,11 +79,24 @@ class LoginPage extends React.Component {
                 { required: true, message: 'Please input your Password!' }
               ]}
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className='site-form-item-icon' />}
                 type='password'
                 placeholder='Password'
               />
+            </Form.Item>
+            <Form.Item name='captcha'>
+              <ReCAPTCHA sitekey={MY_KEY} onChange={onCaptchaChange} />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type='primary'
+                htmlType='submit'
+                className='login-form-button'
+                loading={this.state.isLoading}
+              >
+                Log in
+              </Button>
             </Form.Item>
             <div className='loginForm_footer'>
               <Form.Item name='remember' valuePropName='checked' noStyle>
@@ -79,21 +104,8 @@ class LoginPage extends React.Component {
               </Form.Item>
               <Link to={'/forgot-password'}>Forgot Password</Link>
             </div>
-            <Form.Item>
-              <Form.Item name='captcha'>
-                <ReCAPTCHA sitekey={TEST_KEY} onChange={onCaptchaChange} />
-              </Form.Item>
-              <Button
-                type='primary'
-                htmlType='submit'
-                className='login-form-button'
-              >
-                Log in
-              </Button>
-            </Form.Item>
           </Form>
         </div>
-        )
       </div>
     )
   }

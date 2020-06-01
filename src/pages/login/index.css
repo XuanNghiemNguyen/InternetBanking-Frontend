@@ -4,6 +4,7 @@
   border-style: outset;
 }
 .login_frame {
+  background-image: url('../../background/bg1.jpg');
   min-height: 90vh;
   padding: 15vh 35.9vw;
 }

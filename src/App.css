@@ -28,7 +28,6 @@
 }
 
 .mainBody {
-  background-image: url('./background/bg1.jpg');
   min-height: 90vh;
   background-color: white;
 }
@@ -55,9 +54,9 @@
 }
 .ant-layout-header {
   background: #fff !important;
-  padding: 0, 15px !important;
+  padding: 0px !important;
 }
 
-.ant-layout-content {
+/* .ant-layout-content {
   padding: 0, 15px !important;
-}
+} */

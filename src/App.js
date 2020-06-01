@@ -1,6 +1,11 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom'
 import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
 import HomePage from './pages/homepage'
@@ -9,6 +14,9 @@ import ForgotPassword from './pages/forgotPassword'
 const { Header, Content, Footer } = Layout
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <Router>
@@ -16,7 +24,7 @@ class App extends React.Component {
           <Layout>
             <Header className='header'>
               <div className='logo' />
-              <Navbar />
+              <Navbar props={{...this.props}} />
             </Header>
             <Content className='mainBody'>
               <Switch>
@@ -24,9 +32,16 @@ class App extends React.Component {
                 <Route path='/home'>
                   <HomePage />
                 </Route>
-                <Route path='/login'>
-                  <LoginPage />
-                </Route>
+                <Route
+                  path='/login'
+                  render={(props) => {
+                    return localStorage.getItem('access-token') ? (
+                      <Redirect to='/' />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                  }}
+                ></Route>
                 <Route path='/forgot-password'>
                   <ForgotPassword />
                 </Route>

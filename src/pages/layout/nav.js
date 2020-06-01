@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import logo from './logo.png'
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <nav className='menuBar'>
@@ -12,7 +15,7 @@ class Navbar extends Component {
           <div className='leftMenu'>
             <Link
               className='nav-link'
-              to={'/login'}
+              to={'/'}
               style={{ paddingRight: 20, paddingLeft: 20 }}
             >
               <img
