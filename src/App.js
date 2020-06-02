@@ -13,46 +13,41 @@ import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 const { Header, Content, Footer } = Layout
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <Router>
-        <div className='App'>
-          <Layout>
-            <Header className='header'>
-              <div className='logo' />
-              <Navbar props={{...this.props}} />
-            </Header>
-            <Content className='mainBody'>
-              <Switch>
-                <Route exact path='/' component={HomePage} />
-                <Route path='/home'>
-                  <HomePage />
-                </Route>
-                <Route
-                  path='/login'
-                  render={(props) => {
-                    return localStorage.getItem('access-token') ? (
-                      <Redirect to='/' />
-                    ) : (
-                      <LoginPage {...props} />
-                    )
-                  }}
-                ></Route>
-                <Route path='/forgot-password'>
-                  <ForgotPassword />
-                </Route>
-              </Switch>
-            </Content>
-            <Footer className='x-footer'>Sacombank @ Internet Banking</Footer>
-          </Layout>
-        </div>
-      </Router>
-    )
-  }
+const App = () => {
+  return (
+    <Router>
+      <div className='App'>
+        <Layout>
+          <Header className='header'>
+            <div className='logo' />
+            <Navbar />
+          </Header>
+          <Content className='mainBody'>
+            <Switch>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/home'>
+                <HomePage />
+              </Route>
+              <Route
+                path='/login'
+                render={(props) => {
+                  return localStorage.getItem('access-token') ? (
+                    <Redirect to='/' />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route path='/forgot-password'>
+                <ForgotPassword />
+              </Route>
+            </Switch>
+          </Content>
+          <Footer className='x-footer'>Sacombank @ Internet Banking</Footer>
+        </Layout>
+      </div>
+    </Router>
+  )
 }
 
 export default App

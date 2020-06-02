@@ -4,33 +4,25 @@ import RightMenu from './right.js'
 import { Link } from 'react-router-dom'
 import logo from './logo.png'
 
-class Navbar extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <nav className='menuBar'>
-        <div className='menuCon'>
-          <div className='leftMenu'>
-            <Link
-              className='nav-link'
-              to={'/'}
-              style={{ paddingRight: 20, paddingLeft: 20 }}
-            >
-              <img
-                alt='Brand'
-                src={logo}
-              ></img>
-            </Link>
-            <LeftMenu />
-          </div>
-          <div className='rightMenu'>
-            <RightMenu />
-          </div>
+const Navbar = () => {
+  return (
+    <nav className='menuBar'>
+      <div className='menuCon'>
+        <div className='leftMenu'>
+          <Link
+            className='nav-link'
+            to={'/'}
+            style={{ paddingRight: 20, paddingLeft: 20 }}
+          >
+            <img alt='Brand' src={logo}></img>
+          </Link>
+          <LeftMenu />
         </div>
-      </nav>
-    )
-  }
+        <div className='rightMenu'>
+          <RightMenu />
+        </div>
+      </div>
+    </nav>
+  )
 }
 export default Navbar
