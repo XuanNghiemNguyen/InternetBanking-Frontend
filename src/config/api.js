@@ -31,11 +31,12 @@ const API = {
         return error
       })
   },
-  login: async (email, password) =>
-    await instance
+  login: async (email, password, remember) => {
+    const currentUser = remember ? { email, password } : null
+    return await instance
       .post('/login', { email, password })
       .then((response) => {
-        store.dispatch(setCurrentUser(response.data.user))
+        store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
         const { name, email } = response.data.user
         const userInfo = {
@@ -53,7 +54,8 @@ const API = {
           console.log(error)
           return error_exception()
         }
-      }),
+      })
+  },
   getInfo: async () =>
     await instance
       .get('/users/info')

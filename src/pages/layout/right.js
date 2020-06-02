@@ -13,7 +13,6 @@ class RightMenu extends Component {
   render() {
     const currentUser = JSON.parse(localStorage.getItem('user-info'))
     const handleMenuClick = (e) => {
-      console.log(e)
       switch (+e.key) {
         case 1:
           break
@@ -46,7 +45,7 @@ class RightMenu extends Component {
           onSearch={(value) => console.log(value)}
           style={{ width: 0.3 * window.innerWidth, marginRight: 10 }}
         />
-        <span>{(currentUser && 'Xin chào '.concat(currentUser.name))}</span>
+        <span>{(currentUser && 'Xin chào, '.concat(currentUser.name))}</span>
         {localStorage.getItem('access-token') ? (
           <Item key='logout'>
             <Dropdown overlay={menu}>
