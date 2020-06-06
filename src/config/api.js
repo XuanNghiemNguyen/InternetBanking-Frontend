@@ -6,7 +6,7 @@ const headers = {
   'access-token': localStorage.getItem('access-token') || false
 }
 const HOST_URL = 'https://sacombank-internet-banking.herokuapp.com'
-const LOCAL_URL = 'http://127.0.0.1:8080'
+// const LOCAL_URL = 'http://127.0.0.1:8080'
 const instance = axios.create({
   baseURL: HOST_URL,
   timeout: 10000,
@@ -45,10 +45,12 @@ const API = {
           loginAt: new Date()
         }
         localStorage.setItem('user-info', JSON.stringify(userInfo))
+        localStorage.setItem('loggedIn', true)
         return response.data || error_exception()
       })
       .catch((error) => {
         if (error.response) {
+        localStorage.setItem('loggedIn', false)
           return error.response.data || error_exception()
         } else {
           console.log(error)
@@ -56,8 +58,8 @@ const API = {
         }
       })
   },
-  getInfo: async () =>
-    await instance
+  getInfo: async () => {
+    return await instance
       .get('/users/info')
       .then((response) => {
         return response.data || error_exception()
@@ -70,6 +72,7 @@ const API = {
           return error_exception()
         }
       })
+  }
 }
 
 export { API }

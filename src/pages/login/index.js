@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import { Form, Input, Button, notification, Checkbox } from 'antd'
@@ -6,16 +6,13 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { API } from '../../config/api'
 import store from '../../redux'
-import { useForm } from 'antd/lib/form/util'
 
-const TEST_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
-const MY_KEY = '6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9'
 var onProcess = false
 
 const LoginPage = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [form] = Form.useForm()
-  React.useEffect(() => {
+  useEffect(() => {
     const recentUser = store.getState().currentUser
     if (recentUser) {
       form.setFieldsValue({
@@ -42,7 +39,7 @@ const LoginPage = (props) => {
       const { success, message } = await API.login(email, password, remember)
       if (success) {
         openNotification('Đăng nhập thành công!', '')
-        props.history.push('/home')
+        props.history.push(props.match.url)
       } else {
         openNotification('Đăng nhập thất bại!', message)
       }
@@ -97,7 +94,7 @@ const LoginPage = (props) => {
             name='captcha'
             rules={[{ required: true, message: 'Bạn phải xác thực reCatcha!' }]}
           >
-            <ReCAPTCHA sitekey={MY_KEY} />
+            <ReCAPTCHA sitekey='6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9' />
           </Form.Item>
           <Form.Item>
             <Button

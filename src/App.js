@@ -11,6 +11,7 @@ import { Layout } from 'antd'
 import HomePage from './pages/homepage'
 import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
+import ListAccount from './pages/listAccount'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -31,8 +32,18 @@ const App = () => {
               <Route
                 path='/login'
                 render={(props) => {
-                  return localStorage.getItem('access-token') ? (
+                  return localStorage.getItem('loggedIn') === 'true' ? (
                     <Redirect to='/' />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/listAccount'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListAccount {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )

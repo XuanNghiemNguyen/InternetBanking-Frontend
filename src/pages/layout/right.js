@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Menu, Input, Avatar, Dropdown } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
 import { UserOutlined } from '@ant-design/icons'
@@ -6,7 +6,7 @@ const { Search } = Input
 const { Item } = Menu
 
 let onProcess = false
-const RightMenu = () => {
+const RightMenu = (props) => {
   const currentUser = JSON.parse(localStorage.getItem('user-info'))
   const handleMenuClick = (e) => {
     switch (+e.key) {
@@ -17,8 +17,9 @@ const RightMenu = () => {
         onProcess = true
         localStorage.removeItem('access-token')
         localStorage.removeItem('user-info')
+        localStorage.setItem('loggedIn', false)
         onProcess = false
-        this.props.history.push('/login')
+        props.history.push('/login')
         break
       default:
         break
