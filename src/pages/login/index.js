@@ -4,7 +4,7 @@ import './index.css'
 import { Form, Input, Button, notification, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { API } from '../../config/api'
+import { REST_API } from '../../config/api'
 import store from '../../redux'
 
 var onProcess = false
@@ -36,7 +36,7 @@ const LoginPage = (props) => {
       onProcess = true
       setIsLoading(true)
       const { email, password, remember } = values
-      const { success, message } = await API.login(email, password, remember)
+      const { success, message } = await REST_API.login(email, password, remember)
       if (success) {
         openNotification('Đăng nhập thành công!', '')
         props.history.push(props.match.url)
@@ -92,7 +92,7 @@ const LoginPage = (props) => {
           </Form.Item>
           <Form.Item
             name='captcha'
-            rules={[{ required: true, message: 'Bạn phải xác thực reCatcha!' }]}
+            rules={[{ required: false, message: 'Bạn phải xác thực reCatcha!' }]}
           >
             <ReCAPTCHA sitekey='6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9' />
           </Form.Item>
