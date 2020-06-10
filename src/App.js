@@ -9,6 +9,7 @@ import {
 import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
 import HomePage from './pages/homepage'
+import ChangePassword from './pages/changePassword'
 import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import ListAccount from './pages/listAccount'
@@ -29,6 +30,16 @@ const App = () => {
               <Route path='/home'>
                 <HomePage />
               </Route>
+              <Route
+                path='/changePassword'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ChangePassword {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
               <Route
                 path='/login'
                 render={(props) => {
@@ -52,6 +63,11 @@ const App = () => {
               <Route path='/forgot-password'>
                 <ForgotPassword />
               </Route>
+              <Route
+                path='*'
+                exact={true}
+                render={(props) => <Redirect to='/' {...props} />}
+              ></Route>
             </Switch>
           </Content>
           <Footer className='x-footer'>Sacombank @ Internet Banking</Footer>

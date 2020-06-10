@@ -50,7 +50,9 @@ const ListAccount = () => {
           stt: index,
           number: element.number,
           type: element.isPayment ? 'payments' : 'savings',
-          amount: element.balance.toString().concat(' (VND)')
+          amount: element.balance
+            .toLocaleString(undefined, { minimumFractionDigits: 2 })
+            .concat(' (VND)')
         }))
         setData(items)
       }
