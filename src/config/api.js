@@ -9,7 +9,7 @@ const error_exception = (err) => ({
   message: err || 'Lỗi không xác định!'
 })
 
-const HOST_URL = 'https://sacombank-internet-banking.herokuapp.com'
+const HOST_URL = 'http://localhost:8080'
 class API {
   constructor() {
     this.instance = axios.create({
@@ -70,6 +70,42 @@ class API {
     this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .get(`/users/getListAccount?email=${email}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getOtherUser = async (email) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .get(`/users/getOtherUser?email=${email}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getUserByEmail = async (email) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .get(`/users/getUserByEmail?email=${email}`)
       .then((response) => {
         return response.data || error_exception()
       })

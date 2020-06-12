@@ -12,6 +12,7 @@ import HomePage from './pages/homepage'
 import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import ListAccount from './pages/listAccount'
+import DebtReminder from './pages/debtReminderManagement/debtReminder/index'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -44,6 +45,16 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListAccount {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/debtReminder'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <DebtReminder {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )
