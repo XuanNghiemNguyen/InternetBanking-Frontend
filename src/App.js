@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
+import GetCodeOTP from './pages/getCodeOTP'
 import HomePage from './pages/homepage'
 import ChangePassword from './pages/changePassword'
 import LoginPage from './pages/login'
@@ -29,6 +30,8 @@ const App = () => {
               <Route exact path='/' component={HomePage} />
               <Route path='/home'>
                 <HomePage />
+              </Route>
+              <Route path='/getOTPCode' render={(props) => <GetCodeOTP {...props} />}>
               </Route>
               <Route
                 path='/changePassword'
@@ -60,9 +63,16 @@ const App = () => {
                   )
                 }}
               ></Route>
-              <Route path='/forgot-password'>
-                <ForgotPassword />
-              </Route>
+              <Route
+                path='/forgot-password'
+                render={(props) => {
+                  return localStorage.getItem('codeSent') === 'true' ? (
+                    <ForgotPassword {...props} />
+                  ) : (
+                    <GetCodeOTP {...props} />
+                  )
+                }}
+              ></Route>
               <Route
                 path='*'
                 exact={true}

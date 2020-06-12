@@ -71,12 +71,12 @@ const LoginPage = (props) => {
           </h1>
           <Form.Item
             name='email'
-            rules={[{ required: true, message: 'Hãy nhập E-Mail!' }]}
+            rules={[{ required: true, message: 'Hãy nhập Email!' }]}
           >
             <Input
               autoComplete='on'
               prefix={<UserOutlined className='site-form-item-icon' />}
-              placeholder='E-Mail'
+              placeholder='Email'
             />
           </Form.Item>
           <Form.Item

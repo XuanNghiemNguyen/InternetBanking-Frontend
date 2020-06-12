@@ -1,0 +1,24 @@
+.forgot-pass_form {
+  background: white;
+  padding: 5px 30px;
+  width: 368px;
+  border-style: outset;
+}
+.forgot-pass_frame {
+  background-image: url('../../background/bg1.jpg');
+  min-height: 90vh;
+  padding: 15vh 38vw;
+}
+.title {
+  color: #004997;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.forgot-passForm_footer {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+}
+.forgot-pass-form-button {
+  width: 100%;
+}

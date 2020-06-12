@@ -1,0 +1,19 @@
+.otp_form {
+  background: white;
+  padding: 8px 30px;
+  width: 368px;
+  border-style: outset;
+}
+.otp_frame {
+  background-image: url('../../background/bg1.jpg');
+  min-height: 90vh;
+  padding: 26vh 38vw;
+}
+.title {
+  color: #004997;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.otp-form-button {
+  width: 100%;
+}
