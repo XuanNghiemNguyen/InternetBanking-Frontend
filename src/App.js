@@ -34,7 +34,7 @@ const App = () => {
               <Route path='/getOTPCode' render={(props) => <GetCodeOTP {...props} />}>
               </Route>
               <Route
-                path='/changePassword'
+                path='/change-password'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ChangePassword {...props} />

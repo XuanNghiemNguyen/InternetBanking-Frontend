@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import './index.css'
 import { Form, Input, Button, notification, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
@@ -110,7 +109,13 @@ const LoginPage = (props) => {
             <Form.Item name='remember' valuePropName='checked' noStyle>
               <Checkbox>Lưu thông tin</Checkbox>
             </Form.Item>
-            <Link to={'/forgot-password'}>Quên mật khẩu</Link>
+            <Button type='link' onClick={() => {
+              localStorage.setItem('codeSent', false)
+              props.history.push({
+                pathname: 'getOTPCode',
+                dict: 'forgot-password'
+              })
+            }}>Quên mật khẩu?</Button>
           </div>
         </Form>
       </div>

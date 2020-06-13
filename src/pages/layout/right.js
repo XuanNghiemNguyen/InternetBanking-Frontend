@@ -15,7 +15,7 @@ const RightMenu = (props) => {
       case 2:
         if (!!onProcess) return
         onProcess = true
-        props.history.push('/changePassword')
+        props.history.push('/change-password')
         onProcess = false
         break
       case 3:

@@ -9,7 +9,7 @@ const error_exception = (err) => ({
   message: err || 'Lỗi không xác định!'
 })
 
-const HOST_URL = 'https://sacombank-internet-banking.herokuapp.com'
+const HOST_URL = 'http://127.0.0.1:8080' || 'https://sacombank-internet-banking.herokuapp.com'
 class API {
   constructor() {
     this.instance = axios.create({
@@ -103,9 +103,9 @@ class API {
         }
       })
   }
-  forgotPassword = async (email, code, password_1, password_2) => {
+  forgotPassword = async (email, code, new_password) => {
     return await this.instance
-      .post('/forgotPassword', { email, code, password_1, password_2 })
+      .post('/forgotPassword', { email, code, new_password })
       .then((response) => {
         localStorage.setItem('loggedIn', false)
         return response.data || error_exception()
@@ -119,12 +119,12 @@ class API {
         }
       })
   }
-  changePassword = async (password_0, password_1, password_2) => {
+  changePassword = async (old_password, new_password) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
     )
     return await this.instance
-      .post('/users/changePassword', { password_0, password_1, password_2 })
+      .post('/users/changePassword', { old_password, new_password })
       .then((response) => {
         localStorage.setItem('access-token', 'need login')
         localStorage.setItem('loggedIn', false)

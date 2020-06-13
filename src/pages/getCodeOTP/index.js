@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './index.css'
 import { Form, Input, Button, notification, Typography } from 'antd'
 
@@ -9,8 +9,15 @@ const { Text } = Typography
 var onProcess = false
 
 const GetCodeOTP = (props) => {
-  const [isLoading, setIsLoading] = useState(false)
   const [form] = Form.useForm()
+  useEffect(() => {
+    if (localStorage.getItem('email-otp')) {
+      form.setFieldsValue({
+        email: localStorage.getItem('email-otp')
+      })
+    }
+  }, [])
+  const [isLoading, setIsLoading] = useState(false)
   const onFinish = async (values) => {
     try {
       if (!!onProcess) return
@@ -22,7 +29,7 @@ const GetCodeOTP = (props) => {
         openNotification('Lấy mã OTP thành công!', 'Kiểm tra email của bạn')
         localStorage.setItem('email-otp', email)
         props.history.push({
-          pathname: props.match.url
+          pathname: props.location.dict || '/'
         })
       } else {
         openNotification('Lấy mã OTP thất bại!', data.message)

@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import './index.css'
 import { Form, Input, Button, notification } from 'antd'
-import {
-  FieldNumberOutlined,
-  LockOutlined
-} from '@ant-design/icons'
+import { FieldNumberOutlined, LockOutlined } from '@ant-design/icons'
 import { REST_API } from '../../config/api'
 
 var onProcess = false
@@ -19,13 +16,16 @@ const ForgotPassword = (props) => {
       setIsLoading(true)
       const email = localStorage.getItem('email-otp')
       if (!email) {
-        openNotification('Lấy mật khẩu thất bại!', 'Email không khớp, vui lòng lấy lại OTP!')
+        openNotification(
+          'Lấy mật khẩu thất bại!',
+          'Email không khớp, vui lòng lấy lại OTP!'
+        )
         onProcess = false
         setIsLoading(false)
         return
       }
-      const { code, password1, password2 } = values
-      if (password1 !== password2) {
+      const { code, new_password, new_password_confirm } = values
+      if (new_password !== new_password_confirm) {
         openNotification(
           'Lấy mật khẩu thất bại!',
           'Mật khẩu xác nhận không khớp!'
@@ -34,12 +34,7 @@ const ForgotPassword = (props) => {
         setIsLoading(false)
         return
       }
-      const data = await REST_API.forgotPassword(
-        email,
-        code,
-        password1,
-        password2
-      )
+      const data = await REST_API.forgotPassword(email, code, new_password)
       if (data.success) {
         openNotification('Lấy lại mật khẩu thành công!', '')
         localStorage.setItem('codeSent', false)
@@ -93,7 +88,7 @@ const ForgotPassword = (props) => {
           />
         </Form.Item>
         <Form.Item
-          name='password1'
+          name='new_password'
           rules={[{ required: true, message: 'Nhập mật khẩu mới!' }]}
         >
           <Input.Password
@@ -103,7 +98,7 @@ const ForgotPassword = (props) => {
           />
         </Form.Item>
         <Form.Item
-          name='password2'
+          name='new_password_confirm'
           rules={[{ required: true, message: 'Nhập lại mật khẩu' }]}
         >
           <Input.Password
@@ -122,6 +117,23 @@ const ForgotPassword = (props) => {
             Xác nhận
           </Button>
         </Form.Item>
+        <div className='forgot-passForm_footer'>
+          <Button
+            type='link'
+            onClick={() => {
+              if (onProcess) return
+              onProcess = true
+              localStorage.setItem('codeSent', false)
+              props.history.push({
+                pathname: 'getOTPCode',
+                dict: 'forgot-password'
+              })
+              onProcess = false
+            }}
+          >
+            Bạn muốn lấy lại mã OTP?
+          </Button>
+        </div>
       </Form>
     </div>
   )
