@@ -14,6 +14,7 @@ import ChangePassword from './pages/changePassword'
 import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import ListAccount from './pages/listAccount'
+import ListReceiver from './pages/listReceiver'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -58,6 +59,16 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListAccount {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/listReceiver'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListReceiver {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )

@@ -57,6 +57,6 @@
   padding: 0px !important;
 }
 
-/* .ant-layout-content {
-  padding: 0, 15px !important;
-} */
+.ant-layout-footer {
+  padding: 9px 50px !important;
+}
