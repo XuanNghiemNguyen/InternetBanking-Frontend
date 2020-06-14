@@ -63,7 +63,13 @@ const ListAccount = () => {
       <h2>
         Khách hàng: <b>{name}</b>
       </h2>
-      <Table className='table-data' columns={columns} dataSource={data} />
+      <Table
+        scroll={{ y: '50vh' }}
+        bordered
+        className='table-data'
+        columns={columns}
+        dataSource={data}
+      />
     </div>
   )
 }

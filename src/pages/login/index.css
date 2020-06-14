@@ -1,6 +1,6 @@
 .login_form {
   background: white;
-  padding: 5px 30px;
+  padding: 5px 30px !important;
   width: 368px;
   border-style: outset;
 }

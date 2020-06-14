@@ -28,7 +28,7 @@
 }
 
 .mainBody {
-  min-height: 90vh;
+  min-height: 84vh !important ;
   background-color: white;
 }
 
@@ -59,4 +59,8 @@
 
 .ant-layout-footer {
   padding: 9px 50px !important;
+}
+
+.ant-layout {
+  background: white
 }

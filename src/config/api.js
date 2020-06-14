@@ -139,6 +139,60 @@ class API {
         }
       })
   }
+  getReceivers = async () => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get('/users/receivers')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  updateReceivers = async (receivers) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/receivers/update', { receivers })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getOtherInfo = async (number) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get(`/users/getOtherInfo?number=${number}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
 }
 const REST_API = new API()
 
