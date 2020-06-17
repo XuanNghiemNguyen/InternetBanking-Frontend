@@ -84,7 +84,7 @@ const LoginPage = (props) => {
           </Form.Item>
           <Form.Item
             name='captcha'
-            rules={[{ required: false, message: 'Bạn phải xác thực reCatcha!' }]}
+            rules={[{ required: true, message: 'Bạn phải xác thực reCatcha!' }]}
           >
             <ReCAPTCHA sitekey='6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9' />
           </Form.Item>

@@ -1,30 +1,45 @@
-import { notification } from 'antd';
-import { REST_API } from '../../config/api';
+import { notification } from 'antd'
+import { REST_API } from '../../config/api'
 
 const validateNumber = async (bank_name, number) => {
+	let data = null
 	switch (bank_name.toUpperCase()) {
 		case 'SACOMBANK':
-			const data = await REST_API.getOtherInfo(number);
+			data = await REST_API.getOtherInfo(number)
 			if (data && data.success) {
-				return data.user;
+				return data.user
 			} else {
-				console.log(data);
-				return false;
+				console.log(data)
+				return false
 			}
 		case 'HHBANK':
-			return false;
+			data = await REST_API.getUserInfoFromHHBank(number)
+			console.log('hhbank', data)
+			if (data && data.success) {
+				console.log(data)
+				return data.user
+			} else {
+				return false
+			}
 		case 'TEAM29':
-			return false;
+			data = await REST_API.getUserInfoFromTeam29(number)
+			console.log('Team 29:', data)
+			if (data && data.success) {
+				console.log(data)
+				return data.user
+			} else {
+				return false
+			}
 		default:
-			return false;
+			return false
 	}
-};
+}
 const openNotification = (message, description, time) => {
 	notification.info({
 		message,
 		description,
 		placement: 'bottomLeft',
-		duration: time || 3,
-	});
-};
-export { validateNumber, openNotification };
+		duration: time || 3
+	})
+}
+export { validateNumber, openNotification }
