@@ -8,9 +8,8 @@ import {
   Divider,
   Row,
   Col,
-  notification
 } from 'antd'
-import { REST_API } from '../../config/api'
+import { validateNumber, openNotification } from '../common/index'
 
 const { Option } = Select
 const layout = {
@@ -30,35 +29,8 @@ const CreateReceiverForm = (props) => {
   const [loading, setLoading] = useState(false)
   const formRef = useRef()
 
-  const openNotification = (message, description) => {
-    notification.info({
-      message,
-      description,
-      placement: 'bottomLeft',
-      duration: 3
-    })
-  }
-
   const handleCancel = () => {
     setModalVisiable(false)
-  }
-  const validateNumber = async (bank_name, number) => {
-    switch (bank_name.toUpperCase()) {
-      case 'SACOMBANK':
-        const data = await REST_API.getOtherInfo(number)
-        if (data && data.success) {
-          return data.user
-        } else {
-          console.log(data)
-          return false
-        }
-      case 'HHBANK':
-        return false
-      case 'TEAM29':
-        return false
-      default:
-        return false
-    }
   }
   const onFinish = async (values) => {
     try {

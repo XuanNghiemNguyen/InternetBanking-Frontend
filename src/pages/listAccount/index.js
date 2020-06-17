@@ -46,8 +46,8 @@ const ListAccount = () => {
       const data = await REST_API.getListAccount(email)
       if (data && data.results) {
         const items = data.results.map((element, index) => ({
-          key: index.toString(),
-          stt: index,
+          key: (index + 1).toString(),
+          stt: index + 1,
           number: element.number,
           type: element.isPayment ? 'payments' : 'savings',
           amount: element.balance
@@ -57,14 +57,14 @@ const ListAccount = () => {
         setData(items)
       }
     })()
-  }, [])
+  }, [email])
   return (
     <div className='listAccount_frame'>
       <h2>
         Khách hàng: <b>{name}</b>
       </h2>
       <Table
-        scroll={{ y: '50vh' }}
+        scroll={{ y: '80vh' }}
         bordered
         className='table-data'
         columns={columns}

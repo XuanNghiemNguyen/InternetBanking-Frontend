@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, notification, Typography } from 'antd'
-
+import { Form, Input, Button, Typography } from 'antd'
+import { openNotification } from '../common/index'
 import { UserOutlined } from '@ant-design/icons'
 import { REST_API } from '../../config/api'
 
@@ -16,7 +16,7 @@ const GetCodeOTP = (props) => {
         email: localStorage.getItem('email-otp')
       })
     }
-  }, [])
+  }, [form])
   const [isLoading, setIsLoading] = useState(false)
   const onFinish = async (values) => {
     try {
@@ -44,15 +44,6 @@ const GetCodeOTP = (props) => {
 
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo)
-  }
-
-  const openNotification = (message, description) => {
-    notification.info({
-      message,
-      description,
-      placement: 'bottomLeft',
-      duration: 2
-    })
   }
   return (
     <div className='otp_frame'>

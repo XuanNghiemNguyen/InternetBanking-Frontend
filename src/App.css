@@ -10,25 +10,12 @@
   box-shadow: 0 2px 8px #f0f1f2;
 }
 
-.menuCon {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.menuBar {
-  display: flex;
-}
-
-.leftMenu {
-  display: flex;
-}
 .ant-card-grid {
   padding: 10px !important;
 }
 
 .mainBody {
-  min-height: 84vh !important ;
+  min-height: 90vh !important ;
   background-color: white;
 }
 

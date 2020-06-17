@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, notification, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { REST_API } from '../../config/api'
 import store from '../../redux'
+import { openNotification } from '../common/index'
 
 var onProcess = false
 
@@ -19,15 +20,7 @@ const LoginPage = (props) => {
         password: recentUser.password
       })
     }
-  }, [])
-  const openNotification = (message, description) => {
-    notification.info({
-      message,
-      description,
-      placement: 'bottomLeft',
-      duration: 1
-    })
-  }
+  }, [form])
 
   const onFinish = async (values) => {
     try {

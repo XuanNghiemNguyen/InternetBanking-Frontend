@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './index.css'
-import { Form, Input, Button, notification } from 'antd'
+import { openNotification } from '../common/index'
+import { Form, Input, Button } from 'antd'
 import { LockOutlined } from '@ant-design/icons'
 import { REST_API } from '../../config/api'
 
@@ -9,14 +10,6 @@ var onProcess = false
 const ChangePassword = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [form] = Form.useForm()
-  const openNotification = (message, description) => {
-    notification.info({
-      message,
-      description,
-      placement: 'bottomLeft',
-      duration: 2
-    })
-  }
 
   const onFinish = async (values) => {
     try {
