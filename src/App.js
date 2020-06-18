@@ -8,11 +8,14 @@ import {
 } from 'react-router-dom'
 import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
+import GetCodeOTP from './pages/getCodeOTP'
 import HomePage from './pages/homepage'
+import ChangePassword from './pages/changePassword'
 import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import ListAccount from './pages/listAccount'
 import DebtReminder from './pages/debtReminderManagement/debtReminder/index'
+import ListReceiver from './pages/listReceiver'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -30,6 +33,18 @@ const App = () => {
               <Route path='/home'>
                 <HomePage />
               </Route>
+              <Route path='/getOTPCode' render={(props) => <GetCodeOTP {...props} />}>
+              </Route>
+              <Route
+                path='/change-password'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ChangePassword {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
               <Route
                 path='/login'
                 render={(props) => {
@@ -55,14 +70,38 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtReminder {...props} />
+                
                   ) : (
                     <LoginPage {...props} />
                   )
                 }}
               ></Route>
-              <Route path='/forgot-password'>
-                <ForgotPassword />
+              <Route
+              path='/listReceiver'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListReceiver {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
               </Route>
+              <Route
+                path='/forgot-password'
+                render={(props) => {
+                  return localStorage.getItem('codeSent') === 'true' ? (
+                    <ForgotPassword {...props} />
+                  ) : (
+                    <GetCodeOTP {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='*'
+                exact={true}
+                render={(props) => <Redirect to='/' {...props} />}
+              ></Route>
             </Switch>
           </Content>
           <Footer className='x-footer'>Sacombank @ Internet Banking</Footer>

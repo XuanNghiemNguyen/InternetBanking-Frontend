@@ -1,10 +1,10 @@
-.login_form {
+.forgot-pass_form {
   background: white;
   padding: 5px 30px !important;
   width: 368px;
   border-style: outset;
 }
-.login_frame {
+.forgot-pass_frame {
   background-image: url('../../background/bg1.jpg');
   min-height: 90vh;
   padding: 15vh 38vw;
@@ -14,11 +14,10 @@
   font-size: 25px;
   margin-bottom: 20px;
 }
-.loginForm_footer {
+.forgot-passForm_footer {
   display: flex;
-  justify-content: space-between;
-  height: 30px;
+  justify-content: flex-end;
 }
-.login-form-button {
+.forgot-pass-form-button {
   width: 100%;
 }

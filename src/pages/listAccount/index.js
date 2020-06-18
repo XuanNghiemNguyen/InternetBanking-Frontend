@@ -46,22 +46,30 @@ const ListAccount = () => {
       const data = await REST_API.getListAccount(email)
       if (data && data.results) {
         const items = data.results.map((element, index) => ({
-          key: index.toString(),
-          stt: index,
+          key: (index + 1).toString(),
+          stt: index + 1,
           number: element.number,
           type: element.isPayment ? 'payments' : 'savings',
-          amount: element.balance.toString().concat(' (VND)')
+          amount: element.balance
+            .toLocaleString(undefined, { minimumFractionDigits: 2 })
+            .concat(' (VND)')
         }))
         setData(items)
       }
     })()
-  }, [])
+  }, [email])
   return (
     <div className='listAccount_frame'>
       <h2>
         Khách hàng: <b>{name}</b>
       </h2>
-      <Table className='table-data' columns={columns} dataSource={data} />
+      <Table
+        scroll={{ y: '80vh' }}
+        bordered
+        className='table-data'
+        columns={columns}
+        dataSource={data}
+      />
     </div>
   )
 }

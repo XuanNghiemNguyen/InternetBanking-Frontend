@@ -1,5 +1,6 @@
 .listAccount_frame {
-  margin: 50px;
+  min-height: 90vh;
+  margin: 10px;
   padding: 20px;
   border-style: outset;
 }

@@ -9,7 +9,7 @@ const error_exception = (err) => ({
   message: err || 'Lỗi không xác định!'
 })
 
-const HOST_URL = 'http://localhost:8080'
+const HOST_URL = 'http://127.0.0.1:8080' || 'https://sacombank-internet-banking.herokuapp.com'
 class API {
   constructor() {
     this.instance = axios.create({
@@ -22,8 +22,10 @@ class API {
     })
     this.login = this.login.bind(this)
     this.getListAccount = this.getListAccount.bind(this)
-    this.getInfo = this.getInfo.bind(this)
     this.checkActive = this.checkActive.bind(this)
+    this.getCode = this.getCode.bind(this)
+    this.changePassword = this.changePassword.bind(this)
+    this.forgotPassword = this.forgotPassword.bind(this)
   }
   checkActive = async () => {
     return await this.instance
@@ -82,12 +84,12 @@ class API {
         }
       })
   }
-  getOtherUser = async (email) => {
+  getOtherUser = async () => {
     const token = localStorage.getItem('access-token')
     if (!token) return error_exception('token not found')
     this.instance.defaults.headers['access-token'] = token
     return await this.instance
-      .get(`/users/getOtherUser?email=${email}`)
+      .get(`/users/getAllAccount`)
       .then((response) => {
         return response.data || error_exception()
       })
@@ -118,9 +120,122 @@ class API {
         }
       })
   }
-  getInfo = async () => {
+  
+  getCode = async (email) => {
+    localStorage.setItem('codeSent', false)
     return await this.instance
-      .get('/users/info')
+      .post('/getOTP', {
+        email
+      })
+      .then((response) => {
+        localStorage.setItem('codeSent', true)
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  forgotPassword = async (email, code, new_password) => {
+    return await this.instance
+      .post('/forgotPassword', { email, code, new_password })
+      .then((response) => {
+        localStorage.setItem('loggedIn', false)
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  changePassword = async (old_password, new_password) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('/users/changePassword', { old_password, new_password })
+      .then((response) => {
+        localStorage.setItem('access-token', 'need login')
+        localStorage.setItem('loggedIn', false)
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getReceivers = async () => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get('/users/receivers')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  updateReceivers = async (receivers) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/receivers/update', { receivers })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getOtherInfo = async (number) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get(`/users/getOtherInfo?number=${number}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  sendDebt = async (info) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/sendDebt', { info })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -135,4 +250,5 @@ class API {
   }
 }
 const REST_API = new API()
+
 export { REST_API }

@@ -24,7 +24,9 @@ const LeftMenu = () => {
           <Menu.Item key='setting:1'>
             <Link to={'/listAccount'}>Danh sách tài khoản</Link>
           </Menu.Item>
-          <Menu.Item key='setting:2'>Danh sách người nhận</Menu.Item>
+          <Menu.Item key='setting:2'>
+            <Link to={'/listReceiver'}>Danh sách người nhận</Link>
+          </Menu.Item>
         </MenuItemGroup>
       </SubMenu>
       <SubMenu

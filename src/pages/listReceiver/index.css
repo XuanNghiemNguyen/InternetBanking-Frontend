@@ -1,0 +1,11 @@
+.editable-row .ant-form-explain {
+  position: absolute;
+  font-size: 12px;
+  margin-top: -4px;
+}
+.listReceiver_frame {
+  min-height: 90vh;
+  margin: 10px;
+  padding: 20px;
+  border-style: outset;
+}

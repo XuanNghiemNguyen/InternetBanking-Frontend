@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import './index.css'
-import { Form, Input, Button, notification, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { REST_API } from '../../config/api'
 import store from '../../redux'
+import { openNotification } from '../common/index'
 
 var onProcess = false
 
@@ -20,15 +20,7 @@ const LoginPage = (props) => {
         password: recentUser.password
       })
     }
-  }, [])
-  const openNotification = (message, description) => {
-    notification.info({
-      message,
-      description,
-      placement: 'bottomLeft',
-      duration: 1
-    })
-  }
+  }, [form])
 
   const onFinish = async (values) => {
     try {
@@ -71,12 +63,12 @@ const LoginPage = (props) => {
           </h1>
           <Form.Item
             name='email'
-            rules={[{ required: true, message: 'Hãy nhập E-Mail!' }]}
+            rules={[{ required: true, message: 'Hãy nhập Email!' }]}
           >
             <Input
               autoComplete='on'
               prefix={<UserOutlined className='site-form-item-icon' />}
-              placeholder='E-Mail'
+              placeholder='Email'
             />
           </Form.Item>
           <Form.Item
@@ -110,7 +102,13 @@ const LoginPage = (props) => {
             <Form.Item name='remember' valuePropName='checked' noStyle>
               <Checkbox>Lưu thông tin</Checkbox>
             </Form.Item>
-            <Link to={'/forgot-password'}>Quên mật khẩu</Link>
+            <Button type='link' onClick={() => {
+              localStorage.setItem('codeSent', false)
+              props.history.push({
+                pathname: 'getOTPCode',
+                dict: 'forgot-password'
+              })
+            }}>Quên mật khẩu?</Button>
           </div>
         </Form>
       </div>
