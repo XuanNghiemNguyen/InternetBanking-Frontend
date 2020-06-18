@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import 'antd/dist/antd.css';
-import './index.css';
+import React, { useState, useRef, useEffect } from 'react'
+import 'antd/dist/antd.css'
+import './index.css'
 import {
 	Table,
 	Input,
@@ -9,17 +9,17 @@ import {
 	Form,
 	Button,
 	Popconfirm,
-	message,
-} from 'antd';
-import Highlighter from 'react-highlight-words';
+	message
+} from 'antd'
+import Highlighter from 'react-highlight-words'
 import {
 	SearchOutlined,
 	SaveOutlined,
-	UserAddOutlined,
-} from '@ant-design/icons';
-import CreateRecceiverForm from './createReceiverForm';
-import { REST_API } from '../../config/api';
-import { validateNumber, openNotification } from '../common/index';
+	UserAddOutlined
+} from '@ant-design/icons'
+import CreateRecceiverForm from './createReceiverForm'
+import { REST_API } from '../../config/api'
+import { validateNumber, openNotification } from '../common/index'
 
 const EditableCell = ({
 	editing,
@@ -31,21 +31,20 @@ const EditableCell = ({
 	children,
 	...restProps
 }) => {
-	const inputNode =
-		inputType === 'number' ? <Input type="number" /> : <Input />;
+	const inputNode = inputType === 'number' ? <Input type='number' /> : <Input />
 	return (
 		<td {...restProps}>
 			{editing ? (
 				<Form.Item
 					name={dataIndex}
 					style={{
-						margin: 0,
+						margin: 0
 					}}
 					rules={[
 						{
 							required: true,
-							message: `Hãy nhập ${title}!`,
-						},
+							message: `Hãy nhập ${title}!`
+						}
 					]}
 				>
 					{inputNode}
@@ -54,47 +53,42 @@ const EditableCell = ({
 				children
 			)}
 		</td>
-	);
-};
+	)
+}
 
 const ListReceiver = () => {
-	const [form] = Form.useForm();
-	const [data, setData] = useState([]);
-	const [currentBank, setCurrentBank] = useState('sacombank');
-	const [modalVisiable, setModalVisiable] = useState(false);
-	const [editingKey, setEditingKey] = useState('');
-	const [searchText, setSearchText] = useState('');
-	const [searchedColumn, setSearchedColumn] = useState(null);
-	let searchInput = useRef('');
+	const [form] = Form.useForm()
+	const [data, setData] = useState([])
+	const [currentBank, setCurrentBank] = useState('sacombank')
+	const [currentNumber, setCurrentNumber] = useState(1)
+	const [modalVisiable, setModalVisiable] = useState(false)
+	const [editingKey, setEditingKey] = useState('')
+	const [searchText, setSearchText] = useState('')
+	const [searchedColumn, setSearchedColumn] = useState(null)
+	let searchInput = useRef('')
 	useEffect(() => {
 		const getReceivers = async () => {
-			const _data = await REST_API.getReceivers();
-			if (_data) {
+			const _data = await REST_API.getReceivers()
+			if (_data && _data.receivers && _data.receivers.length > 0) {
 				setData(
 					_data.receivers.map((item, index) => ({
 						key: index.toString(),
 						index: index + 1,
 						reminiscent_name: item.reminiscent_name,
 						number: item.number,
-						bank_name: item.bank_name.toUpperCase(),
+						bank_name: item.bank_name.toUpperCase()
 					}))
-				);
+				)
 			}
-		};
-		getReceivers();
-	}, []);
-	const isEditing = (record) => record.key === editingKey;
+		}
+		getReceivers()
+	}, [])
+	const isEditing = (record) => record.key === editingKey
 	const addReceiver = ({
 		newReceiver_bank,
 		newReceiver_number,
-		newReceiver_name,
+		newReceiver_name
 	}) => {
-		if (data.some((item) => item.number === newReceiver_number)) {
-			return {
-				success: false,
-				message: 'Số tài khoản này đã tồn tại trong danh sách người nhận',
-			};
-		}
 		setData([
 			...data,
 			{
@@ -102,25 +96,25 @@ const ListReceiver = () => {
 				index: data.length + 1,
 				reminiscent_name: newReceiver_name,
 				number: newReceiver_number,
-				bank_name: newReceiver_bank.toUpperCase(),
-			},
-		]);
+				bank_name: newReceiver_bank.toUpperCase()
+			}
+		])
 		return {
 			success: true,
-			message: 'Thêm mới thành công',
-		};
-	};
+			message: 'Thêm mới thành công'
+		}
+	}
 	const getColumnSearchProps = (dataIndex) => ({
 		filterDropdown: ({
 			setSelectedKeys,
 			selectedKeys,
 			confirm,
-			clearFilters,
+			clearFilters
 		}) => (
 			<div style={{ padding: 8 }}>
 				<Input
 					ref={(node) => {
-						searchInput = node;
+						searchInput = node
 					}}
 					placeholder={`Search ${dataIndex}`}
 					value={selectedKeys[0]}
@@ -132,20 +126,20 @@ const ListReceiver = () => {
 				/>
 				<Space>
 					<Button
-						type="primary"
+						type='primary'
 						onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
 						icon={<SearchOutlined />}
-						size="small"
+						size='small'
 						style={{ width: 90 }}
 					>
 						Tìm
 					</Button>
 					<Button
 						onClick={() => handleReset(clearFilters)}
-						size="small"
+						size='small'
 						style={{ width: 90 }}
 					>
-						Hủy
+						Reset
 					</Button>
 				</Space>
 			</div>
@@ -157,7 +151,7 @@ const ListReceiver = () => {
 			record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
 		onFilterDropdownVisibleChange: (visible) => {
 			if (visible) {
-				setTimeout(() => searchInput.select());
+				setTimeout(() => searchInput.select())
 			}
 		},
 		render: (text) =>
@@ -170,83 +164,99 @@ const ListReceiver = () => {
 				/>
 			) : (
 				text
-			),
-	});
+			)
+	})
 
 	const handleSearch = (selectedKeys, confirm, dataIndex) => {
-		confirm();
-		setSearchText(selectedKeys[0]);
-		setSearchedColumn(dataIndex);
-	};
+		confirm()
+		setSearchText(selectedKeys[0])
+		setSearchedColumn(dataIndex)
+	}
 
 	const handleReset = (clearFilters) => {
-		clearFilters();
-		setSearchText('');
-	};
+		clearFilters()
+		setSearchText('')
+	}
 
 	const edit = (record) => {
-		const { bank_name, number, reminiscent_name } = record;
+		const { bank_name, number, reminiscent_name } = record
 		form.setFieldsValue({
 			reminiscent_name,
-			number,
-		});
-		setCurrentBank(bank_name);
-		setEditingKey(record.key);
-	};
+			number
+		})
+		setCurrentBank(bank_name)
+		setCurrentNumber(number)
+		setEditingKey(record.key)
+	}
 
 	const cancel = () => {
-		setEditingKey('');
-	};
+		setEditingKey('')
+	}
 
 	const save = async (key) => {
 		try {
-			const row = await form.validateFields();
-			const newData = [...data];
-			const index = newData.findIndex((item) => key === item.key);
+			const row = await form.validateFields()
+			const newData = [...data]
+			const index = newData.findIndex((item) => key === item.key)
 			if (index > -1) {
-				const user = await validateNumber(currentBank, row.number);
-				if (user) {
-					if (!row.reminiscent_name || row.reminiscent_name === '') {
-						row.reminiscent_name = user.name;
-					}
-					const item = newData[index];
-					newData.splice(index, 1, { ...item, ...row });
-					setData(newData);
-					setEditingKey('');
-				} else {
+				const idx = data.findIndex(
+					(i) => parseInt(i.number) === parseInt(row.number)
+				)
+				if (
+					currentNumber !== row.number &&
+					idx > -1 &&
+					currentBank === data[idx].bank_name
+				) {
 					openNotification(
 						'Có lỗi khi thêm!',
-						'Sô tài khoản này không tồn tại trong ngân hàng!'
-					);
+						`Số tài khoản này đã tồn tại với tên gợi nhớ ${data[idx].reminiscent_name}!`
+					)
+					setEditingKey('')
+					return
+				}
+				const user = await validateNumber(currentBank, row.number)
+				if (user) {
+					if (!row.reminiscent_name || row.reminiscent_name === '') {
+						row.reminiscent_name = user.name
+					}
+					const item = newData[index]
+					newData.splice(index, 1, { ...item, ...row })
+					setData(newData)
+					setEditingKey('')
+				} else {
+					openNotification(
+						'Sô tài khoản này không tồn tại trong ngân hàng!',
+						`Thông báo từ ${currentBank}`
+					)
 				}
 			} else {
-				setEditingKey('');
+				setEditingKey('')
 			}
 		} catch (errInfo) {
-			console.log('Validate Failed:', errInfo);
+			console.log('Validate Failed:', errInfo)
 		}
-	};
+	}
 
 	const columns = [
 		{
 			title: 'STT',
 			dataIndex: 'index',
 			width: '10%',
-			editable: false,
+			editable: false
 		},
 		{
 			title: 'Tên gợi nhớ',
 			dataIndex: 'reminiscent_name',
 			width: '25%',
 			editable: true,
-			...getColumnSearchProps('reminiscent_name'),
+			...getColumnSearchProps('reminiscent_name')
 		},
 		{
 			title: 'Số tài khoản',
 			dataIndex: 'number',
 			width: '25%',
 			editable: true,
-			...getColumnSearchProps('number'),
+			...getColumnSearchProps('number')
 		},
 		{
 			title: 'Tên ngân hàng',
@@ -259,13 +269,13 @@ const ListReceiver = () => {
 						color={(() => {
 							switch (bank_name.toUpperCase()) {
 								case 'SACOMBANK':
-									return 'green';
+									return 'green'
 								case 'HHBANK':
-									return 'blue';
+									return 'blue'
 								case 'TEAM29':
-									return 'orange';
+									return 'orange'
 								default:
-									return 'red';
+									return 'red'
 							}
 						})()}
 						key={bank_name}
@@ -273,19 +283,19 @@ const ListReceiver = () => {
 						{bank_name}
 					</Tag>
 				</>
-			),
+			)
 		},
 		{
 			title: 'Tùy chọn',
 			dataIndex: 'operation',
 			render: (_, record) => {
-				const editable = isEditing(record);
+				const editable = isEditing(record)
 				return editable ? (
 					<span>
 						<Button
 							onClick={() => save(record.key)}
 							style={{
-								marginRight: 8,
+								marginRight: 8
 							}}
 						>
 							Lưu
@@ -303,24 +313,24 @@ const ListReceiver = () => {
 						</Button>
 
 						<Popconfirm
-							placement="bottomRight"
-							title="Bạn chắc chắn muốn xóa người nhận này?"
+							placement='bottomRight'
+							title='Bạn chắc chắn muốn xóa người nhận này?'
 							onConfirm={() => removeReceiver(record)}
-							okText="Có"
-							cancelText="Không"
+							okText='Có'
+							cancelText='Không'
 						>
 							<Button danger disabled={editingKey !== ''}>
 								Xóa
 							</Button>
 						</Popconfirm>
 					</span>
-				);
-			},
-		},
-	];
+				)
+			}
+		}
+	]
 	const mergedColumns = columns.map((col) => {
 		if (!col.editable) {
-			return col;
+			return col
 		}
 
 		return {
@@ -330,10 +340,10 @@ const ListReceiver = () => {
 				inputType: col.dataIndex === 'number' ? 'number' : 'text',
 				dataIndex: col.dataIndex,
 				title: col.title,
-				editing: isEditing(record),
-			}),
-		};
-	});
+				editing: isEditing(record)
+			})
+		}
+	})
 
 	const saveAllChanges = async () => {
 		const recivers =
@@ -342,25 +352,26 @@ const ListReceiver = () => {
 						reminiscent_name: item.reminiscent_name,
 						number: item.number,
 						bank_name: item.bank_name,
-						updatedAt: Date.now(),
+						updatedAt: Date.now()
 				  }))
-				: [];
-		const res = await REST_API.updateReceivers(recivers);
-		console.log(res);
-		message.info('Đã lưu!');
-	};
+				: []
+		const res = await REST_API.updateReceivers(recivers)
+		console.log(res)
+		message.info('Đã lưu!')
+	}
 	const removeReceiver = async (record) => {
-		const idx = data.findIndex((item) => item.number === record.number);
-		let newData = [...data];
-		newData.splice(idx, 1);
-		setData(newData);
-	};
+		const idx = data.findIndex((item) => item.number === record.number)
+		let newData = [...data]
+		newData.splice(idx, 1)
+		setData(newData)
+	}
 	return (
-		<div className="listReceiver_frame">
+		<div className='listReceiver_frame'>
 			<CreateRecceiverForm
 				modalVisiable={modalVisiable}
 				setModalVisiable={setModalVisiable}
 				addReceiver={addReceiver}
+				dataReceiver={data}
 			/>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 				<h2>Danh sách người nhận</h2>
@@ -369,19 +380,19 @@ const ListReceiver = () => {
 						style={{ marginRight: 10 }}
 						icon={<UserAddOutlined />}
 						onClick={() => {
-							setModalVisiable(true);
+							setModalVisiable(true)
 						}}
 					>
 						Thêm mới
 					</Button>
 					<Popconfirm
-						placement="bottomRight"
-						title="Bạn muốn lưu lại tất cả thay đổi?"
+						placement='bottomRight'
+						title='Bạn muốn lưu lại tất cả thay đổi?'
 						onConfirm={saveAllChanges}
-						okText="Có"
-						cancelText="Không"
+						okText='Có'
+						cancelText='Không'
 					>
-						<Button type="primary" icon={<SaveOutlined />}>
+						<Button type='primary' icon={<SaveOutlined />}>
 							Lưu thay đổi
 						</Button>
 					</Popconfirm>
@@ -391,21 +402,21 @@ const ListReceiver = () => {
 				<Table
 					components={{
 						body: {
-							cell: EditableCell,
-						},
+							cell: EditableCell
+						}
 					}}
 					scroll={{ y: '80vh' }}
 					bordered
 					dataSource={data}
 					columns={mergedColumns}
-					rowClassName="editable-row"
+					rowClassName='editable-row'
 					pagination={{
-						onChange: cancel,
+						onChange: cancel
 					}}
 				/>
 			</Form>
 		</div>
-	);
-};
+	)
+}
 
-export default ListReceiver;
+export default ListReceiver

@@ -230,6 +230,42 @@ class API {
         }
       })
   }
+  getUserInfoFromHHBank = async (number) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get(`/users/hhbank/getInfo?number=${number}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getUserInfoFromTeam29 = async (number) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get(`/users/team29/getInfo?number=${number}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
   sendDebt = async (info) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
