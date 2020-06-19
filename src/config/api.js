@@ -284,6 +284,24 @@ class API {
         }
       })
   }
+  getDebt = async () => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get('users/getDebt')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
 }
 const REST_API = new API()
 
