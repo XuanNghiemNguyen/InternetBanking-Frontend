@@ -26,6 +26,7 @@ class API {
     this.getCode = this.getCode.bind(this)
     this.changePassword = this.changePassword.bind(this)
     this.forgotPassword = this.forgotPassword.bind(this)
+    this.cancelDebt = this.cancelDebt.bind(this)
   }
   checkActive = async () => {
     return await this.instance
@@ -120,7 +121,7 @@ class API {
         }
       })
   }
-  
+
   getCode = async (email) => {
     localStorage.setItem('codeSent', false)
     return await this.instance
@@ -290,6 +291,42 @@ class API {
     )
     return await this.instance
       .get('users/getDebt')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  cancelDebt = async (info) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/cancelDebt', { info })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  payDebt = async (info) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/payDebt', { info })
       .then((response) => {
         return response.data || error_exception()
       })

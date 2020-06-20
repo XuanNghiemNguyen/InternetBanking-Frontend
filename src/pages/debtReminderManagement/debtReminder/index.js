@@ -25,15 +25,7 @@ const DebtReminder = () => {
   })
   const [amount, setAmount] = useState('')
   const [msg, setMsg] = useState('')
-  
-  // const onFinish = values => {
-  //   console.log('Success:', values);
-
-  // };
-
-  // const onFinishFailed = errorInfo => {
-  //   console.log('Failed:', errorInfo);
-  // };
+ 
 
   const handleOk = async (e) => {
     if (!amount || !ngNo) {
@@ -50,6 +42,7 @@ const DebtReminder = () => {
         msg: msg
       }
       await REST_API.sendDebt(info)
+
     }
     setModelVisibility(false)
     setInfoVisibility('none')
