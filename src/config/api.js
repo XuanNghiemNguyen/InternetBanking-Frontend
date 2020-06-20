@@ -46,13 +46,15 @@ class API {
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
-        const { name, email } = response.data.user
+        const { name, email,type } = response.data.user
         const userInfo = {
           name,
           email,
+          type,
           loginAt: new Date()
         }
         localStorage.setItem('user-info', JSON.stringify(userInfo))
+        localStorage.setItem('type', userInfo.type)
         localStorage.setItem('loggedIn', true)
         return response.data || error_exception()
       })
