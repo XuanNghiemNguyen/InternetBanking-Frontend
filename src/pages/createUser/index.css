@@ -1,0 +1,30 @@
+#createuser {
+    width: 600px;
+    margin: 90px;
+    padding: 20px;
+    margin-left: 380px;
+    
+  }
+ #btn{
+    left: 470px
+} 
+#createuser_name{
+    width: 472px;
+    left:   23px
+}
+#createuser_username{
+   width: 470px;
+    left:-3px
+}
+#createuser_email{
+    width: 472px;
+    left:27px
+}
+#createuser_phone{
+    width: 472px;
+    left:22px
+}
+#createuser_pin{
+    width: 474px;
+    left:41px
+}

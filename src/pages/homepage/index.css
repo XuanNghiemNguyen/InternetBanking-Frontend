@@ -1,0 +1,13 @@
+.home_bodyContent {
+  width: 100vw;
+  height: 400px;
+}
+.home_mainContent {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: white;
+}
+.spin {
+  width: 100vw;
+  margin: auto;
+}
