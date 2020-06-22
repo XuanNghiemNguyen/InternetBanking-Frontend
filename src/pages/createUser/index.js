@@ -23,8 +23,12 @@ const tailLayout =[ {
     const [form] = Form.useForm()
     const onFinish = async (values) => {
       const data=await REST_API.createUser(values);
-      alert('Tạo tài khoản thành công !');
-      form.resetFields();
+      if(data.success==false){
+        alert('Đã có lỗi xảy ra, hãy nhập lại!')
+        form.resetFields()
+      } else{
+      alert("Tạo thành công !")
+      form.resetFields()}
     }
     const onFinishFailed = errorInfo => {
       console.log('Failed:', errorInfo);
