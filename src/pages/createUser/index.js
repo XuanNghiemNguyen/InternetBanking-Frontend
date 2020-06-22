@@ -23,7 +23,7 @@ const tailLayout =[ {
     const [form] = Form.useForm()
     const onFinish = async (values) => {
       const data=await REST_API.createUser(values);
-      console.log(data)
+      alert('Tạo tài khoản thành công !');
       form.resetFields();
     }
     const onFinishFailed = errorInfo => {
@@ -36,7 +36,6 @@ const tailLayout =[ {
       <Form
           
           {...layout}
-          
           name="createuser"
           initialValues={{
             remember: true,
@@ -44,6 +43,8 @@ const tailLayout =[ {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           form={form}
+         
+          
         >
           
           <Form.Item

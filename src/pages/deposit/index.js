@@ -23,7 +23,6 @@ const tailLayout =[ {
       const [form] = Form.useForm()
       const onFinish = async (values) => {
         const data=await REST_API.deposit(values);
-        console.log(data);
         alert("Nạp tiền thành công !");
         form.resetFields();
     };
