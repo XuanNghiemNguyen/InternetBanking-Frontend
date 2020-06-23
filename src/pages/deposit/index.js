@@ -21,15 +21,36 @@ const tailLayout =[ {
   const Deposit = () => {
    
       const [form] = Form.useForm()
+      const stk =form.getFieldValue("stk")
+      console.log(stk)
       const onFinish = async (values) => {
-        
+        const stk =form.getFieldValue("stk")
+        const amount = form.getFieldValue("amount")
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+        var checkAmount = /^([0-9])+$/;
+      
+          if(parseFloat(stk)==stk && stk.length!=10){
+            alert("STK không hợp lệ, hãy nhập lại!")
+            form.resetFields()
+        } else if(parseFloat(stk)!=stk && filter.test(stk)===false){
+          alert("Email không hợp lệ, hãy nhập lại!")
+          form.resetFields()
+        }
+        else if (parseFloat(amount)<100000){
+          alert("Nạp tối thiểu 100.000đ, hãy nhập lại!")
+          form.resetFields()
+        }
+        else if(checkAmount.test(amount)===false){
+          alert("Số tiền phải là số, hãy nhập lại!")
+        }
+        else{
         const data=await REST_API.deposit(values);
         if(data.success==false){
-          alert('Đã có lỗi xảy ra, hãy nhập lại!')
+          alert(data.message)
           form.resetFields()
         } else{
         alert("Nạp tiền thành công !")
-        form.resetFields()}
+        form.resetFields()}}
     };
     
     const onFinishFailed = errorInfo => {
