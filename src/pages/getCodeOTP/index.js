@@ -9,6 +9,7 @@ const { Text } = Typography
 var onProcess = false
 
 const GetCodeOTP = (props) => {
+  console.log(props)
   const [form] = Form.useForm()
   useEffect(() => {
     if (localStorage.getItem('email-otp')) {

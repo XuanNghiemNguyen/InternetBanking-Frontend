@@ -157,6 +157,21 @@ class API {
         }
       })
   }
+  verifyOTP = async (email, code) => {
+    return await this.instance
+      .post('/verifyOTP', { email, code})
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
   changePassword = async (old_password, new_password) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -322,6 +337,7 @@ class API {
       })
   }
   payDebt = async (info) => {
+    console.log(info)
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
     )

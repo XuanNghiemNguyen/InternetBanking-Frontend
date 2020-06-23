@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react'
 import './index.css'
 import { Form, Input, Button, Modal, message, Table, Space } from 'antd'
 import { REST_API } from '../../../config/api'
+import GetCodeOTP from '../../getCodeOTP'
+import GetOTPTransfer from '../getOTPTransfer'
+import { OmitProps } from 'antd/lib/transfer/ListBody'
 
 
 
-const DebtList = () => {
+const DebtList = (props) => {
+  const [ok, setOk] = useState(true)
   const [myAccounts, setMyAccounts] = useState([])
   const [myDebt, setMyDebt] = useState([])
   const [otherDebt, setOtherDebt] = useState([])
@@ -14,24 +18,53 @@ const DebtList = () => {
   const cancelDebt = async (info) => {
     const result = await REST_API.cancelDebt(info)
     if (result.success === true) {
-      const newMy = myDebt.filter((i) => {
-        return myDebt.findIndex((i) => {
-          return (i.fromAccount === info.fromAccount &&
-            i.toAccount === info.toAccount &&
-            i.amount === info.amount &&
-            i.msg === info.msg)
-        }) < 0
-      })
-      const newOther = otherDebt.filter((i) => {
-        return otherDebt.findIndex((i) => {
-          return (i.fromAccount === info.fromAccount &&
-            i.toAccount === info.toAccount &&
-            i.amount === info.amount &&
-            i.msg === info.msg)
-        }) < 0
-      })
-      setMyDebt(newMy)
-      setOtherDebt(newOther)
+      const myAccs = await REST_API.getListAccount(email)
+      setMyAccounts(myAccs.results)
+      const data = await REST_API.getDebt()
+      if (data && data.debt) {
+        const items = data.debt.map((element, index) => ({
+          key: (index + 1).toString(),
+          stt: index + 1,
+          fromAccount: element.fromAccount,
+          toAccount: element.toAccount,
+          amount: element.amount,
+          msg: element.msg,
+          state: element.state,
+          isEnabled: element.isEnabled
+        }))
+        setMyDebt(
+          items.filter((item) => {
+            return (myAccs.results.findIndex(function (i) {
+              return i.number.toString() === item.fromAccount.toString()
+            })) >= 0
+          })
+        )
+        setOtherDebt(
+          items.filter((item) => {
+            return (myAccs.results.findIndex(function (i) {
+              return i.number.toString() === item.toAccount.toString()
+            })) >= 0
+          })
+        )
+      }
+      // const newMy = myDebt.filter((i) => {
+      //   return myDebt.findIndex((i) => {
+      //     return (i.fromAccount === info.fromAccount &&
+      //       i.toAccount === info.toAccount &&
+      //       i.amount === info.amount &&
+      //       i.msg === info.msg)
+      //   }) < 0
+      // })
+      // const newOther = otherDebt.filter((i) => {
+      //   return otherDebt.findIndex((i) => {
+      //     return (i.fromAccount === info.fromAccount &&
+      //       i.toAccount === info.toAccount &&
+      //       i.amount === info.amount &&
+      //       i.msg === info.msg)
+      //   }) < 0
+      // })
+      // setMyDebt(newMy)
+      // setOtherDebt(newOther)
     }
   }
   const handleOk = async (info) => {
@@ -55,6 +88,7 @@ const DebtList = () => {
   };
   useEffect(() => {
     ; (async () => {
+
       const myAccs = await REST_API.getListAccount(email)
       setMyAccounts(myAccs.results)
       const data = await REST_API.getDebt()
@@ -115,7 +149,8 @@ const DebtList = () => {
               amount: text.amount,
               msg: text.msg,
               state: text.state,
-              isEnabled: text.isEnabled
+              isEnabled: text.isEnabled,
+              fee: text.amount * 0.01
             }
             cancelDebt(debt)
 
@@ -148,6 +183,7 @@ const DebtList = () => {
           <Modal
             title="Xác nhận"
             visible={modelVisibility}
+            okButtonProps={{ disabled: ok }}
             onOk={() => {
               const debt = {
                 fromAccount: text.fromAccount,
@@ -155,7 +191,8 @@ const DebtList = () => {
                 amount: text.amount,
                 msg: text.msg,
                 state: text.state,
-                isEnabled: text.isEnabled
+                isEnabled: text.isEnabled,
+                fee: text.amount * 0.01
               }
               handleOk(debt)
             }}
@@ -163,6 +200,9 @@ const DebtList = () => {
           >
             <p>Người nhận: {text.fromAccount}</p>
             <p>Số tiền: {text.amount}</p>
+            <p>Phí giao dịch: {text.amount * 0.01}</p>
+            <GetOTPTransfer data={email} setOk={setOk}   >
+            </GetOTPTransfer>
           </Modal>
           <Button onClick={() => {
             setModelVisibility(true)
@@ -183,6 +223,9 @@ const DebtList = () => {
       ),
     },
   ];
+  const myCallback = (dataFromChild) => {
+    console.log(dataFromChild)
+  }
   return (
 
     <div className='reminder_frame'>

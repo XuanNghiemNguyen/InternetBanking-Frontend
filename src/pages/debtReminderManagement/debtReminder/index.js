@@ -1,7 +1,8 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import './index.css'
 import { Form, Input, Button, Modal, message } from 'antd'
 import { REST_API } from '../../../config/api'
+import { openNotification } from '../../common';
 
 
 const layout = {
@@ -25,11 +26,11 @@ const DebtReminder = () => {
   })
   const [amount, setAmount] = useState('')
   const [msg, setMsg] = useState('')
- 
+
 
   const handleOk = async (e) => {
     if (!amount || !ngNo) {
-      message.info(' thieu du lieu')
+      openNotification('Nhập thiếu dữ liệu!')
     }
     else {
       message.info('gui nhac no')
@@ -38,22 +39,23 @@ const DebtReminder = () => {
       const info = {
         fromAccount: me.results[0].payment,
         toAccount: ngNo.number,
+        fee: amount * 0.01,
         amount: amount,
         msg: msg
       }
       await REST_API.sendDebt(info)
-
+      setModelVisibility(false)
+      setInfoVisibility('none')
+      setValue(undefined)
+      setAmount('')
+      setMsg('')
+      setNgNo({
+        name: '',
+        bank_name: '',
+        number: ''
+      })
     }
-    setModelVisibility(false)
-    setInfoVisibility('none')
-    setValue(undefined)
-    setAmount('')
-    setMsg('')
-    setNgNo({
-      name: '',
-      bank_name: '',
-      number: ''
-    })
+
   };
 
   const handleCancel = e => {
@@ -82,9 +84,21 @@ const DebtReminder = () => {
               setValue(e.target.value)
             }} />
             <Button onClick={async () => {
-              const otherInfo = await REST_API.getOtherInfo(value)
-              setNgNo(otherInfo.user)
-              setInfoVisibility(true)
+              if (!value) {
+                openNotification('Xin nhập số tài khoản trước!')
+              }
+              else {
+                const otherInfo = await REST_API.getOtherInfo(value)
+                if (otherInfo.success) {
+                  setNgNo(otherInfo.user)
+                  setInfoVisibility(true)
+                }
+                else{
+                  openNotification('Không tìm thấy người dùng này!')
+                }
+              }
+
+
             }}>Tìm</Button>
 
           </div>
@@ -95,21 +109,27 @@ const DebtReminder = () => {
         <Form.Item
           label="Tiền nợ"
 
-          
+
           rules={[{ required: true, message: 'Please input amount!' }]}
         >
           <Input style={{ width: '100%' }} value={amount} type="number" onChange={(e) => { setAmount(e.target.value) }} />
         </Form.Item>
         <Form.Item
           label="Lời nhắn"
-          
+
         >
           <Input value={msg} onChange={(e) => { setMsg(e.target.value) }} />
         </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit"
             onClick={() => {
-              setModelVisibility(true)
+              if (!email || !amount) {
+                openNotification('Nhập thiếu dữ liệu!')
+              }
+              else {
+                setModelVisibility(true)
+              }
+
             }}
           >
             Gửi nhắc nợ

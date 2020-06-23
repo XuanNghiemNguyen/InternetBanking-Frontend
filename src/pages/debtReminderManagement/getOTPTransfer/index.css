@@ -1,0 +1,25 @@
+.otp_form {
+  background: white;
+  /* padding: 8px 30px; */
+  width: 368px;
+  border: none;
+  flex-direction: row;
+  display: flex;
+}
+.otp_frame {
+  
+  min-height: 90vh;
+  padding: 26vh 38vw;
+}
+.otp-form-button {
+  width: 100%;
+  /* color: black;
+  background-color: white ;
+  border-color: white ;
+  box-shadow: none; */
+}
+.otp-form-button:hover{
+  /* background-color: white ;
+  border-color: white ;
+  color: blue; */
+}
