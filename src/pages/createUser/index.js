@@ -22,14 +22,35 @@ const tailLayout =[ {
   const NewUser = () => {
     const [form] = Form.useForm()
     const onFinish = async (values) => {
+      const email = form.getFieldValue("email")
+      const phone = form.getFieldValue("phone")
+      const pin = form.getFieldValue("pin")
+      const password = form.getFieldValue("password")
+      const checkmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+      const checkpin =  /^([0-9]{6})+$/
+      const checkphone = /((09|03|07|08|05)+([0-9]{8})\b)/
+      const checkpass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+      if ( checkmail.test(email)==false){
+        alert("Email không đúng định dạng, hãy nhập lại!")
+        form.resetFields()
+      } else if (checkpin.test(pin)==false){
+        alert("Mã pin gồm 6 chữ số, hãy nhập lại!")
+        form.resetFields()
+      } else if(checkphone.test(phone)==false | phone.le){
+        alert("Số điện thoại không đúng định dạng, hãy nhập lại!")
+        form.resetFields()
+      } else if(checkpass.test(password)==false){
+        alert("Mật khẩu phải có ít nhất 8 ký tự, ít nhất 1 chữ và 1 số!")
+        form.resetFields()
+      }else{
       const data=await REST_API.createUser(values);
       if(data.success==false){
-        alert('Đã có lỗi xảy ra, hãy nhập lại!')
+        alert(data.message)
         form.resetFields()
       } else{
       alert("Tạo thành công !")
       form.resetFields()}
-    }
+    }}
     const onFinishFailed = errorInfo => {
       console.log('Failed:', errorInfo);
     };
