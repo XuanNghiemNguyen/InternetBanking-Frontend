@@ -4,7 +4,7 @@ import RightMenu from './right.js'
 import { Link } from 'react-router-dom'
 import logo from './logo.png'
 
-const Navbar = () => {
+const ENavbar = () => {
   return (
     <nav className='menuBar'>
       <div className='menuCon'>
@@ -25,4 +25,4 @@ const Navbar = () => {
     </nav>
   )
 }
-export default Navbar
+export default ENavbar
