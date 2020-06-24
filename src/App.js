@@ -17,6 +17,7 @@ import ListAccount from './pages/listAccount'
 import DebtReminder from './pages/debtReminderManagement/debtReminder/index'
 import ListReceiver from './pages/listReceiver'
 import DebtList from './pages/debtReminderManagement/debtList/index'
+import HistoryReceive from './pages/transactionsHistory/receive'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -82,6 +83,17 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtList {...props} />
+                
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/historyReceive'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistoryReceive {...props} />
                 
                   ) : (
                     <LoginPage {...props} />

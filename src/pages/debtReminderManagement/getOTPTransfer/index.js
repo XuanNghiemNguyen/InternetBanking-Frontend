@@ -9,12 +9,9 @@ const { Text } = Typography
 var onProcess = false
 
 const GetOTPTransfer = (props) => {
-  console.log(props)
   const [gotOTP, setGotOTP] = useState('none')
   const [form] = Form.useForm()
   const { email } = JSON.parse(localStorage.getItem('user-info'))
-  // const [transfer, setTransfer] = useState(true)
-  // console.log(email)
   useEffect(() => {
     if (localStorage.getItem('email-otp')) {
       form.setFieldsValue({
@@ -28,15 +25,11 @@ const GetOTPTransfer = (props) => {
       if (!!onProcess) return
       onProcess = true
       setIsLoading(true)
-      // const { email } = values
       const data = await REST_API.getCode(email)
       console.log(data)
       if (data.success) {
         openNotification('Lấy mã OTP thành công!', 'Kiểm tra email của bạn')
         localStorage.setItem('email-otp', email)
-        // props.history.push({
-        //   pathname: props.location.dict || '/'
-        // })
         setGotOTP('flex')
         
       } else {
@@ -50,9 +43,7 @@ const GetOTPTransfer = (props) => {
 
   }
   const onFinish = async (values) => {
-    // console.log(values)
     try {
-      // if (!!onProcess) return;
       onProcess = true;
       setIsLoading(true);
       const email = localStorage.getItem('email-otp');
