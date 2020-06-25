@@ -7,8 +7,6 @@ import {
   Redirect
 } from 'react-router-dom'
 import Navbar from './pages/layout/nav'
-import UNavbar from './pages/userLayout/nav'
-import ENavbar from './pages/employeeLayout/nav'
 import { Layout } from 'antd'
 import GetCodeOTP from './pages/getCodeOTP'
 import HomePage from './pages/homepage'
@@ -17,8 +15,6 @@ import LoginPage from './pages/login'
 import ForgotPassword from './pages/forgotPassword'
 import ListAccount from './pages/listAccount'
 import ListReceiver from './pages/listReceiver'
-import NewUser from './pages/createUser'
-import Deposit from './pages/deposit'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -27,18 +23,8 @@ const App = () => {
       <div className='App'>
         <Layout>
           <Header className='header'>
-          <div className='logo' />
-          <Switch>
-              <Route path='/' render={(props) => {
-                return localStorage.getItem('loggedIn') === 'false'?(
-                  <Navbar/>
-                ):localStorage.getItem('loggedIn') === 'true' && localStorage.getItem('type')==='normal'?(
-                  <UNavbar/>
-                ):(
-                  <ENavbar/>)
-              }}></Route>
-             
-            </Switch>
+            <div className='logo' />
+            <Navbar />
           </Header>
           <Content className='mainBody'>
             <Switch>
@@ -61,9 +47,9 @@ const App = () => {
               <Route
                 path='/login'
                 render={(props) => {
-                  return localStorage.getItem('loggedIn') === 'true' ?(
-                    <Redirect to='/ ' />
-                  ):(
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <Redirect to='/' />
+                  ) : (
                     <LoginPage {...props} />
                   )
                 }}
@@ -73,26 +59,6 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListAccount {...props} />
-                  ) : (
-                    <LoginPage {...props} />
-                  )
-                }}
-              ></Route>
-              <Route
-                path='/createUser'
-                render={(props) => {
-                  return localStorage.getItem('loggedIn') === 'true' ? (
-                    <NewUser {...props} />
-                  ) : (
-                    <LoginPage {...props} />
-                  )
-                }}
-              ></Route>
-              <Route
-                path='/deposit'
-                render={(props) => {
-                  return localStorage.getItem('loggedIn') === 'true' ? (
-                    <Deposit {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )
