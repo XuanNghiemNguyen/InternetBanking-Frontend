@@ -26,8 +26,6 @@ class API {
     this.getCode = this.getCode.bind(this)
     this.changePassword = this.changePassword.bind(this)
     this.forgotPassword = this.forgotPassword.bind(this)
-    this.deposit = this.deposit.bind(this)
-    this.createUser = this.createUser.bind(this)
   }
   checkActive = async () => {
     return await this.instance
@@ -48,15 +46,13 @@ class API {
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
-        const { name, email,type } = response.data.user
+        const { name, email } = response.data.user
         const userInfo = {
           name,
           email,
-          type,
           loginAt: new Date()
         }
         localStorage.setItem('user-info', JSON.stringify(userInfo))
-        localStorage.setItem('type', userInfo.type)
         localStorage.setItem('loggedIn', true)
         return response.data || error_exception()
       })
@@ -232,38 +228,6 @@ class API {
           return error_exception()
         }
       })
-  }
-  createUser = async (info)=>{
-    console.log(info)
-    return await this.instance
-    .post(`/employee/createUser`,info)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
-  }
-  deposit = async (info)=>{
-    console.log(info)
-    return await this.instance
-    .post(`/employee/deposit`,info)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
   }
 }
 const REST_API = new API()
