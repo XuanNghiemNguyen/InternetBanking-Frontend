@@ -90,17 +90,6 @@ const App = () => {
                 }}
               ></Route>
               <Route
-                path='/historyReceive'
-                render={(props) => {
-                  return localStorage.getItem('loggedIn') === 'true' ? (
-                    <HistoryReceive {...props} />
-                
-                  ) : (
-                    <LoginPage {...props} />
-                  )
-                }}
-              ></Route>
-              <Route
               path='/listReceiver'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
