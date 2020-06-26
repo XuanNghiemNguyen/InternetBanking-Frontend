@@ -17,7 +17,9 @@ import ListAccount from './pages/listAccount'
 import DebtReminder from './pages/debtReminderManagement/debtReminder/index'
 import ListReceiver from './pages/listReceiver'
 import DebtList from './pages/debtReminderManagement/debtList/index'
-import HistoryReceive from './pages/transactionsHistory/receive'
+import HistoryReceive from './pages/transactionHistory/receive/index'
+import HistorySend from './pages/transactionHistory/send'
+import HistoryDebt from './pages/transactionHistory/paidDebt'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -89,6 +91,50 @@ const App = () => {
                   )
                 }}
               ></Route>
+              <Route
+              path='/listReceiver'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListReceiver {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionReceive'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistoryReceive {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionSend'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistorySend {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionDebt'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistoryDebt {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
               <Route
               path='/listReceiver'
                 render={(props) => {

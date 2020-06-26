@@ -45,9 +45,9 @@ const LeftMenu = () => {
           <Menu.Item key='setting:6'><Link to={'/debtList'}>Danh sách nhắc nợ</Link></Menu.Item>
         </MenuItemGroup>
         <MenuItemGroup title='Lịch sử giao dịch'>
-          <Menu.Item key='setting:7'>Nhận tiền</Menu.Item>
-          <Menu.Item key='setting:8'>Chuyển khoản</Menu.Item>
-          <Menu.Item key='setting:9'>Thanh toán nhắc nợ</Menu.Item>
+          <Menu.Item key='setting:7'><Link to={'/transactionReceive'}>Nhận tiền</Link></Menu.Item>
+          <Menu.Item key='setting:8'><Link to={'/transactionSend'}>Chuyển khoản</Link></Menu.Item>
+          <Menu.Item key='setting:9'><Link to={'/transactionDebt'}>Thanh toán nhắc nợ</Link></Menu.Item>
           <Menu.Item key='setting:10'>Tất cả giao dịch</Menu.Item>
         </MenuItemGroup>
       </SubMenu>
