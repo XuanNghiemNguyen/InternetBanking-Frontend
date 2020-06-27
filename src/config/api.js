@@ -6,10 +6,11 @@ import { setCurrentUser } from '../redux/actions'
 
 const error_exception = (err) => ({
   success: false,
-  message: err || 'Lỗi không xác định!'
+  message: err || 'Lỗi không xác định!',
 })
 
-const HOST_URL = 'http://127.0.0.1:8080' || 'https://sacombank-internet-banking.herokuapp.com'
+const HOST_URL =
+  'http://127.0.0.1:8080' || 'https://sacombank-internet-banking.herokuapp.com'
 class API {
   constructor() {
     this.instance = axios.create({
@@ -17,8 +18,8 @@ class API {
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
-        'access-token': localStorage.getItem('access-token')
-      }
+        'access-token': localStorage.getItem('access-token'),
+      },
     })
     this.login = this.login.bind(this)
     this.getListAccount = this.getListAccount.bind(this)
@@ -50,7 +51,7 @@ class API {
         const userInfo = {
           name,
           email,
-          loginAt: new Date()
+          loginAt: new Date(),
         }
         localStorage.setItem('user-info', JSON.stringify(userInfo))
         localStorage.setItem('loggedIn', true)
@@ -84,11 +85,29 @@ class API {
         }
       })
   }
+  internalTransfer = async (dataInput) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .post(`/users/transfer`, { ...dataInput })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
   getCode = async (email) => {
     localStorage.setItem('codeSent', false)
     return await this.instance
       .post('/getOTP', {
-        email
+        email,
       })
       .then((response) => {
         localStorage.setItem('codeSent', true)
@@ -163,6 +182,24 @@ class API {
     )
     return await this.instance
       .post('users/receivers/update', { receivers })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  addReceiver = async (receiver) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/receivers/add', { receiver })
       .then((response) => {
         return response.data || error_exception()
       })

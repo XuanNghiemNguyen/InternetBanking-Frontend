@@ -1,0 +1,33 @@
+.transfer_frame {
+  background-image: url('../../background/bg1.jpg');
+  min-height: 90vh;
+  padding: 10vh 15vw;
+}
+.transfer_main {
+  background-color: white;
+  padding: 10px;
+  border-style: outset
+} 
+.form_info {
+  display: flex;
+  justify-content: flex-start;
+  border-style: ridge;
+  padding: 2vw !important;
+  margin-right: 2vw;
+}
+#transfer-form {
+  min-width: 100%;
+} 
+.receiver-item {
+  margin-bottom: -50px !important;
+} 
+.ant-form-item-label {
+  text-align: left;
+}
+.search-button {
+  justify-content: flex-end !important;
+  display: flex !important;
+}
+/* .ant-steps-item-description {
+  margin-right: 20px;
+} */
