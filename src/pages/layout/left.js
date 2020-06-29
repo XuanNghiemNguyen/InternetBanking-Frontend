@@ -37,8 +37,12 @@ const LeftMenu = () => {
         }
       >
         <MenuItemGroup title='Chuyển khoản'>
-          <Menu.Item key='setting:3'>Chuyển khoản nội bộ</Menu.Item>
-          <Menu.Item key='setting:4'>Chuyển khoản liên ngân hàng</Menu.Item>
+          <Menu.Item key='setting:3'>
+            <Link to={'/interbank-transfer'}>Chuyển khoản nội bộ</Link>
+          </Menu.Item>
+          <Menu.Item key='setting:4'>
+            <Link to={'/internal-bank-transfer'}>Chuyển khoản liên ngân hàng</Link>
+          </Menu.Item>
         </MenuItemGroup>
         <MenuItemGroup title='Nhắc nợ'>
           <Menu.Item key='setting:5'><Link to={'/debtReminder'}>Tạo nhắc nợ</Link></Menu.Item>
@@ -48,7 +52,7 @@ const LeftMenu = () => {
           <Menu.Item key='setting:7'><Link to={'/transactionReceive'}>Nhận tiền</Link></Menu.Item>
           <Menu.Item key='setting:8'><Link to={'/transactionSend'}>Chuyển khoản</Link></Menu.Item>
           <Menu.Item key='setting:9'><Link to={'/transactionDebt'}>Thanh toán nhắc nợ</Link></Menu.Item>
-          <Menu.Item key='setting:10'>Tất cả giao dịch</Menu.Item>
+          {/* <Menu.Item key='setting:10'>Tất cả giao dịch</Menu.Item> */}
         </MenuItemGroup>
       </SubMenu>
     </Menu>

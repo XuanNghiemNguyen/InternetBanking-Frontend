@@ -4,22 +4,27 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom'
-import Navbar from './pages/layout/nav'
 import { Layout } from 'antd'
-import GetCodeOTP from './pages/getCodeOTP'
-import HomePage from './pages/homepage'
-import ChangePassword from './pages/changePassword'
-import LoginPage from './pages/login'
-import ForgotPassword from './pages/forgotPassword'
-import ListAccount from './pages/listAccount'
-import DebtReminder from './pages/debtReminderManagement/debtReminder/index'
-import ListReceiver from './pages/listReceiver'
-import DebtList from './pages/debtReminderManagement/debtList/index'
-import HistoryReceive from './pages/transactionHistory/receive/index'
-import HistorySend from './pages/transactionHistory/send'
-import HistoryDebt from './pages/transactionHistory/paidDebt'
+
+import {
+  Navbar,
+  GetCodeOTP,
+  HomePage,
+  ChangePassword,
+  LoginPage,
+  ForgotPassword,
+  ListAccount,
+  ListReceiver,
+  InterbankTransfer,
+  InternalBankTransfer,
+  HistoryReceive,
+  HistorySend,
+  HistoryDebt,
+  DebtReminder,
+  DebtList
+} from './components/index'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -34,11 +39,30 @@ const App = () => {
           <Content className='mainBody'>
             <Switch>
               <Route exact path='/' component={HomePage} />
-              <Route path='/home'>
-                <HomePage />
-              </Route>
-              <Route path='/getOTPCode' render={(props) => <GetCodeOTP {...props} />}>
-              </Route>
+              <Route
+                path='/getOTPCode'
+                render={(props) => <GetCodeOTP {...props} />}
+              ></Route>
+              <Route
+                path='/internal-bank-transfer'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <InternalBankTransfer {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/interbank-transfer'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <InterbankTransfer {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
               <Route
                 path='/change-password'
                 render={(props) => {

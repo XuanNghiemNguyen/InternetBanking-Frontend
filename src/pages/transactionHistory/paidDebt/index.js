@@ -10,14 +10,36 @@ import { OmitProps } from 'antd/lib/transfer/ListBody'
 const HistoryDebt = (props) => {
     const [myAccounts, setMyAccounts] = useState([])
     const [transaction, setTransaction] = useState([])
-    const { email } = localStorage.getItem('user-info')
+    const { name, email } = JSON.parse(localStorage.getItem('user-info'))
+    function convert(a) {
+        if (a) {
+            var unixtimestamp = a;
+            var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var date = new Date(unixtimestamp * 1000);
+            var year = date.getFullYear();
+            var month = months_arr[date.getMonth()];
+            var day = date.getDate();
+            var hours = date.getHours();
+            var minutes = "0" + date.getMinutes();
+            var seconds = "0" + date.getSeconds();
+            var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            return convdataTime;
+        }
+        else {
+            return ''
+        }
+    }
     useEffect(() => {
         ; (async () => {
             const myAccs = await REST_API.getListAccount(email)
+            const myNumber = await REST_API.getUserByEmail(email)
+            console.log(myNumber)
+            console.log(email)
             setMyAccounts(myAccs.results)
             const data = await REST_API.getDebt()
-            if (data && data.transaction) {
-                const table = data.transaction.map((element, index) => ({
+            if (data && data.debt) {
+
+                const table = data.debt.map((element, index) => ({
                     key: (index + 1).toString(),
                     stt: index + 1,
                     fromAccount: element.fromAccount,
@@ -25,30 +47,43 @@ const HistoryDebt = (props) => {
                     amount: element.amount,
                     msg: element.msg,
                     state: element.state,
-                    stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
-                    isEnabled: element.isEnabled
+                    // stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
+                    isEnabled: element.isEnabled,
+                    createAt: convert(element.createAt / 1000)
                 }))
-                setTransaction(table)
+                    .filter(item => parseInt(item.toAccount) === parseInt(myNumber.results[0].payment))
+                    .filter(item => item.state === true)
                 console.log(table)
+                setTransaction(table)
             }
         })()
     }, [email])
     const columns = [
         {
-            title: 'Từ số tài khoản',
-            dataIndex: 'senderNumber',
-            key: 'senderNumber',
+            title: 'Cho số tài khoản',
+            dataIndex: 'fromAccount',
+            key: 'fromAccount',
         },
         {
             title: 'Số tiền',
             dataIndex: 'amount',
             key: 'amount',
         },
+        {
+            title: 'Lời nhắn',
+            dataIndex: 'msg',
+            key: 'msg',
+        },
+        {
+            title: 'Thời gian',
+            dataIndex: 'createAt',
+            key: 'createAt',
+        },
     ]
     return (
 
         <div className='reminder_frame'>
-            <h1>Lịch sử nhận tiền</h1>
+            <h1>Lịch sử thanh toán nợ</h1>
             <Table dataSource={transaction} columns={columns} ></Table>
         </div>
     )

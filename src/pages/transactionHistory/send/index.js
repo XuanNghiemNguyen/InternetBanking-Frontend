@@ -10,7 +10,25 @@ import { OmitProps } from 'antd/lib/transfer/ListBody'
 const HistorySend = (props) => {
     const [myAccounts, setMyAccounts] = useState([])
     const [transaction, setTransaction] = useState([])
-    const { email } = localStorage.getItem('user-info')
+    const { name, email } = JSON.parse(localStorage.getItem('user-info'))
+    function convert(a) {
+        if (a) {
+            var unixtimestamp = a;
+            var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var date = new Date(unixtimestamp * 1000);
+            var year = date.getFullYear();
+            var month = months_arr[date.getMonth()];
+            var day = date.getDate();
+            var hours = date.getHours();
+            var minutes = "0" + date.getMinutes();
+            var seconds = "0" + date.getSeconds();
+            var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            return convdataTime;
+        }
+        else {
+            return ''
+        }
+    }
     useEffect(() => {
         ; (async () => {
             const myAccs = await REST_API.getListAccount(email)
@@ -26,28 +44,39 @@ const HistorySend = (props) => {
                     receiverNumber: element.receiver.number,
                     amount: element.amount,
                     message: element.message,
-                  }))
+                    createAt: convert(element.createAt/1000)
+                }))
+                    .filter(item => item.senderEmail === email)
                 setTransaction(table)
-                console.log(table)
             }
         })()
     }, [email])
     const columns = [
         {
-            title: 'Từ số tài khoản',
-            dataIndex: 'senderNumber',
-            key: 'senderNumber',
+            title: 'Đến số tài khoản',
+            dataIndex: 'receiverNumber',
+            key: 'receiverNumber',
         },
         {
             title: 'Số tiền',
             dataIndex: 'amount',
             key: 'amount',
         },
+        {
+            title: 'Lời nhắn',
+            dataIndex: 'message',
+            key: 'message',
+        },
+        {
+            title: 'Thời gian',
+            dataIndex: 'createAt',
+            key: 'createAt',
+        },
     ]
     return (
 
         <div className='reminder_frame'>
-            <h1>Lịch sử nhận tiền</h1>
+            <h1>Lịch sử gửi tiền</h1>
             <Table dataSource={transaction} columns={columns} ></Table>
         </div>
     )
