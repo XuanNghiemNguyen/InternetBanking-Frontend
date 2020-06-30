@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, Modal, message, Table, Space } from 'antd'
+import { Table } from 'antd'
 import { REST_API } from '../../../config/api'
-import GetCodeOTP from '../../getCodeOTP'
-import { OmitProps } from 'antd/lib/transfer/ListBody'
+// import GetCodeOTP from '../../getCodeOTP'
+// import { OmitProps } from 'antd/lib/transfer/ListBody'
 
 
 
@@ -44,7 +44,8 @@ const HistoryReceive = (props) => {
                     receiverNumber: element.receiver.number,
                     amount: element.amount,
                     message: element.message,
-                    createAt: convert(element.createAt/1000)
+                    createAt: convert(element.createAt/1000),
+                    createAtUNIX: element.paidAt,
                 })).filter(item => item.receiverEmail === email)
                 setTransaction(table)
             }
@@ -70,6 +71,7 @@ const HistoryReceive = (props) => {
             title: 'Thời gian',
             dataIndex: 'createAt',
             key: 'createAt',
+            sorter: (a, b) => a.createAtUNIX - b.createAtUNIX,
         },
     ]
     return (

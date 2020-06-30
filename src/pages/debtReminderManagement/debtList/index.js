@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, Modal, message, Table, Space } from 'antd'
+import { Button, Modal, Table, Space } from 'antd'
 import { REST_API } from '../../../config/api'
-import GetCodeOTP from '../../getCodeOTP'
+// import GetCodeOTP from '../../getCodeOTP'
 import GetOTPTransfer from '../getOTPTransfer'
-import { OmitProps } from 'antd/lib/transfer/ListBody'
+// import { OmitProps } from 'antd/lib/transfer/ListBody'
 
 
 
@@ -23,7 +23,7 @@ const DebtList = (props) => {
   const [myDebt, setMyDebt] = useState([])
   const [otherDebt, setOtherDebt] = useState([])
   const [modelVisibility, setModelVisibility] = useState(false)
-  const { name, email } = JSON.parse(localStorage.getItem('user-info'))
+  const { email } = JSON.parse(localStorage.getItem('user-info'))
   const cancelDebt = async (info) => {
     const result = await REST_API.cancelDebt(info)
     if (result.success === true) {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, Modal, message, Table, Space } from 'antd'
+import { Table } from 'antd'
 import { REST_API } from '../../../config/api'
-import GetCodeOTP from '../../getCodeOTP'
-import { OmitProps } from 'antd/lib/transfer/ListBody'
+// import GetCodeOTP from '../../getCodeOTP'
+// import { OmitProps } from 'antd/lib/transfer/ListBody'
 
 
 
@@ -49,7 +49,8 @@ const HistoryDebt = (props) => {
                     state: element.state,
                     // stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
                     isEnabled: element.isEnabled,
-                    createAt: convert(element.createAt / 1000)
+                    createAtUNIX: element.paidAt,
+                    createAt: convert(element.paidAt / 1000)
                 }))
                     .filter(item => parseInt(item.toAccount) === parseInt(myNumber.results[0].payment))
                     .filter(item => item.state === true)
@@ -78,6 +79,7 @@ const HistoryDebt = (props) => {
             title: 'Thời gian',
             dataIndex: 'createAt',
             key: 'createAt',
+            sorter: (a, b) => a.createAtUNIX - b.createAtUNIX,
         },
     ]
     return (
