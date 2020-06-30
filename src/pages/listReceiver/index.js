@@ -350,7 +350,7 @@ const ListReceiver = () => {
 			data.length > 0
 				? data.map((item) => ({
 						reminiscent_name: item.reminiscent_name,
-						number: item.number,
+						number: parseInt(item.number),
 						bank_name: item.bank_name,
 						updatedAt: Date.now()
 				  }))

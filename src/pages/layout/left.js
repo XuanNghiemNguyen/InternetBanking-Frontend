@@ -37,8 +37,12 @@ const LeftMenu = () => {
         }
       >
         <MenuItemGroup title='Chuyển khoản'>
-          <Menu.Item key='setting:3'>Chuyển khoản nội bộ</Menu.Item>
-          <Menu.Item key='setting:4'>Chuyển khoản liên ngân hàng</Menu.Item>
+          <Menu.Item key='setting:3'>
+            <Link to={'/interbank-transfer'}>Chuyển khoản nội bộ</Link>
+          </Menu.Item>
+          <Menu.Item key='setting:4'>
+            <Link to={'/internal-bank-transfer'}>Chuyển khoản liên ngân hàng</Link>
+          </Menu.Item>
         </MenuItemGroup>
         <MenuItemGroup title='Nhắc nợ'>
           <Menu.Item key='setting:5'><Link to={'/debtReminder'}>Tạo nhắc nợ</Link></Menu.Item>
