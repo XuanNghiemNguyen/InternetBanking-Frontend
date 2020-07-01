@@ -87,6 +87,7 @@ class API {
       })
   }
   getOtherUser = async () => {
+
     const token = localStorage.getItem('access-token')
     if (!token) return error_exception('token not found')
     this.instance.defaults.headers['access-token'] = token
