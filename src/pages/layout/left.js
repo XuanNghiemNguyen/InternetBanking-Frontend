@@ -45,8 +45,8 @@ const LeftMenu = () => {
           </Menu.Item>
         </MenuItemGroup>
         <MenuItemGroup title='Nhắc nợ'>
-          <Menu.Item key='setting:5'>Tạo nhắc nợ</Menu.Item>
-          <Menu.Item key='setting:6'>Danh sách nhắc nợ</Menu.Item>
+          <Menu.Item key='setting:5'><Link to={'/debtReminder'}>Tạo nhắc nợ</Link></Menu.Item>
+          <Menu.Item key='setting:6'><Link to={'/debtList'}>Danh sách nhắc nợ</Link></Menu.Item>
         </MenuItemGroup>
         <MenuItemGroup title='Lịch sử giao dịch'>
           <Menu.Item key='setting:7'>Nhận tiền</Menu.Item>

@@ -8,6 +8,8 @@ import ListAccount from '../pages/listAccount'
 import ListReceiver from '../pages/listReceiver'
 import InterbankTransfer from '../pages/transaction/interbankTransfer'
 import InternalBankTransfer from '../pages/transaction/internalBankTransfer'
+import DebtReminder from '../pages/debtReminderManagement/debtReminder/index'
+import DebtList from '../pages/debtReminderManagement/debtList/index'
 export {
   Navbar,
   GetCodeOTP,
@@ -19,4 +21,6 @@ export {
   ListReceiver,
   InterbankTransfer,
   InternalBankTransfer,
+  DebtReminder,
+  DebtList
 }
