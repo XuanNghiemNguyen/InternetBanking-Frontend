@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Form, Input, Button, Typography } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { openNotification } from '../../common/index'
-import { UserOutlined } from '@ant-design/icons'
+// import { UserOutlined } from '@ant-design/icons'
 import { REST_API } from '../../../config/api'
 
-const { Text } = Typography
+// const { Text } = Typography
 var onProcess = false
 
 const GetOTPTransfer = (props) => {

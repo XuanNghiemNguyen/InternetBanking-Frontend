@@ -93,6 +93,7 @@ class API {
     this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .get(`/users/getAllAccount`)
+
       .then((response) => {
         return response.data || error_exception()
       })

@@ -10,6 +10,9 @@ import InterbankTransfer from '../pages/transaction/interbankTransfer'
 import InternalBankTransfer from '../pages/transaction/internalBankTransfer'
 import DebtReminder from '../pages/debtReminderManagement/debtReminder/index'
 import DebtList from '../pages/debtReminderManagement/debtList/index'
+import HistoryReceive from '../pages/transactionHistory/receive/index'
+import HistorySend from '../pages/transactionHistory/send'
+import HistoryDebt from '../pages/transactionHistory/paidDebt'
 export {
   Navbar,
   GetCodeOTP,
@@ -22,5 +25,8 @@ export {
   InterbankTransfer,
   InternalBankTransfer,
   DebtReminder,
-  DebtList
+  DebtList,
+  HistoryDebt,
+  HistorySend,
+  HistoryReceive
 }

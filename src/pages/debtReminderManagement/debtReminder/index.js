@@ -33,7 +33,7 @@ const DebtReminder = () => {
       openNotification('Nhập thiếu dữ liệu!')
     }
     else {
-      message.info('gui nhac no')
+      openNotification('Đã gửi nhắc nợ')
       const me = await REST_API.getUserByEmail(email)
 
       const info = {
@@ -70,14 +70,10 @@ const DebtReminder = () => {
       <Form
         {...layout}
         name="basic"
-      // initialValues={{ remember: true }}
-      // onFinish={onFinish}
-      // onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Số tài khoản"
           name="username"
-        // rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <div style={{ display: 'flex' }}>
             <Input type='number' value={value} onChange={(e) => {
