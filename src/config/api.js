@@ -27,6 +27,7 @@ class API {
     this.getCode = this.getCode.bind(this)
     this.changePassword = this.changePassword.bind(this)
     this.forgotPassword = this.forgotPassword.bind(this)
+    this.cancelDebt = this.cancelDebt.bind(this)
   }
   // Check Backend
   checkActive = async () => {
@@ -276,6 +277,98 @@ class API {
     )
     return await this.instance
       .get(`/users/team29/getInfo?number=${number}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  sendDebt = async (info) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    console.log(info)
+    return await this.instance
+      .post('users/sendDebt', { info })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getDebt = async () => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get('users/getDebt')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  cancelDebt = async (info) => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/cancelDebt', { info })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  payDebt = async (info) => {
+    console.log(info)
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .post('users/payDebt', { info })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getTransaction = async () => {
+    this.instance.defaults.headers['access-token'] = localStorage.getItem(
+      'access-token'
+    )
+    return await this.instance
+      .get('users/getTransaction')
       .then((response) => {
         return response.data || error_exception()
       })

@@ -7,6 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import { Layout } from 'antd'
+
 import {
   Navbar,
   GetCodeOTP,
@@ -18,6 +19,11 @@ import {
   ListReceiver,
   InterbankTransfer,
   InternalBankTransfer,
+  HistoryReceive,
+  HistorySend,
+  HistoryDebt,
+  DebtReminder,
+  DebtList
 } from './components/index'
 const { Header, Content, Footer } = Layout
 
@@ -88,15 +94,82 @@ const App = () => {
                 }}
               ></Route>
               <Route
-                path='/listReceiver'
+                path='/debtReminder'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
-                    <ListReceiver {...props} />
+                    <DebtReminder {...props} />
+                
                   ) : (
                     <LoginPage {...props} />
                   )
                 }}
               ></Route>
+              <Route
+                path='/debtList'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <DebtList {...props} />
+                
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+              path='/listReceiver'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListReceiver {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionReceive'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistoryReceive {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionSend'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistorySend {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/transactionDebt'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <HistoryDebt {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
+              <Route
+              path='/listReceiver'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ListReceiver {...props} />
+                    ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              >
+              </Route>
               <Route
                 path='/forgot-password'
                 render={(props) => {
