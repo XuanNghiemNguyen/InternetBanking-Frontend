@@ -108,7 +108,7 @@ const CreateReceiverForm = (props) => {
 					<Select placeholder='Chọn ngân hàng' allowClear>
 						<Option value='sacombank'>SACOMBANK</Option>
 						<Option value='hhbank'>HHBANK</Option>
-						<Option value='team29'>TEAM29</Option>
+						<Option value='agribank'>AGRIBANK</Option>
 					</Select>
 				</Form.Item>
 				<Form.Item

@@ -133,8 +133,8 @@ const InterbankTransfer = (props) => {
     } else {
       return (
         <div>
-          <Select style={{ width: '40vw' }}>
-            <Option>Khong co du lieu</Option>
+          <Select>
+            <Option disabled>Không có dữ liệu</Option>
           </Select>
         </div>
       )
@@ -184,8 +184,8 @@ const InterbankTransfer = (props) => {
     } else {
       return (
         <div>
-          <Select style={{ width: '40vw' }}>
-            <Option>Khong co du lieu</Option>
+          <Select>
+            <Option disabled>Không có dữ liệu</Option>
           </Select>
         </div>
       )
@@ -277,19 +277,20 @@ const InterbankTransfer = (props) => {
       const dataInput = {
         reminiscent_name: name,
         number,
-        bank_name: bank_name.toUpperCase()
+        bank_name: bank_name.toUpperCase(),
       }
       const data = await REST_API.addReceiver(dataInput)
       if (data && data.success) {
         message.info('Đã lưu!')
       } else {
-        openNotification('Thông báo từ hệ thống', 'Có lỗi, Chưa lưu người nhận!')
+        openNotification(
+          'Thông báo từ hệ thống',
+          'Có lỗi, Chưa lưu người nhận!'
+        )
         return
       }
-      props.history.push('/')
-    } else {
-      props.history.push('/')
     }
+    props.history.push('/')
   }
   //
   return (
@@ -297,7 +298,20 @@ const InterbankTransfer = (props) => {
       <div className='transfer_main'>
         <Steps direction='vertical' current={currentProgress}>
           <Step
-            title={<h3>Nhập thông tin</h3>}
+            title={
+              <div
+                style={{
+                  width: '71vw',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <h3>Nhập thông tin</h3>
+                <h4 style={{ color: 'rgb(24, 144, 255)' }}>
+                  <b>Chuyển khoản nội bộ</b>
+                </h4>
+              </div>
+            }
             description={
               currentProgress === 0 ? (
                 <div className='form_info'>
@@ -432,18 +446,20 @@ const InterbankTransfer = (props) => {
               ) : (
                 <div>
                   <Text>Chuyển khoản thành công!</Text>
-                    <Button
-                      style={{
-                        margin: 'auto',
-                        display: 'block',
-                      }}
-                      type='primary'
-                      htmlType='button'
-                      loading={loading}
-                      onClick={confirm}
-                    >
-                      {isNewReceiver ? 'Lưu người nhận cho lần kế tiếp' : 'Hoàn tất'}
-                    </Button>
+                  <Button
+                    style={{
+                      margin: 'auto',
+                      display: 'block',
+                    }}
+                    type='primary'
+                    htmlType='button'
+                    loading={loading}
+                    onClick={confirm}
+                  >
+                    {isNewReceiver
+                      ? 'Lưu người nhận cho lần kế tiếp'
+                      : 'Hoàn tất'}
+                  </Button>
                 </div>
               )
             }

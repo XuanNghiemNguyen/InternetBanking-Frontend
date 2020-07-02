@@ -150,7 +150,7 @@ class API {
       })
   }
 
-  //Đổi mật khẩu 
+  //Đổi mật khẩu
   changePassword = async (old_password, new_password) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -270,13 +270,33 @@ class API {
         }
       })
   }
+  // Chuyển khoản cho HHBank
+  transferToHHBank = async (dataInput) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .post(`users/hhbank/transfer`, { ...dataInput })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+
   //Lấy thông tin user từ team 29
   getUserInfoFromTeam29 = async (number) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
     )
     return await this.instance
-      .get(`/users/team29/getInfo?number=${number}`)
+      .get(`/users/agribank/getInfo?number=${number}`)
       .then((response) => {
         return response.data || error_exception()
       })
@@ -308,6 +328,26 @@ class API {
         }
       })
   }
+  // Chuyển khoản cho Agribank
+  transferToAgribank = async (dataInput) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .post(`users/agribank/transfer`, { ...dataInput })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+
   getDebt = async () => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
