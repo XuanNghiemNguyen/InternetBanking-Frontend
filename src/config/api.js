@@ -325,6 +325,7 @@ class API {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
     )
+    console.log(info)
     return await this.instance
       .post('users/sendDebt', { info })
       .then((response) => {

@@ -16,6 +16,7 @@ const DebtReminder = () => {
   const {
     // name, 
     email } = JSON.parse(localStorage.getItem('user-info'))
+    console.log(email)
   const [value, setValue] = useState('')
   const [modelVisibility, setModelVisibility] = useState(false)
   const [infoVisibility, setInfoVisibility] = useState('none')
@@ -35,7 +36,7 @@ const DebtReminder = () => {
     else {
       openNotification('Đã gửi nhắc nợ')
       const me = await REST_API.getUserByEmail(email)
-
+      console.log(me)
       const info = {
         fromAccount: me.results[0].payment,
         toAccount: ngNo.number,
@@ -43,6 +44,7 @@ const DebtReminder = () => {
         amount: amount,
         msg: msg
       }
+      console.log(info)
       await REST_API.sendDebt(info)
       setModelVisibility(false)
       setInfoVisibility('none')
