@@ -1,8 +1,8 @@
 import { Form, Input, Button } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { REST_API } from '../../config/api'
 import './index.css'
-const axios = require('axios');
+
 const layout = [{
   labelCol: {
     span: 8,

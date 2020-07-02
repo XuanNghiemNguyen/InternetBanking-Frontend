@@ -2,6 +2,7 @@ import React from 'react'
 import LeftMenu from './left.js'
 import RightMenu from './right.js'
 import { Link } from 'react-router-dom'
+import './index.css'
 import logo from './logo.png'
 
 const Navbar = () => {

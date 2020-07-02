@@ -7,8 +7,6 @@ import {
   Redirect
 } from 'react-router-dom'
 import Navbar from './pages/layout/nav'
-import UNavbar from './pages/userLayout/nav'
-import ENavbar from './pages/employeeLayout/nav'
 import { Layout } from 'antd'
 import GetCodeOTP from './pages/getCodeOTP'
 import HomePage from './pages/homepage'
@@ -28,17 +26,7 @@ const App = () => {
         <Layout>
           <Header className='header'>
           <div className='logo' />
-          <Switch>
-              <Route path='/' render={(props) => {
-                return localStorage.getItem('loggedIn') === 'false'?(
-                  <Navbar/>
-                ):localStorage.getItem('loggedIn') === 'true' && localStorage.getItem('type')==='normal'?(
-                  <UNavbar/>
-                ):(
-                  <ENavbar/>)
-              }}></Route>
-             
-            </Switch>
+          <Navbar/>
           </Header>
           <Content className='mainBody'>
             <Switch>
