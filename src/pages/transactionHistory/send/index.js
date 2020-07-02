@@ -43,7 +43,8 @@ const HistorySend = (props) => {
                     senderNumber: element.sender.number,
                     receiverEmail: element.receiver.email,
                     receiverNumber: element.receiver.number,
-                    amount: element.amount,
+                    amount: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+                    .concat(' (VND)'),
                     message: element.message,
                     createAt: convert(element.createAt / 1000),
                     createAtUNIX: element.paidAt,

@@ -45,7 +45,8 @@ const HistoryDebt = (props) => {
                     stt: index + 1,
                     fromAccount: element.fromAccount,
                     toAccount: element.toAccount,
-                    amount: element.amount,
+                    amount: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+                    .concat(' (VND)'),
                     msg: element.msg,
                     state: element.state,
                     // stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
