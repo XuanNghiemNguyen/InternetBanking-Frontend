@@ -6,10 +6,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom'
-<<<<<<< HEAD
-import Navbar from './pages/layout/nav'
-=======
->>>>>>> 30ae433e343358a97e5eee1a8e654efe13ffa0c2
+
 import { Layout } from 'antd'
 
 import {
@@ -27,7 +24,9 @@ import {
   HistorySend,
   HistoryDebt,
   DebtReminder,
-  DebtList
+  DebtList,
+  NewUser,
+  Deposit
 } from './components/index'
 const { Header, Content, Footer } = Layout
 
@@ -37,13 +36,8 @@ const App = () => {
       <div className='App'>
         <Layout>
           <Header className='header'>
-<<<<<<< HEAD
-          <div className='logo' />
-          <Navbar/>
-=======
             <div className='logo' />
             <Navbar />
->>>>>>> 30ae433e343358a97e5eee1a8e654efe13ffa0c2
           </Header>
           <Content className='mainBody'>
             <Switch>
@@ -186,6 +180,26 @@ const App = () => {
                     <ForgotPassword {...props} />
                   ) : (
                     <GetCodeOTP {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/createUser'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <NewUser {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/deposit'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <Deposit {...props} />
+                  ) : (
+                    <LoginPage {...props} />
                   )
                 }}
               ></Route>

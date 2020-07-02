@@ -6,6 +6,7 @@ import './index.css'
 import logo from './logo.png'
 
 const Navbar = () => {
+  
   return (
     <nav className='menuBar'>
       <div className='menuCon'>
