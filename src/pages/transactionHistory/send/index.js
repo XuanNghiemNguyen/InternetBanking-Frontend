@@ -14,7 +14,8 @@ const HistorySend = (props) => {
     function convert(a) {
         if (a) {
             var unixtimestamp = a;
-            var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var months_arr = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
             var date = new Date(unixtimestamp * 1000);
             var year = date.getFullYear();
             var month = months_arr[date.getMonth()];
@@ -22,7 +23,7 @@ const HistorySend = (props) => {
             var hours = date.getHours();
             var minutes = "0" + date.getMinutes();
             var seconds = "0" + date.getSeconds();
-            var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            var convdataTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ' ' + day + ' ' + month + ' ' + year + ' ';
             return convdataTime;
         }
         else {
@@ -44,7 +45,7 @@ const HistorySend = (props) => {
                     receiverNumber: element.receiver.number,
                     amount: element.amount,
                     message: element.message,
-                    createAt: convert(element.createAt/1000),
+                    createAt: convert(element.createAt / 1000),
                     createAtUNIX: element.paidAt,
                 }))
                     .filter(item => item.senderEmail === email)
