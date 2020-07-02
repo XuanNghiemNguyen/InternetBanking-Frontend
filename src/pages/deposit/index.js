@@ -2,6 +2,7 @@ import { Form, Input, Button } from 'antd';
 import React from 'react'
 import { REST_API } from '../../config/api'
 import './index.css'
+import { openNotification } from '../common/index'
 const layout = [{
   labelCol: {
     span: 8,
@@ -29,26 +30,22 @@ const tailLayout =[ {
         var checkAmount = /^([0-9])+$/;
       
           if(parseFloat(stk)==stk && stk.length!=10){
-            alert("STK không hợp lệ, hãy nhập lại!")
-            form.resetFields()
+            openNotification('Nạp tiền thất bại','STK không hợp lệ, hãy nhập lại!')
         } else if(parseFloat(stk)!=stk && filter.test(stk)===false){
-          alert("Email không hợp lệ, hãy nhập lại!")
-          form.resetFields()
+          openNotification('Nạp tiền thất bại','Email không hợp lệ, hãy nhập lại!')
         }
         else if (parseFloat(amount)<100000){
-          alert("Nạp tối thiểu 100.000đ, hãy nhập lại!")
-          form.resetFields()
+          openNotification('Nạp tiền thất bại','Nạp tối thiểu 100.000đ, hãy nhập lại!')
         }
         else if(checkAmount.test(amount)===false){
-          alert("Số tiền phải là số, hãy nhập lại!")
+          openNotification('Nạp tiền thất bại','Số tiền phải là số, hãy nhập lại!')
         }
         else{
         const data=await REST_API.deposit(values);
         if(data.success==false){
-          alert(data.message)
-          form.resetFields()
+          openNotification('Nạp tiền thất bại',data.message)
         } else{
-        alert("Nạp tiền thành công !")
+          openNotification('Nạp tiền thành công !')
         form.resetFields()}}
     };
     

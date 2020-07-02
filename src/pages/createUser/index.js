@@ -2,7 +2,7 @@ import { Form, Input, Button } from 'antd';
 import React from 'react'
 import { REST_API } from '../../config/api'
 import './index.css'
-
+import { openNotification } from '../common/index'
 const layout = [{
   labelCol: {
     span: 8,
@@ -31,25 +31,24 @@ const tailLayout =[ {
       const checkphone = /((09|03|07|08|05)+([0-9]{8})\b)/
       const checkpass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
       if ( checkmail.test(email)==false){
-        alert("Email không đúng định dạng, hãy nhập lại!")
-        form.resetFields()
+        openNotification('Tạo tài khoản thất bại!','Định dạng mail không hợp lệ !')
+       
       } else if (checkpin.test(pin)==false){
-        alert("Mã pin gồm 6 chữ số, hãy nhập lại!")
-        form.resetFields()
+        openNotification('Tạo tài khoản thất bại!','Mã pin gồm 6 chữ số, hãy nhập lại!')
+       
       } else if(checkphone.test(phone)==false | phone.le){
-        alert("Số điện thoại không đúng định dạng, hãy nhập lại!")
-        form.resetFields()
+        openNotification('Tạo tài khoản thất bại!','Số điện thoại không đúng định dạng, hãy nhập lại!')
+      
       } else if(checkpass.test(password)==false){
-        alert("Mật khẩu phải có ít nhất 8 ký tự, ít nhất 1 chữ và 1 số!")
-        form.resetFields()
+        openNotification('Tạo tài khoản thất bại!','Mật khẩu phải có ít nhất 8 ký tự, ít nhất 1 chữ và 1 số!')
       }else{
       const data=await REST_API.createUser(values);
       if(data.success==false){
-        alert(data.message)
-        form.resetFields()
+        openNotification('Tạo tài khoản thất bại!',data.message)
       } else{
-      alert("Tạo thành công !")
-      form.resetFields()}
+        openNotification("Tạo thành công !")
+        form.resetFields();
+     }
     }}
     const onFinishFailed = errorInfo => {
       console.log('Failed:', errorInfo);
