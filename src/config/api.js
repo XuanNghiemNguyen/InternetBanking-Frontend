@@ -15,7 +15,7 @@ class API {
   constructor() {
     this.instance = axios.create({
       baseURL: HOST_URL,
-      timeout: 10000,
+      timeout: 20000,
       headers: {
         'Content-Type': 'application/json',
         'access-token': localStorage.getItem('access-token'),
@@ -29,6 +29,7 @@ class API {
     this.forgotPassword = this.forgotPassword.bind(this)
     this.cancelDebt = this.cancelDebt.bind(this)
   }
+  // Check Backend
   checkActive = async () => {
     return await this.instance
       .get('/')
@@ -41,6 +42,7 @@ class API {
         return error
       })
   }
+  // Đăng nhập
   login = async (email, password, remember) => {
     const currentUser = remember ? { email, password } : null
     return await this.instance
@@ -68,6 +70,8 @@ class API {
         }
       })
   }
+
+  //Lấy danh sách tài khoản của người dùng (1 payment, n savings)
   getListAccount = async (email) => {
     const token = localStorage.getItem('access-token')
     if (!token) return error_exception('token not found')
@@ -86,26 +90,8 @@ class API {
         }
       })
   }
-  getOtherUser = async () => {
 
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
-    return await this.instance
-      .get(`/users/getAllAccount`)
-
-      .then((response) => {
-        return response.data || error_exception()
-      })
-      .catch((error) => {
-        if (error.response) {
-          return error.response.data || error_exception()
-        } else {
-          console.log(error)
-          return error_exception()
-        }
-      })
-  }
+  //Chuyển khoản nội bộ sacombank
   internalTransfer = async (dataInput) => {
     const token = localStorage.getItem('access-token')
     if (!token) return error_exception('token not found')
@@ -124,25 +110,8 @@ class API {
         }
       })
   }
-  getUserByEmail = async (email) => {
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
-    return await this.instance
-      .get(`/users/getUserByEmail?email=${email}`)
-      .then((response) => {
-        return response.data || error_exception()
-      })
-      .catch((error) => {
-        if (error.response) {
-          return error.response.data || error_exception()
-        } else {
-          console.log(error)
-          return error_exception()
-        }
-      })
-  }
 
+  // Lấy mã OTP
   getCode = async (email) => {
     localStorage.setItem('codeSent', false)
     return await this.instance
@@ -162,6 +131,8 @@ class API {
         }
       })
   }
+
+  // Đổi mật khẩu dùng OTP (quên mật khẩu)
   forgotPassword = async (email, code, new_password) => {
     return await this.instance
       .post('/forgotPassword', { email, code, new_password })
@@ -178,21 +149,8 @@ class API {
         }
       })
   }
-  verifyOTP = async (email, code) => {
-    return await this.instance
-      .post('/verifyOTP', { email, code })
-      .then((response) => {
-        return response.data || error_exception()
-      })
-      .catch((error) => {
-        if (error.response) {
-          return error.response.data || error_exception()
-        } else {
-          console.log(error)
-          return error_exception()
-        }
-      })
-  }
+
+  //Đổi mật khẩu
   changePassword = async (old_password, new_password) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -213,6 +171,8 @@ class API {
         }
       })
   }
+
+  //Lấy danh sách người nhận (Bao gồm cả tài khoản nội bộ và liên ngân hàng)
   getReceivers = async () => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -231,6 +191,8 @@ class API {
         }
       })
   }
+
+  //Cập nhật danh sách người nhận (là mảng do FE tự check thông qua API)
   updateReceivers = async (receivers) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -249,6 +211,8 @@ class API {
         }
       })
   }
+
+  //Thêm một người nhận mới (hiện tại đang sử dụng trong lưu tài khoản lạ khi chuyển khoản)
   addReceiver = async (receiver) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -267,6 +231,8 @@ class API {
         }
       })
   }
+
+  // Lấy thông tin 1 user thông qua số tài khoản (Nội bộ)
   getOtherInfo = async (number) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -285,6 +251,7 @@ class API {
         }
       })
   }
+  // Lấy thông tin user từ HHbank
   getUserInfoFromHHBank = async (number) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
@@ -303,12 +270,33 @@ class API {
         }
       })
   }
+  // Chuyển khoản cho HHBank
+  transferToHHBank = async (dataInput) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .post(`users/hhbank/transfer`, { ...dataInput })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+
+  //Lấy thông tin user từ team 29
   getUserInfoFromTeam29 = async (number) => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'
     )
     return await this.instance
-      .get(`/users/team29/getInfo?number=${number}`)
+      .get(`/users/agribank/getInfo?number=${number}`)
       .then((response) => {
         return response.data || error_exception()
       })
@@ -340,6 +328,26 @@ class API {
         }
       })
   }
+  // Chuyển khoản cho Agribank
+  transferToAgribank = async (dataInput) => {
+    const token = localStorage.getItem('access-token')
+    if (!token) return error_exception('token not found')
+    this.instance.defaults.headers['access-token'] = token
+    return await this.instance
+      .post(`users/agribank/transfer`, { ...dataInput })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+
   getDebt = async () => {
     this.instance.defaults.headers['access-token'] = localStorage.getItem(
       'access-token'

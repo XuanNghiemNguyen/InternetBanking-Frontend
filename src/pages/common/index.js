@@ -21,9 +21,9 @@ const validateNumber = async (bank_name, number) => {
 			} else {
 				return false
 			}
-		case 'TEAM29':
+		case 'AGRIBANK':
 			data = await REST_API.getUserInfoFromTeam29(number)
-			console.log('Team 29:', data)
+			console.log('Agribank:', data)
 			if (data && data.success) {
 				console.log(data)
 				return data.user
