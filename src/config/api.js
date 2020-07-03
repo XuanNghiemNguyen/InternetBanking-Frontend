@@ -70,6 +70,8 @@ class API {
     this.changePassword = this.changePassword.bind(this)
     this.forgotPassword = this.forgotPassword.bind(this)
     this.cancelDebt = this.cancelDebt.bind(this)
+    this.getNotification = this.getNotification.bind(this)
+    this.readNotification = this.readNotification.bind(this)
   }
   // Check Backend
   checkActive = async () => {
@@ -417,6 +419,36 @@ class API {
   getTransaction = async () => {
     return await this.instance
       .get('users/getTransaction')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getNotification = async () => {
+    return await this.instance
+      .get('notifications/all')
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  readNotification = async (id) => {
+    return await this.instance
+      .get(`notification/read?id=${id}`)
       .then((response) => {
         return response.data || error_exception()
       })
