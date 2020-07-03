@@ -101,7 +101,8 @@ const InternalBankTransfer = (props) => {
     setIsSearching(false)
     if (data && data.success) {
       setValidateStatus('success')
-      newAccountReceiver = { ...data.user }
+      console.log(data.user)
+      newAccountReceiver = { ...data.user, number }
       openNotification('Thông tin người nhận', 'Tên: ' + data.user.name)
       return
     } else {
@@ -340,9 +341,8 @@ const InternalBankTransfer = (props) => {
       } else {
         openNotification(
           'Thông báo từ hệ thống',
-          'Có lỗi, Chưa lưu người nhận!'
+          data.message
         )
-        return
       }
     }
     props.history.push('/')
