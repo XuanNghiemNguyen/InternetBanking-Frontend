@@ -16,11 +16,53 @@ class API {
     this.instance = axios.create({
       baseURL: HOST_URL,
       timeout: 20000,
-      headers: {
-        'Content-Type': 'application/json',
-        'access-token': localStorage.getItem('access-token'),
-      },
     })
+    this.instance.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('access-token')
+        if (token) {
+          config.headers['access-token'] = token
+        }
+        // config.headers['Content-Type'] = 'application/json';
+        return config
+      },
+      (error) => {
+        Promise.reject(error)
+      }
+    )
+    this.instance.interceptors.response.use(
+      (response) => {
+        return response
+      },
+      async (error) => {
+        const originalRequest = error.config
+        if (
+          error.response.data.code === 425
+        ) {
+          localStorage.clear()
+          return Promise.reject(error)
+        }
+
+        if (error.response.status === 421 && !originalRequest._retry) {
+          originalRequest._retry = true
+          const refreshToken = localStorage.getItem('refresh-token')
+          const accessToken = localStorage.getItem('access-token')
+          return await this.instance
+            .post('/refreshToken', {
+              refreshToken,
+              accessToken
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                localStorage.setItem('access-token', res.data.newAccessToken)
+                this.instance.defaults.headers['access-token'] = res.data.newAccessToken
+                return this.instance(originalRequest)
+              }
+            })
+        }
+        return Promise.reject(error)
+      }
+    )
     this.login = this.login.bind(this)
     this.getListAccount = this.getListAccount.bind(this)
     this.checkActive = this.checkActive.bind(this)
@@ -42,6 +84,19 @@ class API {
         return error
       })
   }
+  // Lấy lại access-token
+  checkActive = async () => {
+    return await this.instance
+      .get('/')
+      .then((res) => {
+        console.log(res)
+        return res
+      })
+      .catch((error) => {
+        console.log(error)
+        return error
+      })
+  }
   // Đăng nhập
   login = async (email, password, remember) => {
     const currentUser = remember ? { email, password } : null
@@ -50,6 +105,7 @@ class API {
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
+        localStorage.setItem('refresh-token', response.data.user.refreshToken)
         const { name, email } = response.data.user
         const userInfo = {
           name,
@@ -73,9 +129,6 @@ class API {
 
   //Lấy danh sách tài khoản của người dùng (1 payment, n savings)
   getListAccount = async (email) => {
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .get(`/users/getListAccount?email=${email}`)
       .then((response) => {
@@ -93,9 +146,6 @@ class API {
 
   //Chuyển khoản nội bộ sacombank
   internalTransfer = async (dataInput) => {
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .post(`/users/transfer`, { ...dataInput })
       .then((response) => {
@@ -152,9 +202,6 @@ class API {
 
   //Đổi mật khẩu
   changePassword = async (old_password, new_password) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .post('/users/changePassword', { old_password, new_password })
       .then((response) => {
@@ -174,9 +221,6 @@ class API {
 
   //Lấy danh sách người nhận (Bao gồm cả tài khoản nội bộ và liên ngân hàng)
   getReceivers = async () => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get('/users/receivers')
       .then((response) => {
@@ -194,9 +238,6 @@ class API {
 
   //Cập nhật danh sách người nhận (là mảng do FE tự check thông qua API)
   updateReceivers = async (receivers) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .post('users/receivers/update', { receivers })
       .then((response) => {
@@ -214,9 +255,6 @@ class API {
 
   //Thêm một người nhận mới (hiện tại đang sử dụng trong lưu tài khoản lạ khi chuyển khoản)
   addReceiver = async (receiver) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .post('users/receivers/add', { receiver })
       .then((response) => {
@@ -234,9 +272,6 @@ class API {
 
   // Lấy thông tin 1 user thông qua số tài khoản (Nội bộ)
   getOtherInfo = async (number) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get(`/users/getOtherInfo?number=${number}`)
       .then((response) => {
@@ -253,9 +288,6 @@ class API {
   }
   // Lấy thông tin user từ HHbank
   getUserInfoFromHHBank = async (number) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get(`/users/hhbank/getInfo?number=${number}`)
       .then((response) => {
@@ -272,9 +304,6 @@ class API {
   }
   // Chuyển khoản cho HHBank
   transferToHHBank = async (dataInput) => {
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .post(`users/hhbank/transfer`, { ...dataInput })
       .then((response) => {
@@ -292,9 +321,6 @@ class API {
 
   //Lấy thông tin user từ team 29
   getUserInfoFromTeam29 = async (number) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get(`/users/agribank/getInfo?number=${number}`)
       .then((response) => {
@@ -310,9 +336,6 @@ class API {
       })
   }
   sendDebt = async (info) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     console.log(info)
     return await this.instance
       .post('users/sendDebt', { info })
@@ -330,9 +353,6 @@ class API {
   }
   // Chuyển khoản cho Agribank
   transferToAgribank = async (dataInput) => {
-    const token = localStorage.getItem('access-token')
-    if (!token) return error_exception('token not found')
-    this.instance.defaults.headers['access-token'] = token
     return await this.instance
       .post(`users/agribank/transfer`, { ...dataInput })
       .then((response) => {
@@ -349,9 +369,6 @@ class API {
   }
 
   getDebt = async () => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get('users/getDebt')
       .then((response) => {
@@ -367,9 +384,6 @@ class API {
       })
   }
   cancelDebt = async (info) => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .post('users/cancelDebt', { info })
       .then((response) => {
@@ -386,9 +400,6 @@ class API {
   }
   payDebt = async (info) => {
     console.log(info)
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .post('users/payDebt', { info })
       .then((response) => {
@@ -404,9 +415,6 @@ class API {
       })
   }
   getTransaction = async () => {
-    this.instance.defaults.headers['access-token'] = localStorage.getItem(
-      'access-token'
-    )
     return await this.instance
       .get('users/getTransaction')
       .then((response) => {
