@@ -70,8 +70,89 @@ class API {
     this.changePassword = this.changePassword.bind(this)
     this.forgotPassword = this.forgotPassword.bind(this)
     this.cancelDebt = this.cancelDebt.bind(this)
+    this.deposit = this.deposit.bind(this)
+    this.createUser = this.createUser.bind(this)
+    this.sendHistory = this.sendHistory.bind(this)
+    this.receiveHistory = this.receiveHistory.bind(this)
+    this.debtHistory = this.debtHistory.bind(this)
     this.getNotification = this.getNotification.bind(this)
     this.readNotification = this.readNotification.bind(this)
+  }
+  createUser = async (info)=>{
+    console.log(info)
+    return await this.instance
+    .post(`/employee/createUser`,info)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  deposit = async (info)=>{
+    return await this.instance
+    .post(`/employee/deposit`,info)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  sendHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/sendHistory`,stk)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  receiveHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/receiveHistory`,stk)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  debtHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/debtHistory`,stk)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
   }
   // Check Backend
   checkActive = async () => {
@@ -107,8 +188,8 @@ class API {
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
+        const { name, email,type } = response.data.user
         localStorage.setItem('refresh-token', response.data.user.refreshToken)
-        const { name, email } = response.data.user
         const userInfo = {
           name,
           email,
@@ -116,6 +197,7 @@ class API {
         }
         localStorage.setItem('user-info', JSON.stringify(userInfo))
         localStorage.setItem('loggedIn', true)
+        localStorage.setItem('type', type)
         return response.data || error_exception()
       })
       .catch((error) => {

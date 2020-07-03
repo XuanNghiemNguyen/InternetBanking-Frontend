@@ -13,6 +13,11 @@ import DebtList from '../pages/debtReminderManagement/debtList/index'
 import HistoryReceive from '../pages/transactionHistory/receive/index'
 import HistorySend from '../pages/transactionHistory/send'
 import HistoryDebt from '../pages/transactionHistory/paidDebt'
+import NewUser from '../pages/createUser/index'
+import Deposit from '../pages/deposit/index'
+import SendHistory from '../pages/sendHistory/index'
+import ReceiveHistory from '../pages/receiveHistory/index'
+import DebtHistory from '../pages/debtHistory/index'
 export {
   Navbar,
   GetCodeOTP,
@@ -28,5 +33,10 @@ export {
   DebtList,
   HistoryDebt,
   HistorySend,
-  HistoryReceive
+  HistoryReceive,
+  NewUser,
+  Deposit,
+  SendHistory,
+  ReceiveHistory,
+  DebtHistory
 }

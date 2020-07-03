@@ -38,7 +38,7 @@ const RightMenu = (props) => {
         setNotification(data.result)
       }
     }
-
+    getNoti()
     ws.onopen = () => {
       console.log('connected!')
     }
@@ -52,7 +52,7 @@ const RightMenu = (props) => {
     return () => {
       ws.close()
     }
-  }, [])
+  }, [localStorage.getItem('loggedIn')])
   const currentUser = JSON.parse(localStorage.getItem('user-info'))
   const handleMenuClick = (e) => {
     switch (+e.key) {

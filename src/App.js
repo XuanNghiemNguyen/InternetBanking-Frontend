@@ -6,6 +6,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom'
+
 import { Layout } from 'antd'
 
 import {
@@ -23,7 +24,12 @@ import {
   HistorySend,
   HistoryDebt,
   DebtReminder,
-  DebtList
+  DebtList,
+  NewUser,
+  Deposit,
+  SendHistory,
+  ReceiveHistory,
+  DebtHistory
 } from './components/index'
 const { Header, Content, Footer } = Layout
 
@@ -177,6 +183,56 @@ const App = () => {
                     <ForgotPassword {...props} />
                   ) : (
                     <GetCodeOTP {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/createUser'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <NewUser {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/deposit'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <Deposit {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+               <Route
+                path='/sendHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <SendHistory {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+               <Route
+                path='/receiveHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ReceiveHistory {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/debtHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <DebtHistory {...props} />
+                  ) : (
+                    <LoginPage {...props} />
                   )
                 }}
               ></Route>
