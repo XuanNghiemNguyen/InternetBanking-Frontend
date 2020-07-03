@@ -14,8 +14,8 @@ const HistoryDebt = (props) => {
     function convert(a) {
         if (a) {
             var unixtimestamp = a;
-            var months_arr = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 
-            'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+            var months_arr = ['1', '2', '3', '4', '5', '6', 
+            '7', '8', '9', '10', '11', '12'];
             var date = new Date(unixtimestamp * 1000);
             var year = date.getFullYear();
             var month = months_arr[date.getMonth()];
@@ -23,7 +23,7 @@ const HistoryDebt = (props) => {
             var hours = date.getHours();
             var minutes = "0" + date.getMinutes();
             var seconds = "0" + date.getSeconds();
-            var convdataTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2) + ' ' + day + ' ' + month + ' ' + year + ' ';
+            var convdataTime = `${hours>12?hours-12:hours}:${minutes.substr(-2)}:${seconds.substr(-2)} ${hours>12?'PM':'AM'}, ${month}/${day}/${year} `;
             return convdataTime;
         }
         else {

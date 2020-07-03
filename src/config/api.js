@@ -143,6 +143,37 @@ class API {
         }
       })
   }
+  //Lấy thông tin của người dùng 
+  getUserByEmail = async (email) => {
+    return await this.instance
+      .get(`/users/getUserByEmail?email=${email}`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  verifyOTP = async (email, code) => {
+    return await this.instance
+      .post('/verifyOTP', { email, code })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
 
   //Chuyển khoản nội bộ sacombank
   internalTransfer = async (dataInput) => {
