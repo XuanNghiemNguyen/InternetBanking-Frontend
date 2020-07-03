@@ -11,3 +11,7 @@
 .leftMenu {
   display: flex;
 }
+.rightMenu {
+  min-width: 17vw;
+  margin-right: 10px
+}
