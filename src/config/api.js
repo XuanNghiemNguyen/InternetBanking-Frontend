@@ -30,6 +30,9 @@ class API {
     this.cancelDebt = this.cancelDebt.bind(this)
     this.deposit = this.deposit.bind(this)
     this.createUser = this.createUser.bind(this)
+    this.sendHistory = this.sendHistory.bind(this)
+    this.receiveHistory = this.receiveHistory.bind(this)
+    this.debtHistory = this.debtHistory.bind(this)
   }
   createUser = async (info)=>{
     console.log(info)
@@ -48,9 +51,53 @@ class API {
     })
   }
   deposit = async (info)=>{
-    console.log(info)
     return await this.instance
     .post(`/employee/deposit`,info)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  sendHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/sendHistory`,stk)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  receiveHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/receiveHistory`,stk)
+    .then((response) => {
+      return response.data || error_exception()
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data || error_exception()
+      } else {
+        console.log(error)
+        return error_exception()
+      }
+    })
+  }
+  debtHistory = async (stk) => {
+    return await this.instance
+    .post(`/employee/debtHistory`,stk)
     .then((response) => {
       return response.data || error_exception()
     })

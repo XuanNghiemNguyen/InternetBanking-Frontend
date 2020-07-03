@@ -1,0 +1,26 @@
+#receivehistory {
+    width: 600px;
+    margin: 90px;
+    padding: 20px;
+    margin-left: 380px;
+   margin-top: 40px;
+  }
+#receivehistory_stk{
+    width: 410px;
+    left:   1px
+}
+#receivehistory_btn{
+    top: -55px;
+    left: 487px;
+}
+.hide{
+    visibility: hidden;
+}
+.show{
+    visibility:1 ;
+}
+#receiverListHistory{
+    width:800px;
+    margin-left: -95px;
+    margin-top: -30px;
+}

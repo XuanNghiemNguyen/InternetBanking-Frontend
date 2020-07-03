@@ -1,0 +1,26 @@
+#sendhistory {
+    width: 600px;
+    margin: 90px;
+    padding: 20px;
+    margin-left: 380px;
+   margin-top: 40px;
+  }
+#sendhistory_stk{
+    width: 410px;
+    left:   1px
+}
+#sendhistory_btn{
+    top: -55px;
+    left: 487px;
+}
+.hide{
+    visibility: hidden;
+}
+.show{
+    visibility:1 ;
+}
+#senderListHistory{
+    width:700px;
+    margin-left: -40px;
+    margin-top: -30px;
+}

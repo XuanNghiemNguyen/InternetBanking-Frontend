@@ -26,7 +26,10 @@ import {
   DebtReminder,
   DebtList,
   NewUser,
-  Deposit
+  Deposit,
+  SendHistory,
+  ReceiveHistory,
+  DebtHistory
 } from './components/index'
 const { Header, Content, Footer } = Layout
 
@@ -198,6 +201,36 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <Deposit {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+               <Route
+                path='/sendHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <SendHistory {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+               <Route
+                path='/receiveHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ReceiveHistory {...props} />
+                  ) : (
+                    <LoginPage {...props} />
+                  )
+                }}
+              ></Route>
+              <Route
+                path='/debtHistory'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <DebtHistory {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )

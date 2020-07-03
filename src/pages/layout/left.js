@@ -51,10 +51,16 @@ const LeftMenu = () => {
       </Menu.Item>
     </MenuItemGroup>
     <MenuItemGroup title='Lịch sử giao dịch'>
-      <Menu.Item key='setting:3'>Nhận tiền</Menu.Item>
-      <Menu.Item key='setting:4'>Chuyển khoản</Menu.Item>
-      <Menu.Item key='setting:5'>Thanh toán nhắc nợ</Menu.Item>
-      <Menu.Item key='setting:6'>Tất cả giao dịch</Menu.Item>
+      <Menu.Item key='setting:3'>
+      <Link to={'/receiveHistory'}>Nhận Tiền</Link>
+      </Menu.Item>
+      <Menu.Item key='setting:4'>
+        <Link to={'/sendHistory'}>Chuyển khoản</Link>
+        </Menu.Item>
+      <Menu.Item key='setting:5'>
+      <Link to={'/debtHistory'}>Thanh toán nhắc nợ</Link>
+      </Menu.Item>
+    
     </MenuItemGroup>
   </SubMenu>
 </Menu>):(

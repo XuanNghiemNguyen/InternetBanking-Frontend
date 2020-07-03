@@ -22,7 +22,6 @@ const tailLayout =[ {
    
       const [form] = Form.useForm()
       const stk =form.getFieldValue("stk")
-      console.log(stk)
       const onFinish = async (values) => {
         const stk =form.getFieldValue("stk")
         const amount = form.getFieldValue("amount")

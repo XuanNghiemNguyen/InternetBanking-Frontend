@@ -1,7 +1,7 @@
 import { Form,Input, Button } from 'antd';
 import React,{  useState } from 'react'
 import { REST_API } from '../../config/api'
-import { Table, Tag } from 'antd'
+import { Table } from 'antd'
 import './index.css'
 import { openNotification } from '../common/index'
 const columns = [
@@ -16,11 +16,20 @@ const columns = [
     key: 'sender'
   },
   {
+    title: 'Ngân hàng',
+    dataIndex: 'senderbank',
+    key: 'senderbank'
+  },
+  {
     title: 'Tài khoản nhận',
     dataIndex: 'receiver',
     key: 'receiver'
   },
-  
+  {
+    title: 'Ngân hàng',
+    dataIndex: 'receiverbank',
+    key: 'receiverbank'
+  },
   {
     title: 'Số Tiền',
     dataIndex: 'amount',
@@ -43,7 +52,7 @@ const tailLayout =[ {
   },
 }];
 
-  const SendHistory = () => {
+  const ReceiveHistory = () => {
     const [data, setData] = useState([])
       const [form] = Form.useForm()
       const onFinish = async (values) => {
@@ -53,9 +62,9 @@ const tailLayout =[ {
             form.resetFields()
           }
         else{
-        const data=await REST_API.sendHistory(values);
+        const data=await REST_API.receiveHistory(values);
         if(data.success==false){
-          openNotification('Thất bại!',data.message)
+        openNotification('Thất bại!',data.message)
           form.resetFields()
         } else{
           console.log(data.result)
@@ -64,14 +73,16 @@ const tailLayout =[ {
             stt: index + 1,
             sender: element.sender.number,
             receiver:element.receiver.number,
+            senderbank:element.sender.bank_name,
+            receiverbank:element.receiver.bank_name,
             amount: element.amount
               .toLocaleString(undefined, { minimumFractionDigits: 2 })
               .concat(' (VND)')
           }))
           setData(items)
          
-          document.getElementById('senderListHistory').classList.remove("hide")
-         document.getElementById('senderListHistory').classList.add("show")
+          document.getElementById('receiverListHistory').classList.remove("hide")
+         document.getElementById('receiverListHistory').classList.add("show")
     }}};
     
     const onFinishFailed = errorInfo => {
@@ -83,7 +94,7 @@ const tailLayout =[ {
           
           {...layout}
           form={form}
-          name="sendhistory"
+          name="receivehistory"
           initialValues={{
             remember: true,
           }}
@@ -106,11 +117,11 @@ const tailLayout =[ {
           </Form.Item>
       
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" id="sendhistory_btn">
+            <Button type="primary" htmlType="submit" id="receivehistory_btn">
               Submit
             </Button>
           </Form.Item>
-          <div id='senderListHistory' className="hide">
+          <div id='receiverListHistory' className="hide">
       <Table
         scroll={{ y: '80vh' }}
         bordered
@@ -124,4 +135,4 @@ const tailLayout =[ {
         )
   }
   
-export default SendHistory
+export default ReceiveHistory
