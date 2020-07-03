@@ -1,7 +1,7 @@
 .transfer_frame {
   background-image: url('../../background/bg1.jpg');
   min-height: 90vh;
-  padding: 10vh 15vw;
+  padding: 10vh 10vw;
 }
 .transfer_main {
   background-color: white;

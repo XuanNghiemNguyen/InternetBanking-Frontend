@@ -1,6 +1,6 @@
 .otp_form {
   background: white;
-  padding: 8px 30px;
+  padding: 8px 30px !important;
   width: 368px;
   border-style: outset;
 }

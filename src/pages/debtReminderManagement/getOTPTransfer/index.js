@@ -136,7 +136,7 @@ const GetOTPTransfer = (props) => {
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        className='otp_form'
+        className='otp_form_transfer'
         form={form}
       >
         <Form.Item
@@ -153,7 +153,7 @@ const GetOTPTransfer = (props) => {
           <Button
             type='primary'
             loading={isLoading}
-            className='otp-form-button'
+            className='otp-form-button-transfer'
             onClick={getOTP}
           >
             Nhận mã OTP
