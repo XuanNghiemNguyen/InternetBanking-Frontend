@@ -1,13 +1,17 @@
 .menuCon {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .menuBar {
-    display: flex;
-  }
-  
-  .leftMenu {
-    display: flex;
-  }
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menuBar {
+  display: flex;
+}
+
+.leftMenu {
+  display: flex;
+}
+.rightMenu {
+  min-width: 16vw;
+  margin-right: 10px
+}

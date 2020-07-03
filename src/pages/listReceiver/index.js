@@ -272,7 +272,7 @@ const ListReceiver = () => {
 									return 'green'
 								case 'HHBANK':
 									return 'blue'
-								case 'TEAM29':
+								case 'AGRIBANK':
 									return 'orange'
 								default:
 									return 'red'

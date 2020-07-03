@@ -17,7 +17,7 @@ const LoginPage = (props) => {
     if (recentUser) {
       form.setFieldsValue({
         email: recentUser.email,
-        password: recentUser.password
+        password: recentUser.password,
       })
     }
   }, [form])
@@ -28,18 +28,24 @@ const LoginPage = (props) => {
       onProcess = true
       setIsLoading(true)
       const { email, password, remember } = values
-      const { success, message } = await REST_API.login(email, password, remember)
+      const { success, message } = await REST_API.login(
+        email,
+        password,
+        remember
+      )
       if (success) {
         openNotification('Đăng nhập thành công!', '')
         props.history.push(props.match.url)
+        setIsLoading(false)
       } else {
         openNotification('Đăng nhập thất bại!', message)
+        setIsLoading(false)
       }
     } catch (error) {
       console.log(error)
       openNotification('Đăng nhập thất bại!', 'Kiểm tra cài đặt mạng')
+      setIsLoading(false)
     }
-    setIsLoading(false)
     onProcess = false
   }
 
@@ -102,13 +108,18 @@ const LoginPage = (props) => {
             <Form.Item name='remember' valuePropName='checked' noStyle>
               <Checkbox>Lưu thông tin</Checkbox>
             </Form.Item>
-            <Button type='link' onClick={() => {
-              localStorage.setItem('codeSent', false)
-              props.history.push({
-                pathname: 'getOTPCode',
-                dict: 'forgot-password'
-              })
-            }}>Quên mật khẩu?</Button>
+            <Button
+              type='link'
+              onClick={() => {
+                localStorage.setItem('codeSent', false)
+                props.history.push({
+                  pathname: 'getOTPCode',
+                  dict: 'forgot-password',
+                })
+              }}
+            >
+              Quên mật khẩu?
+            </Button>
           </div>
         </Form>
       </div>
