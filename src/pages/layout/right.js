@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Menu, Avatar, Dropdown, Badge, Typography, Drawer, Result, Divider } from 'antd'
+import {
+  Menu,
+  Avatar,
+  Dropdown,
+  Badge,
+  Typography,
+  Drawer,
+  Result,
+  Divider,
+} from 'antd'
 import { Link, withRouter } from 'react-router-dom'
 import {
   BellOutlined,
@@ -17,19 +26,32 @@ const RightMenu = (props) => {
   const showDrawer = () => {
     setVisible(true)
   }
-
   const onClose = () => {
     setVisible(false)
   }
+  const ws = new WebSocket('ws://localhost:8082')
+  
   useEffect(() => {
     const getNoti = async () => {
       const data = await REST_API.getNotification()
       if (data) {
         setNotification(data.result)
-        console.log(data)
       }
     }
-    getNoti()
+
+    ws.onopen = () => {
+      console.log('connected!')
+    }
+    ws.onmessage = (event) => {
+      if (event.data === 'fetch_notification')
+      getNoti()
+    }
+    ws.onclose = () => {
+      ws.close()
+    }
+    return () => {
+      ws.close()
+    }
   }, [])
   const currentUser = JSON.parse(localStorage.getItem('user-info'))
   const handleMenuClick = (e) => {
