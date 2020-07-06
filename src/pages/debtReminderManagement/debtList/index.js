@@ -18,14 +18,14 @@ const DebtList = (props) => {
     isEnabled: '',
     fee: ''
   })
-  const [ok, setOk] = useState(true)
+  const [ok, setOk] = useState(false)
   const [myAccounts, setMyAccounts] = useState([])
   const [myDebt, setMyDebt] = useState([])
   const [otherDebt, setOtherDebt] = useState([])
   const [modelVisibility, setModelVisibility] = useState(false)
   const { email } = JSON.parse(localStorage.getItem('user-info'))
   const cancelDebt = async (info) => {
-    const result = await REST_API.cancelDebt(info)
+    const result = await REST_API.cancelDebt(info,email)
     if (result.success === true) {
       const myAccs = await REST_API.getListAccount(email)
       setMyAccounts(myAccs.results)
@@ -60,42 +60,42 @@ const DebtList = (props) => {
 
     }
   }
-  const handleOk = async (info) => {
-    const payDebt = await REST_API.payDebt(info)
-    setModelVisibility(false)
-    if (payDebt.success === true) {
-      const myAccs = await REST_API.getListAccount(email)
-      setMyAccounts(myAccs.results)
-      const data = await REST_API.getDebt()
-      if (data && data.debt) {
-        const items = data.debt.map((element, index) => ({
-          key: (index + 1).toString(),
-          stt: index + 1,
-          fromAccount: element.fromAccount,
-          toAccount: element.toAccount,
-          amount: element.amount,
-          msg: element.msg,
-          state: element.state,
-          stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
-          isEnabled: element.isEnabled
-        }))
-        setMyDebt(
-          items.filter((item) => {
-            return (myAccs.results.findIndex(function (i) {
-              return i.number.toString() === item.fromAccount.toString()
-            })) >= 0
-          })
-        )
-        setOtherDebt(
-          items.filter((item) => {
-            return (myAccs.results.findIndex(function (i) {
-              return i.number.toString() === item.toAccount.toString()
-            })) >= 0
-          })
-        )
-      }
-    }
-  };
+  // const handleOk = async (info) => {
+  //   const payDebt = await REST_API.payDebt(info)
+  //   setModelVisibility(false)
+  //   if (payDebt.success === true) {
+  //     const myAccs = await REST_API.getListAccount(email)
+  //     setMyAccounts(myAccs.results)
+  //     const data = await REST_API.getDebt()
+  //     if (data && data.debt) {
+  //       const items = data.debt.map((element, index) => ({
+  //         key: (index + 1).toString(),
+  //         stt: index + 1,
+  //         fromAccount: element.fromAccount,
+  //         toAccount: element.toAccount,
+  //         amount: element.amount,
+  //         msg: element.msg,
+  //         state: element.state,
+  //         stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
+  //         isEnabled: element.isEnabled
+  //       }))
+  //       setMyDebt(
+  //         items.filter((item) => {
+  //           return (myAccs.results.findIndex(function (i) {
+  //             return i.number.toString() === item.fromAccount.toString()
+  //           })) >= 0
+  //         })
+  //       )
+  //       setOtherDebt(
+  //         items.filter((item) => {
+  //           return (myAccs.results.findIndex(function (i) {
+  //             return i.number.toString() === item.toAccount.toString()
+  //           })) >= 0
+  //         })
+  //       )
+  //     }
+  //   }
+  // };
 
   const handleCancel = e => {
     setModelVisibility(false)
@@ -210,7 +210,6 @@ const DebtList = (props) => {
         return (
           <Space size="middle">
             <Button disabled={text.state || !text.isEnabled} onClick={() => {
-              console.log(text)
               setCurrentDebt(text)
               setModelVisibility(true)
             }} >Trả nợ</Button>
@@ -233,40 +232,79 @@ const DebtList = (props) => {
     },
   ];
 
+  const reload = async () => {
+    // console.log('reloaded')
+    // console.log(ok)
+    // if (ok === true) {
+    //   console.log('reloaded ok')
 
+    setModelVisibility(false)
+    const myAccs = await REST_API.getListAccount(email)
+    setMyAccounts(myAccs.results)
+    const data = await REST_API.getDebt()
+    if (data && data.debt) {
+      const items = data.debt.map((element, index) => ({
+        key: (index + 1).toString(),
+        stt: index + 1,
+        fromAccount: element.fromAccount,
+        toAccount: element.toAccount,
+        amount: element.amount,
+        msg: element.msg,
+        state: element.state,
+        stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
+        isEnabled: element.isEnabled
+      }))
+      setMyDebt(
+        items.filter((item) => {
+          return (myAccs.results.findIndex(function (i) {
+            return i.number.toString() === item.fromAccount.toString()
+          })) >= 0
+        })
+      )
+      setOtherDebt(
+        items.filter((item) => {
+          return (myAccs.results.findIndex(function (i) {
+            return i.number.toString() === item.toAccount.toString()
+          })) >= 0
+        })
+      )
+    }
+
+    // }
+  }
   return (
 
     <div className='reminder_frame'>
       <div>
         <p>Danh sách nợ đã gửi</p>
-        <Table dataSource={myDebt} columns={columnsFrom} ></Table>
+        <Table dataSource={myDebt} columns={columnsFrom} bordered></Table>
       </div>
       <div>
         <p>Danh sách nợ được gửi</p>
-        <Table dataSource={otherDebt} columns={columnsTo} ></Table>
+        <Table dataSource={otherDebt} columns={columnsTo} bordered></Table>
       </div>
       <Modal
         title="Xác nhận"
         visible={modelVisibility}
-        okButtonProps={{ disabled: ok }}
-        onOk={() => {
-          const debt = {
-            fromAccount: currentDebt.fromAccount,
-            toAccount: currentDebt.toAccount,
-            amount: currentDebt.amount,
-            msg: currentDebt.msg,
-            state: currentDebt.state,
-            isEnabled: currentDebt.isEnabled,
-            fee: currentDebt.amount * 0.01
-          }
-          handleOk(debt)
-        }}
+        okButtonProps={{ style: { display: 'none' } }}
+        // onOk={() => {
+        //   const debt = {
+        //     fromAccount: currentDebt.fromAccount,
+        //     toAccount: currentDebt.toAccount,
+        //     amount: currentDebt.amount,
+        //     msg: currentDebt.msg,
+        //     state: currentDebt.state,
+        //     isEnabled: currentDebt.isEnabled,
+        //     fee: currentDebt.amount * 0.01
+        //   }
+        //   handleOk(debt)
+        // }}
         onCancel={handleCancel}
       >
         <p>Người nhận: {currentDebt.fromAccount}</p>
         <p>Số tiền: {currentDebt.amount}</p>
         <p>Phí giao dịch: {currentDebt.amount * 0.01}</p>
-        <GetOTPTransfer data={email} setOk={setOk}   >
+        <GetOTPTransfer data={currentDebt} setOk={setOk} reload={reload}    >
         </GetOTPTransfer>
       </Modal>
     </div>

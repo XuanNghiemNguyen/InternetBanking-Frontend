@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './index.css'
-import { Form, Input, Button, Modal, message } from 'antd'
+import { Form, Input, Button, Modal } from 'antd'
 import { REST_API } from '../../../config/api'
 import { openNotification } from '../../common';
 

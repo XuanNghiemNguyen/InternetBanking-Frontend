@@ -78,81 +78,81 @@ class API {
     this.getNotification = this.getNotification.bind(this)
     this.readNotification = this.readNotification.bind(this)
   }
-  createUser = async (info)=>{
+  createUser = async (info) => {
     console.log(info)
     return await this.instance
-    .post(`/employee/createUser`,info)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
+      .post(`/employee/createUser`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
-  deposit = async (info)=>{
+  deposit = async (info) => {
     return await this.instance
-    .post(`/employee/deposit`,info)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
+      .post(`/employee/deposit`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
   sendHistory = async (stk) => {
     return await this.instance
-    .post(`/employee/sendHistory`,stk)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
+      .post(`/employee/sendHistory`, stk)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
   receiveHistory = async (stk) => {
     return await this.instance
-    .post(`/employee/receiveHistory`,stk)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
+      .post(`/employee/receiveHistory`, stk)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
   debtHistory = async (stk) => {
     return await this.instance
-    .post(`/employee/debtHistory`,stk)
-    .then((response) => {
-      return response.data || error_exception()
-    })
-    .catch((error) => {
-      if (error.response) {
-        return error.response.data || error_exception()
-      } else {
-        console.log(error)
-        return error_exception()
-      }
-    })
+      .post(`/employee/debtHistory`, stk)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
   // Check Backend
   checkActive = async () => {
@@ -188,7 +188,7 @@ class API {
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
         localStorage.setItem('access-token', response.data.token)
-        const { name, email,type } = response.data.user
+        const { name, email, type } = response.data.user
         localStorage.setItem('refresh-token', response.data.user.refreshToken)
         const userInfo = {
           name,
@@ -467,9 +467,9 @@ class API {
         }
       })
   }
-  cancelDebt = async (info) => {
+  cancelDebt = async (info, email) => {
     return await this.instance
-      .post('users/cancelDebt', { info })
+      .post('users/cancelDebt', { info, email })
       .then((response) => {
         return response.data || error_exception()
       })
