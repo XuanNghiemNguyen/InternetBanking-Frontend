@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './index.css'
-import { Table } from 'antd'
+import { Table, Tag } from 'antd'
 import { REST_API } from '../../../config/api'
 // import GetCodeOTP from '../../getCodeOTP'
 // import { OmitProps } from 'antd/lib/transfer/ListBody'
@@ -62,7 +62,29 @@ const HistoryReceive = (props) => {
         {
             title: 'Ngân hàng',
             dataIndex: 'senderBankname',
-            key: 'senderBankname',
+            width: '20%',
+            editable: false,
+            render: (senderBankname) => (
+                <>
+                    <Tag
+                        color={(() => {
+                            switch (senderBankname.toUpperCase()) {
+                                case 'SACOMBANK':
+                                    return 'green'
+                                case 'HHBANK':
+                                    return 'blue'
+                                case 'AGRIBANK':
+                                    return 'orange'
+                                default:
+                                    return 'red'
+                            }
+                        })()}
+                        key={senderBankname}
+                    >
+                        {senderBankname}
+                    </Tag>
+                </>
+            )
         },
         {
             title: 'Số tiền',

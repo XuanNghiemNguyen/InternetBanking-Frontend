@@ -25,7 +25,7 @@ const DebtList = (props) => {
   const [modelVisibility, setModelVisibility] = useState(false)
   const { email } = JSON.parse(localStorage.getItem('user-info'))
   const cancelDebt = async (info) => {
-    const result = await REST_API.cancelDebt(info)
+    const result = await REST_API.cancelDebt(info,email)
     if (result.success === true) {
       const myAccs = await REST_API.getListAccount(email)
       setMyAccounts(myAccs.results)
