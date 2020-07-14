@@ -9,6 +9,7 @@ import { REST_API } from '../../../config/api'
 var onProcess = false
 
 const GetOTPTransfer = (props) => {
+  const currentDebt = props.data
   const [gotOTP, setGotOTP] = useState('none')
   const [form] = Form.useForm()
   const { email } = JSON.parse(localStorage.getItem('user-info'))
@@ -31,7 +32,7 @@ const GetOTPTransfer = (props) => {
         openNotification('Lấy mã OTP thành công!', 'Kiểm tra email của bạn')
         localStorage.setItem('email-otp', email)
         setGotOTP('flex')
-        
+
       } else {
         openNotification('Lấy mã OTP thất bại!', data.message)
       }
@@ -58,17 +59,28 @@ const GetOTPTransfer = (props) => {
       const { code } = values;
       const data = await REST_API.verifyOTP(email, code);
       if (data.success) {
-        openNotification('Xac nhan thành công!', '');
+        openNotification('Xác nhận thành công!', '');
         localStorage.setItem('codeSent', false);
         localStorage.removeItem('email-otp');
-        props.setOk(false)
-        
+        // props.setOk(true)
+
+        const debt = {
+          fromAccount: currentDebt.fromAccount,
+          toAccount: currentDebt.toAccount,
+          amount: currentDebt.amount,
+          msg: currentDebt.msg,
+          state: currentDebt.state,
+          isEnabled: currentDebt.isEnabled,
+          fee: currentDebt.amount * 0.01
+        }
+        transfer(debt)
+        props.reload()
       } else {
-        openNotification('Xac nhan thất bại!', data.message);
+        openNotification('Xác nhận thất bại!', data.message);
       }
     } catch (error) {
       console.log(error);
-      openNotification('Xac nhan thất bại!', 'Kiểm tra cài đặt mạng');
+      openNotification('Xác nhận thất bại!', 'Kiểm tra cài đặt mạng');
     }
     setIsLoading(false);
     onProcess = false;
@@ -77,6 +89,46 @@ const GetOTPTransfer = (props) => {
   const onFinishFailed = (errorInfo) => {
     console.log(errorInfo)
   }
+  const transfer = async (info) => {
+    const payDebt = await REST_API.payDebt(info)
+    if (payDebt.success === true) {
+      props.reload()
+    }
+
+    // setModelVisibility(false)
+    // if (payDebt.success === true) {
+    // const myAccs = await REST_API.getListAccount(email)
+    // setMyAccounts(myAccs.results)
+    // const data = await REST_API.getDebt()
+    // if (data && data.debt) {
+    //   const items = data.debt.map((element, index) => ({
+    //     key: (index + 1).toString(),
+    //     stt: index + 1,
+    //     fromAccount: element.fromAccount,
+    //     toAccount: element.toAccount,
+    //     amount: element.amount,
+    //     msg: element.msg,
+    //     state: element.state,
+    //     stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
+    //     isEnabled: element.isEnabled
+    //   }))
+    // setMyDebt(
+    //   items.filter((item) => {
+    //     return (myAccs.results.findIndex(function (i) {
+    //       return i.number.toString() === item.fromAccount.toString()
+    //     })) >= 0
+    //   })
+    // )
+    // setOtherDebt(
+    //   items.filter((item) => {
+    //     return (myAccs.results.findIndex(function (i) {
+    //       return i.number.toString() === item.toAccount.toString()
+    //     })) >= 0
+    //   })
+    // )
+    // }
+    // }
+  };
   return (
     <div>
       <Form
@@ -110,7 +162,7 @@ const GetOTPTransfer = (props) => {
       </Form>
       <p style={{ display: gotOTP }}
       //   
-       >
+      >
         Nhập mã và nhấn Enter để xác nhận OTP
       </p>
     </div>

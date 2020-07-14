@@ -14,7 +14,8 @@ const HistoryDebt = (props) => {
     function convert(a) {
         if (a) {
             var unixtimestamp = a;
-            var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var months_arr = ['1', '2', '3', '4', '5', '6', 
+            '7', '8', '9', '10', '11', '12'];
             var date = new Date(unixtimestamp * 1000);
             var year = date.getFullYear();
             var month = months_arr[date.getMonth()];
@@ -22,7 +23,7 @@ const HistoryDebt = (props) => {
             var hours = date.getHours();
             var minutes = "0" + date.getMinutes();
             var seconds = "0" + date.getSeconds();
-            var convdataTime = month + '-' + day + '-' + year + ' ' + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+            var convdataTime = `${hours>12?hours-12:hours}:${minutes.substr(-2)}:${seconds.substr(-2)} ${hours>12?'PM':'AM'}, ${month}/${day}/${year} `;
             return convdataTime;
         }
         else {
@@ -44,7 +45,8 @@ const HistoryDebt = (props) => {
                     stt: index + 1,
                     fromAccount: element.fromAccount,
                     toAccount: element.toAccount,
-                    amount: element.amount,
+                    amount: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+                    .concat(' (VND)'),
                     msg: element.msg,
                     state: element.state,
                     // stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',

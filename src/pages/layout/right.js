@@ -29,6 +29,7 @@ const RightMenu = (props) => {
   const onClose = () => {
     setVisible(false)
   }
+  const currentUser = JSON.parse(localStorage.getItem('user-info'))
   const ws = new WebSocket('ws://localhost:8082')
   
   useEffect(() => {
@@ -53,7 +54,6 @@ const RightMenu = (props) => {
       ws.close()
     }
   }, [localStorage.getItem('loggedIn')])
-  const currentUser = JSON.parse(localStorage.getItem('user-info'))
   const handleMenuClick = (e) => {
     switch (+e.key) {
       case 1:
