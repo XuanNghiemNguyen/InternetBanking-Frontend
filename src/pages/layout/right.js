@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 import {
   Menu,
   Avatar,
@@ -8,15 +8,16 @@ import {
   Drawer,
   Result,
   Divider,
-} from 'antd'
-import { Link, withRouter } from 'react-router-dom'
+  Button,
+} from "antd"
+import { Link, withRouter } from "react-router-dom"
 import {
   BellOutlined,
   LogoutOutlined,
   UserSwitchOutlined,
   SmileOutlined,
-} from '@ant-design/icons'
-import { REST_API } from '../../config/api'
+} from "@ant-design/icons"
+import { REST_API } from "../../config/api"
 const { Paragraph } = Typography
 
 let onProcess = false
@@ -26,26 +27,31 @@ const RightMenu = (props) => {
   const showDrawer = () => {
     setVisible(true)
   }
-  const onClose = () => {
+  const onClose = async () => {
+    if (notification.filter((i) => !i.isRead).length !== 0) {
+      const data = await REST_API.readNotification()
+      if (data) {
+        setNotification(data.result.reverse())
+      }
+    }
     setVisible(false)
   }
-  const currentUser = JSON.parse(localStorage.getItem('user-info'))
-  const ws = new WebSocket('ws://localhost:8082')
-  
+  const currentUser = JSON.parse(localStorage.getItem("user-info"))
+  const ws = new WebSocket("ws://localhost:8082")
+
   useEffect(() => {
     const getNoti = async () => {
       const data = await REST_API.getNotification()
       if (data) {
-        setNotification(data.result)
+        setNotification(data.result.reverse())
       }
     }
     getNoti()
     ws.onopen = () => {
-      console.log('connected!')
+      console.log("connected!")
     }
     ws.onmessage = (event) => {
-      if (event.data === 'fetch_notification')
-      getNoti()
+      if (event.data === "fetch_notification") getNoti()
     }
     ws.onclose = () => {
       ws.close()
@@ -53,7 +59,7 @@ const RightMenu = (props) => {
     return () => {
       ws.close()
     }
-  }, [localStorage.getItem('loggedIn')])
+  }, [localStorage.getItem("loggedIn")])
   const handleMenuClick = (e) => {
     switch (+e.key) {
       case 1:
@@ -62,17 +68,17 @@ const RightMenu = (props) => {
       case 2:
         if (!!onProcess) return
         onProcess = true
-        props.history.push('/change-password')
+        props.history.push("/change-password")
         onProcess = false
         break
       case 3:
         if (!!onProcess) return
         onProcess = true
-        localStorage.removeItem('access-token')
-        localStorage.removeItem('user-info')
-        localStorage.setItem('loggedIn', false)
+        localStorage.removeItem("access-token")
+        localStorage.removeItem("user-info")
+        localStorage.setItem("loggedIn", false)
         onProcess = false
-        props.history.push('/login')
+        props.history.push("/login")
         break
       default:
         break
@@ -94,19 +100,21 @@ const RightMenu = (props) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-      }}
-    >
-      <span>{currentUser && 'Xin chào, '.concat(currentUser.name)}</span>
-      {localStorage.getItem('access-token') ? (
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+      }}>
+      <span>{currentUser && "Xin chào, ".concat(currentUser.name)}</span>
+      {localStorage.getItem("access-token") ? (
         <>
           <div key='logout'>
             <Dropdown overlay={menu}>
-              <Badge count={notification && notification.length}>
+              <Badge
+                count={
+                  notification && notification.filter((i) => !i.isRead).length
+                }>
                 <Avatar
-                  style={{ backgroundColor: '#87d068' }}
+                  style={{ backgroundColor: "#87d068" }}
                   icon={<UserSwitchOutlined />}
                 />
               </Badge>
@@ -115,7 +123,7 @@ const RightMenu = (props) => {
         </>
       ) : (
         <div key='login'>
-          <Link className='nav-link' to={'/login'}>
+          <Link className='nav-link' to={"/login"}>
             Đăng nhập
           </Link>
         </div>
@@ -130,15 +138,17 @@ const RightMenu = (props) => {
         placement='right'
         closable={true}
         onClose={onClose}
-        visible={visible}
-      >
+        visible={visible}>
         {notification && notification.length > 0 ? (
           notification.map((item, idx) => (
             <div key={idx}>
               <Paragraph
-                ellipsis={{ rows: 2, expandable: true, symbol: 'more' }}
-                style={{ backgroundColor: item.isRead ? '#ccc' : 'white' }}
-              >
+                ellipsis={{ rows: 2, expandable: true, symbol: "more" }}
+                style={{
+                  padding: 5,
+                  borderRadius: 5,
+                  backgroundColor: item.isRead ? "white" : "#f5f5f5"
+                }}>
                 {item.content}
               </Paragraph>
               <Divider plain></Divider>

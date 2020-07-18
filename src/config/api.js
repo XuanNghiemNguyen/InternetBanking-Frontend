@@ -39,7 +39,7 @@ class API {
         if (
           error.response.data.code === 425
         ) {
-          localStorage.clear()
+          localStorage.clear()  
           return Promise.reject(error)
         }
 
@@ -559,9 +559,9 @@ class API {
         }
       })
   }
-  readNotification = async (id) => {
+  readNotification = async () => {
     return await this.instance
-      .get(`notification/read?id=${id}`)
+      .get(`notifications/read`)
       .then((response) => {
         return response.data || error_exception()
       })
