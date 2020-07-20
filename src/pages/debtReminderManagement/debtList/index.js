@@ -25,7 +25,7 @@ const DebtList = (props) => {
   const [modelVisibility, setModelVisibility] = useState(false)
   const { email } = JSON.parse(localStorage.getItem('user-info'))
   const cancelDebt = async (info) => {
-    const result = await REST_API.cancelDebt(info,email)
+    const result = await REST_API.cancelDebt(info, email)
     if (result.success === true) {
       const myAccs = await REST_API.getListAccount(email)
       setMyAccounts(myAccs.results)
@@ -37,6 +37,8 @@ const DebtList = (props) => {
           fromAccount: element.fromAccount,
           toAccount: element.toAccount,
           amount: element.amount,
+          // amountTemp: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+          //   .concat(' (VND)'),
           msg: element.msg,
           state: element.state,
           stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
@@ -105,6 +107,7 @@ const DebtList = (props) => {
       const myAccs = await REST_API.getListAccount(email)
       setMyAccounts(myAccs.results)
       const data = await REST_API.getDebt()
+      console.log(data)
       if (data && data.debt) {
         const items = data.debt.map((element, index) => ({
           key: (index + 1).toString(),
@@ -112,6 +115,8 @@ const DebtList = (props) => {
           fromAccount: element.fromAccount,
           toAccount: element.toAccount,
           amount: element.amount,
+          amountTemp: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+            .concat(' (VND)'),
           msg: element.msg,
           state: element.state,
           stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
@@ -143,8 +148,8 @@ const DebtList = (props) => {
     },
     {
       title: 'Số tiền',
-      dataIndex: 'amount',
-      key: 'amount',
+      dataIndex: 'amountTemp',
+      key: 'amountTemp',
     },
 
     {
@@ -189,8 +194,8 @@ const DebtList = (props) => {
     },
     {
       title: 'Số tiền',
-      dataIndex: 'amount',
-      key: 'amount',
+      dataIndex: 'amountTemp',
+      key: 'amountTemp',
     },
     {
       title: 'Lời nhắn',
@@ -249,6 +254,8 @@ const DebtList = (props) => {
         fromAccount: element.fromAccount,
         toAccount: element.toAccount,
         amount: element.amount,
+        amountTemp: element.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })
+          .concat(' (VND)'),
         msg: element.msg,
         state: element.state,
         stateTemp: element.state === true ? 'Đã thanh toán' : 'Chưa thanh toán',
