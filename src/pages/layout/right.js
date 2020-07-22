@@ -30,7 +30,7 @@ const RightMenu = (props) => {
   const onClose = async () => {
     if (notification.filter((i) => !i.isRead).length !== 0) {
       const data = await REST_API.readNotification()
-      if (data) {
+      if (data && data.result && data.result.length > 0) {
         setNotification(data.result.reverse())
       }
     }
@@ -42,7 +42,7 @@ const RightMenu = (props) => {
   useEffect(() => {
     const getNoti = async () => {
       const data = await REST_API.getNotification()
-      if (data) {
+      if (data && data.result && data.result.length > 0) {
         setNotification(data.result.reverse())
       }
     }
