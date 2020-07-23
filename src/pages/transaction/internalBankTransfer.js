@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 import {
   Form,
   Select,
@@ -13,14 +13,14 @@ import {
   Radio,
   message,
   Typography,
-} from 'antd'
+} from "antd"
 
-import { SearchOutlined } from '@ant-design/icons'
-import { REST_API } from '../../config/api'
-import { openNotification } from '../common/index'
-import OtpConfirm from './otpConfirm'
+import { SearchOutlined } from "@ant-design/icons"
+import { REST_API } from "../../config/api"
+import { openNotification } from "../common/index"
+import OtpConfirm from "./otpConfirm"
 
-import './index.css'
+import "./index.css"
 const { Text } = Typography
 const { Step } = Steps
 const { Option, OptGroup } = Select
@@ -36,9 +36,9 @@ const InternalBankTransfer = (props) => {
   const [currentProgress, setCurrentProgress] = useState(0)
   const [listAccount, setListAccount] = useState([])
   const [listAccountReceiver, setListAccountReceiver] = useState([])
-  const { email } = JSON.parse(localStorage.getItem('user-info'))
-  const [optionReceiver, setOptionReceiver] = useState('Danh sách đã lưu')
-  const [validateStatus, setValidateStatus] = useState('success')
+  const { email } = JSON.parse(localStorage.getItem("user-info"))
+  const [optionReceiver, setOptionReceiver] = useState("Danh sách đã lưu")
+  const [validateStatus, setValidateStatus] = useState("success")
   const [loading, setLoading] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const [form] = Form.useForm()
@@ -50,13 +50,13 @@ const InternalBankTransfer = (props) => {
         const { number } =
           data.results.find((item) => item.isPayment) ||
           data.results.filter((item) => !item.isPayment)[0]
-        form.setFieldsValue({ numberResource: number })
+        form.setFieldsValue({ numberSender: number })
         setListAccount(data.results)
       }
       const _data = await REST_API.getReceivers()
       if (_data && _data.receivers && _data.receivers.length > 0) {
         const externalReceiver = _data.receivers.filter(
-          (i) => i.bank_name !== 'SACOMBANK'
+          (i) => i.bank_name !== "SACOMBANK"
         )
         setListAccountReceiver([...externalReceiver])
         form.setFieldsValue({
@@ -66,13 +66,13 @@ const InternalBankTransfer = (props) => {
           }),
         })
       }
-      form.setFieldsValue({ receiverOption: 'Danh sách đã lưu' })
+      form.setFieldsValue({ receiverOption: "Danh sách đã lưu" })
     }
     getAccount()
   }, [email])
 
   const onChangeAccountResource = (value) => {
-    form.setFieldsValue({ numberResource: value })
+    form.setFieldsValue({ numberSender: value })
   }
   const onChangeAccountReceiver = (value) => {
     form.setFieldsValue({ numberReceiver: value })
@@ -80,19 +80,19 @@ const InternalBankTransfer = (props) => {
 
   const confirmReceiver = async () => {
     setIsSearching(true)
-    const number = form.getFieldValue('newNumberReceiver')
+    const number = form.getFieldValue("newNumberReceiver")
     if (!number || isNaN(number)) {
-      setValidateStatus('error')
-      openNotification('Truy vấn thất bại', 'Xin vui lòng nhập số tài khoản!')
+      setValidateStatus("error")
+      openNotification("Truy vấn thất bại", "Xin vui lòng nhập số tài khoản!")
       return
     }
-    const option = form.getFieldValue('receiverOption')
+    const option = form.getFieldValue("receiverOption")
     let data = {}
     switch (option) {
-      case 'HHBANK':
+      case "HHBANK":
         data = await REST_API.getUserInfoFromHHBank(number)
         break
-      case 'AGRIBANK':
+      case "AGRIBANK":
         data = await REST_API.getUserInfoFromTeam29(number)
         break
       default:
@@ -100,14 +100,14 @@ const InternalBankTransfer = (props) => {
     }
     setIsSearching(false)
     if (data && data.success) {
-      setValidateStatus('success')
+      setValidateStatus("success")
       console.log(data.user)
       newAccountReceiver = { ...data.user, number }
-      openNotification('Thông tin người nhận', 'Tên: ' + data.user.name)
+      openNotification("Thông tin người nhận", "Tên: " + data.user.name)
       return
     } else {
-      setValidateStatus('error')
-      openNotification('Truy vấn thất bại', 'Sô tài khoản không tồn tại')
+      setValidateStatus("error")
+      openNotification("Truy vấn thất bại", "Sô tài khoản không tồn tại")
       return
     }
   }
@@ -122,11 +122,10 @@ const InternalBankTransfer = (props) => {
         <Select
           // style={{ width: '40vw' }}
           onChange={(value) => onChangeAccountResource(value)}
-          defaultValue={payment.number || savings[0].number}
-        >
+          defaultValue={payment.number || savings[0].number}>
           <OptGroup label='Tài khoản thanh toán'>
             <Option value={payment.number}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>
                   <b>{payment.number}</b>
                 </span>
@@ -138,8 +137,7 @@ const InternalBankTransfer = (props) => {
             {savings.map((item, idx) => (
               <Option value={item.number} key={idx}>
                 <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
+                  style={{ display: "flex", justifyContent: "space-between" }}>
                   <span>
                     <b>{item.number}</b>
                   </span>
@@ -170,14 +168,13 @@ const InternalBankTransfer = (props) => {
           })
           setOptionReceiver(value)
           setValidateStatus(
-            value !== 'Danh sách đã lưu' ? 'warning' : 'success'
+            value !== "Danh sách đã lưu" ? "warning" : "success"
           )
-        }}
-      >
-        <Option value={'Danh sách đã lưu'}>Danh sách đã lưu</Option>
+        }}>
+        <Option value={"Danh sách đã lưu"}>Danh sách đã lưu</Option>
         <OptGroup label='Người nhận mới'>
-          <Option value={'HHBANK'}>HHBANK</Option>
-          <Option value={'AGRIBANK'}>AGRIBANK</Option>
+          <Option value={"HHBANK"}>HHBANK</Option>
+          <Option value={"AGRIBANK"}>AGRIBANK</Option>
         </OptGroup>
       </Select>
     </Form.Item>
@@ -188,22 +185,14 @@ const InternalBankTransfer = (props) => {
       return (
         <Select
           onChange={(value) => {
-            onChangeAccountReceiver(JSON.stringify(value))
+            onChangeAccountReceiver(value)
           }}
-          defaultValue={JSON.stringify({
-            number: arr[0].number,
-            bank_name: arr[0].bank_name,
-          })}
-        >
+          >
           {arr.map((item, idx) => (
             <Option
-              value={JSON.stringify({
-                number: item.number,
-                bank_name: item.bank_name,
-              })}
-              key={idx}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              value={`${item.number}_${item.bank_name}`}
+              key={idx}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>
                   <b>{item.reminiscent_name}</b>
                 </span>
@@ -227,16 +216,16 @@ const InternalBankTransfer = (props) => {
   }
   const checkForm = async () => {
     setLoading(true)
-    if (validateStatus !== 'success') {
+    if (validateStatus !== "success") {
       openNotification(
-        'Yêu cầu biểu mẫu',
-        'Thông tin tài khoản nhận không chính xác!'
+        "Yêu cầu biểu mẫu",
+        "Thông tin tài khoản nhận không chính xác!"
       )
       setLoading(false)
       return
     }
     const {
-      numberResource,
+      numberSender,
       numberReceiver,
       newNumberReceiver,
       amount,
@@ -247,70 +236,73 @@ const InternalBankTransfer = (props) => {
     isNewReceiver = !!!numberReceiver
     if (!amount || amount < 10000) {
       openNotification(
-        'Yêu cầu biểu mẫu',
-        'Số tiền cần chuyển ít nhất là 10,000đ'
+        "Yêu cầu biểu mẫu",
+        "Số tiền cần chuyển ít nhất là 10,000đ"
       )
       setLoading(false)
       return
     }
     form_data = {
-      numberResource,
+      numberSender,
       numberReceiver: numberReceiver || newNumberReceiver,
       amount,
       isSenderPaidFee: !!isSenderPaidFee,
-      message: message || '',
+      message: message || "",
       email,
       receiverOption,
     }
     const otp = await REST_API.getCode(email)
-    openNotification('Thông báo từ hệ thống', 'Đã gửi mã OTP về email cá nhân!')
+    openNotification("Thông báo từ hệ thống", "Đã gửi mã OTP về email cá nhân!")
     setLoading(false)
     setCurrentProgress(1)
     if (otp && otp.success) {
     } else {
-      openNotification('Thông báo từ hệ thống', 'Lỗi khi gửi OTP!')
+      openNotification("Thông báo từ hệ thống", "Lỗi khi gửi OTP!")
       return
     }
   }
   const transfer = async (otp) => {
     if (isNaN(otp)) {
-      openNotification('Thông báo từ hệ thống', 'Mã OTP không hợp lệ!')
+      openNotification("Thông báo từ hệ thống", "Mã OTP không hợp lệ!")
       return
     }
     form_data.code = otp
     let data = {}
-    console.log(form_data)
-    if (form_data.receiverOption === 'HHBANK') {
+    if (form_data.receiverOption === "HHBANK") {
+      console.log('transfer to new acc of HHBANK')
       data = await REST_API.transferToHHBank(form_data)
-    } else if (form_data.receiverOption === 'AGRIBANK') {
+    } else if (form_data.receiverOption === "AGRIBANK") {
+      console.log('transfer to new acc of AGRIBANK')
       data = await REST_API.transferToAgribank(form_data)
     } else if (form_data && isNaN(form_data.numberReceiver)) {
-      const { number, bank_name } = JSON.parse(
-        form_data.numberReceiver.toString()
-      )
-      console.log(number, bank_name)
+      console.log('transfer to element in list ACC')
+      const number = form_data.numberReceiver.toString().split('_')[0]
+      const bank_name = form_data.numberReceiver.toString().split('_')[1]
       form_data.numberReceiver = parseInt(number)
-      console.log(form_data)
-      switch (bank_name) {
-        case 'HHBANK':
+      switch (bank_name.toUpperCase()) {
+        case "HHBANK":
           data = await REST_API.transferToHHBank(form_data)
           break
-        case 'AGRIBANK':
+        case "AGRIBANK":
           data = await REST_API.transferToAgribank(form_data)
           break
         default:
           break
       }
+    } else {
+      openNotification("Thông báo từ hệ thống", "Có lỗi xảy ra trong biểu mẫu!")
+      return
     }
     if (data && data.success) {
-      openNotification('Thông báo từ hệ thống', 'Chuyển khoản thành công!')
+      openNotification("Thông báo từ hệ thống", "Chuyển khoản thành công!")
       form.resetFields()
       setIsDone(true)
       setCurrentProgress(2)
     } else {
+      console.log(data)
       openNotification(
-        'Thông báo từ hệ thống',
-        data.message || 'Mã OTP không hợp lệ!'
+        "Thông báo từ hệ thống",
+        data.message || "Mã OTP không hợp lệ!"
       )
       return
     }
@@ -319,11 +311,11 @@ const InternalBankTransfer = (props) => {
     const otp = await REST_API.getCode(email)
     if (otp && otp.success) {
       openNotification(
-        'Thông báo từ hệ thống',
-        'Đã gửi mã OTP về email cá nhân!'
+        "Thông báo từ hệ thống",
+        "Đã gửi mã OTP về email cá nhân!"
       )
     } else {
-      openNotification('Thông báo từ hệ thống', 'Lỗi khi gửi OTP!')
+      openNotification("Thông báo từ hệ thống", "Lỗi khi gửi OTP!")
       return
     }
   }
@@ -337,15 +329,12 @@ const InternalBankTransfer = (props) => {
       }
       const data = await REST_API.addReceiver(dataInput)
       if (data && data.success) {
-        message.info('Đã lưu!')
+        message.info("Đã lưu!")
       } else {
-        openNotification(
-          'Thông báo từ hệ thống',
-          data.message
-        )
+        openNotification("Thông báo từ hệ thống", data.message)
       }
     }
-    props.history.push('/')
+    props.history.push("/")
   }
   //
   return (
@@ -356,13 +345,12 @@ const InternalBankTransfer = (props) => {
             title={
               <div
                 style={{
-                  width: '71vw',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
+                  width: "71vw",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}>
                 <h3>Nhập thông tin</h3>
-                <h4 style={{ color: 'rgb(24, 144, 255)' }}>
+                <h4 style={{ color: "rgb(24, 144, 255)" }}>
                   <b>Chuyển khoản liên ngân hàng</b>
                 </h4>
               </div>
@@ -372,9 +360,8 @@ const InternalBankTransfer = (props) => {
                 <div className='form_info'>
                   <Form {...layout} name='transfer-form' form={form}>
                     <Form.Item
-                      name='numberResource'
-                      label={<b>Tài khoản nguồn</b>}
-                    >
+                      name='numberSender'
+                      label={<b>Tài khoản nguồn</b>}>
                       <AccountSelect arr={listAccount} />
                     </Form.Item>
                     <Divider />
@@ -386,31 +373,30 @@ const InternalBankTransfer = (props) => {
                           </Form.Item>
                         </Col>
                         <Col
-                          span={optionReceiver === 'Danh sách đã lưu' ? 16 : 15}
-                        >
-                          {optionReceiver === 'Danh sách đã lưu' ? (
+                          span={
+                            optionReceiver === "Danh sách đã lưu" ? 16 : 15
+                          }>
+                          {optionReceiver === "Danh sách đã lưu" ? (
                             <Form.Item
                               name='numberReceiver'
                               hasFeedback
-                              validateStatus={validateStatus}
-                            >
+                              validateStatus={validateStatus}>
                               <AccountReceiver arr={listAccountReceiver} />
                             </Form.Item>
                           ) : (
                             <Form.Item
                               name='newNumberReceiver'
                               hasFeedback
-                              validateStatus={validateStatus}
-                            >
+                              validateStatus={validateStatus}>
                               <InputNumber
                                 type='number'
                                 min={1}
-                                style={{ width: '100%' }}
+                                style={{ width: "100%" }}
                               />
                             </Form.Item>
                           )}
                         </Col>
-                        {optionReceiver !== 'Danh sách đã lưu' && (
+                        {optionReceiver !== "Danh sách đã lưu" && (
                           <Col span={1} className='search-button'>
                             <Form.Item>
                               <Tooltip title='search'>
@@ -433,15 +419,14 @@ const InternalBankTransfer = (props) => {
                         min={10000}
                         step={10000}
                         suffix={<b>| VND</b>}
-                        style={{ width: '100%' }}
+                        style={{ width: "100%" }}
                       />
                     </Form.Item>
                     <Divider />
                     <Form.Item
                       name='isSenderPaidFee'
-                      label={<b>Thanh toán phí</b>}
-                    >
-                      <Radio.Group defaultValue={'isReceiverPaid'}>
+                      label={<b>Thanh toán phí</b>}>
+                      <Radio.Group defaultValue={"isReceiverPaid"}>
                         <Radio value='isSenderPaid'>Người gửi trả phí</Radio>
                         <Radio value='isReceiverPaid'>Người nhận trả phí</Radio>
                       </Radio.Group>
@@ -453,21 +438,19 @@ const InternalBankTransfer = (props) => {
                     <Divider />
 
                     <Form.Item
-                      style={{ display: 'flex', justifyContent: 'center' }}
-                    >
+                      style={{ display: "flex", justifyContent: "center" }}>
                       <Button
                         style={{
-                          margin: 'auto',
-                          width: '10vw',
-                          display: 'block',
+                          margin: "auto",
+                          width: "10vw",
+                          display: "block",
                         }}
                         type='primary'
                         htmlType='button'
                         onClick={() => {
                           checkForm()
                         }}
-                        loading={loading}
-                      >
+                        loading={loading}>
                         Tiếp tục
                       </Button>
                     </Form.Item>
@@ -481,8 +464,7 @@ const InternalBankTransfer = (props) => {
                   htmlType='button'
                   onClick={() => {
                     setCurrentProgress(0)
-                  }}
-                >
+                  }}>
                   Cập nhật
                 </Button>
               )
@@ -506,17 +488,16 @@ const InternalBankTransfer = (props) => {
                   <Text>Chuyển khoản thành công!</Text>
                   <Button
                     style={{
-                      margin: 'auto',
-                      display: 'block',
+                      margin: "auto",
+                      display: "block",
                     }}
                     type='primary'
                     htmlType='button'
                     loading={loading}
-                    onClick={confirm}
-                  >
+                    onClick={confirm}>
                     {isNewReceiver
-                      ? 'Lưu người nhận cho lần kế tiếp'
-                      : 'Hoàn tất'}
+                      ? "Lưu người nhận cho lần kế tiếp"
+                      : "Hoàn tất"}
                   </Button>
                 </div>
               )
