@@ -8,7 +8,6 @@ import {
   Drawer,
   Result,
   Divider,
-  Button,
 } from "antd"
 import { Link, withRouter } from "react-router-dom"
 import {
@@ -16,6 +15,7 @@ import {
   LogoutOutlined,
   UserSwitchOutlined,
   SmileOutlined,
+  LoginOutlined
 } from "@ant-design/icons"
 import { REST_API } from "../../config/api"
 const { Paragraph } = Typography
@@ -123,8 +123,8 @@ const RightMenu = (props) => {
         </>
       ) : (
         <div key='login'>
-          <Link className='nav-link' to={"/login"}>
-            Đăng nhập
+          <Link type='' className='nav-link' to={"/login"}>
+            <LoginOutlined /> Đăng nhập
           </Link>
         </div>
       )}

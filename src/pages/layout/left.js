@@ -14,12 +14,11 @@ const LeftMenu = () => {
         </Link>
       </Menu.Item>
 
-      <SubMenu
-        title={
-          <span>
-            <b>ABOUT US</b>
-          </span>
-        }></SubMenu>
+      <Menu.Item key='mail'>
+        <Link className='nav-link' to={"/aboutUs"}>
+          <b>ABOUT US</b>
+        </Link>
+      </Menu.Item>
     </Menu>
   ) : localStorage.getItem("loggedIn") === "true" &&
     localStorage.getItem("type") === "employee" ? (

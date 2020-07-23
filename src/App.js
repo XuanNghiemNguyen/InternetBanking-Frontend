@@ -29,7 +29,8 @@ import {
   Deposit,
   SendHistory,
   ReceiveHistory,
-  DebtHistory
+  DebtHistory,
+  AboutUs
 } from './components/index'
 const { Header, Content, Footer } = Layout
 
@@ -45,6 +46,7 @@ const App = () => {
           <Content className='mainBody'>
             <Switch>
               <Route exact path='/' component={HomePage} />
+              <Route exact path='/aboutUs' component={AboutUs} />
               <Route
                 path='/getOTPCode'
                 render={(props) => <GetCodeOTP {...props} />}
