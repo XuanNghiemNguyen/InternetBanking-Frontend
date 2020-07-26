@@ -1,0 +1,10 @@
+.manage-employee{
+    flex: 1;
+    flex-direction: 'column';
+    margin: 50px;
+    padding: 20px;
+    border-style: outset;
+}
+.table{
+    
+}

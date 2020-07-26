@@ -32,6 +32,7 @@ import {
   DebtHistory,
   AboutUs
 } from './components/index'
+import ManageEmployee from './pages/Admin/employeeList'
 const { Header, Content, Footer } = Layout
 
 const App = () => {
@@ -57,8 +58,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <InternalBankTransfer {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -67,8 +68,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <InterbankTransfer {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -77,8 +78,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ChangePassword {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -87,8 +88,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <Redirect to='/' />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -97,8 +98,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListAccount {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -106,10 +107,10 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtReminder {...props} />
-                
+
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -117,75 +118,85 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtList {...props} />
-                
+
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
-              path='/listReceiver'
+                path='/listReceiver'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListReceiver {...props} />
-                    ) : (
+                  ) : (
                       <LoginPage {...props} />
                     )
                 }}
               >
               </Route>
               <Route
-              path='/transactionReceive'
+                path='/transactionReceive'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <HistoryReceive {...props} />
-                    ) : (
+                  ) : (
                       <LoginPage {...props} />
                     )
                 }}
               >
               </Route>
               <Route
-              path='/transactionSend'
+                path='/transactionSend'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <HistorySend {...props} />
-                    ) : (
+                  ) : (
                       <LoginPage {...props} />
                     )
                 }}
               >
               </Route>
               <Route
-              path='/transactionDebt'
+                path='/transactionDebt'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <HistoryDebt {...props} />
-                    ) : (
+                  ) : (
                       <LoginPage {...props} />
                     )
                 }}
               >
               </Route>
               <Route
-              path='/listReceiver'
+                path='/listReceiver'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ListReceiver {...props} />
-                    ) : (
+                  ) : (
                       <LoginPage {...props} />
                     )
                 }}
               >
               </Route>
+              <Route
+                path='/employee'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ManageEmployee {...props} />
+                  ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              ></Route>
               <Route
                 path='/forgot-password'
                 render={(props) => {
                   return localStorage.getItem('codeSent') === 'true' ? (
                     <ForgotPassword {...props} />
                   ) : (
-                    <GetCodeOTP {...props} />
-                  )
+                      <GetCodeOTP {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -194,8 +205,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <NewUser {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -204,28 +215,28 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <Deposit {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
-               <Route
+              <Route
                 path='/sendHistory'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <SendHistory {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
-               <Route
+              <Route
                 path='/receiveHistory'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <ReceiveHistory {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
@@ -234,8 +245,8 @@ const App = () => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtHistory {...props} />
                   ) : (
-                    <LoginPage {...props} />
-                  )
+                      <LoginPage {...props} />
+                    )
                 }}
               ></Route>
               <Route
