@@ -14,7 +14,7 @@ const LeftMenu = () => {
         </Link>
       </Menu.Item>
 
-      <Menu.Item key='mail'>
+      <Menu.Item key='aboutus'>
         <Link className='nav-link' to={"/aboutUs"}>
           <b>ABOUT US</b>
         </Link>
@@ -89,10 +89,10 @@ const LeftMenu = () => {
             </span>
           }>
           <MenuItemGroup title='Người dùng'>
-            <Menu.Item key='setting:1'>
+            <Menu.Item key='u-setting:1'>
               <Link to={"/listAccount"}>Danh sách tài khoản</Link>
             </Menu.Item>
-            <Menu.Item key='setting:2'>
+            <Menu.Item key='u-setting:2'>
               <Link to={"/listReceiver"}>Danh sách người nhận</Link>
             </Menu.Item>
           </MenuItemGroup>
@@ -104,31 +104,31 @@ const LeftMenu = () => {
             </span>
           }>
           <MenuItemGroup title='Chuyển khoản'>
-            <Menu.Item key='setting:3'>
+            <Menu.Item key='u-setting:3'>
               <Link to={"/interbank-transfer"}>Chuyển khoản nội bộ</Link>
             </Menu.Item>
-            <Menu.Item key='setting:4'>
+            <Menu.Item key='u-setting:4'>
               <Link to={"/internal-bank-transfer"}>
                 Chuyển khoản liên ngân hàng
         </Link>
             </Menu.Item>
           </MenuItemGroup>
           <MenuItemGroup title='Nhắc nợ'>
-            <Menu.Item key='setting:5'>
+            <Menu.Item key='u-setting:5'>
               <Link to={"/debtReminder"}>Tạo nhắc nợ</Link>
             </Menu.Item>
-            <Menu.Item key='setting:6'>
+            <Menu.Item key='u-setting:6'>
               <Link to={"/debtList"}>Danh sách nhắc nợ</Link>
             </Menu.Item>
           </MenuItemGroup>
           <MenuItemGroup title='Lịch sử giao dịch'>
-            <Menu.Item key='setting:7'>
+            <Menu.Item key='u-setting:7'>
               <Link to={"/transactionReceive"}>Nhận tiền</Link>
             </Menu.Item>
-            <Menu.Item key='setting:8'>
+            <Menu.Item key='u-setting:8'>
               <Link to={"/transactionSend"}>Chuyển khoản</Link>
             </Menu.Item>
-            <Menu.Item key='setting:9'>
+            <Menu.Item key='u-setting:9'>
               <Link to={"/transactionDebt"}>Thanh toán nhắc nợ</Link>
             </Menu.Item>
           </MenuItemGroup>

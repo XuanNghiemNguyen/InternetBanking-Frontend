@@ -100,11 +100,9 @@ const RightMenu = (props) => {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
+        display: "flex"
       }}>
-      <span>{currentUser && "Xin chào, ".concat(currentUser.name)}</span>
+      <span style={{ marginRight: 10 }}>{currentUser && "Xin chào, ".concat(currentUser.name)}</span>
       {localStorage.getItem("access-token") ? (
         <>
           <div key='logout'>
