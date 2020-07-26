@@ -12,6 +12,5 @@
   display: flex;
 }
 .rightMenu {
-  min-width: 16vw;
   margin-right: 10px
 }

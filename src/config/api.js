@@ -39,7 +39,7 @@ class API {
         if (
           error.response.data.code === 425
         ) {
-          localStorage.clear()  
+          localStorage.clear()
           return Promise.reject(error)
         }
 
@@ -77,6 +77,7 @@ class API {
     this.debtHistory = this.debtHistory.bind(this)
     this.getNotification = this.getNotification.bind(this)
     this.readNotification = this.readNotification.bind(this)
+    this.getEmployeeList = this.getEmployeeList.bind(this)
   }
   createUser = async (info) => {
     console.log(info)
@@ -562,6 +563,22 @@ class API {
   readNotification = async () => {
     return await this.instance
       .get(`notifications/read`)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getEmployeeList = async (email) => {
+    console.log(email)
+    return await this.instance
+      .get(`admin/getEmployee`, { email })
       .then((response) => {
         return response.data || error_exception()
       })

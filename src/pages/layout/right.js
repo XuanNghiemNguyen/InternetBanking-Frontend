@@ -15,6 +15,7 @@ import {
   LogoutOutlined,
   UserSwitchOutlined,
   SmileOutlined,
+  LoginOutlined
 } from "@ant-design/icons"
 import { REST_API } from "../../config/api"
 const { Paragraph } = Typography
@@ -99,11 +100,9 @@ const RightMenu = (props) => {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
+        display: "flex"
       }}>
-      <span>{currentUser && "Xin chào, ".concat(currentUser.name)}</span>
+      <span style={{ marginRight: 10 }}>{currentUser && "Xin chào, ".concat(currentUser.name)}</span>
       {localStorage.getItem("access-token") ? (
         <>
           <div key='logout'>
@@ -122,8 +121,8 @@ const RightMenu = (props) => {
         </>
       ) : (
         <div key='login'>
-          <Link className='nav-link' to={"/login"}>
-            Đăng nhập
+          <Link type='' className='nav-link' to={"/login"}>
+            <LoginOutlined /> Đăng nhập
           </Link>
         </div>
       )}
