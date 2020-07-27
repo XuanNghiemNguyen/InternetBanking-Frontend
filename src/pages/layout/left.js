@@ -71,7 +71,7 @@ const LeftMenu = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key='exc'>
-            <Link className='nav-link' to={"/exchange"}>
+            <Link className='nav-link' to={"/reportTransaction"}>
               <b>QUẢN LÝ GIAO DỊCH</b>
             </Link>
           </Menu.Item>

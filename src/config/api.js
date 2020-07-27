@@ -1,16 +1,16 @@
-import axios from 'axios'
-import store from '../redux'
-import { setCurrentUser } from '../redux/actions'
+import axios from "axios"
+import store from "../redux"
+import { setCurrentUser } from "../redux/actions"
 
 // axios.defaults.headers['access-token'] = localStorage.getItem('access-token')
 
 const error_exception = (err) => ({
   success: false,
-  message: err || 'Lỗi không xác định!',
+  message: err || "Lỗi không xác định!",
 })
 
 const HOST_URL =
-  'http://127.0.0.1:8080' || 'https://sacombank-internet-banking.herokuapp.com'
+  "http://127.0.0.1:8080" || "https://sacombank-internet-banking.herokuapp.com"
 class API {
   constructor() {
     this.instance = axios.create({
@@ -19,9 +19,9 @@ class API {
     })
     this.instance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem('access-token')
+        const token = localStorage.getItem("access-token")
         if (token) {
-          config.headers['access-token'] = token
+          config.headers["access-token"] = token
         }
         // config.headers['Content-Type'] = 'application/json';
         return config
@@ -36,26 +36,25 @@ class API {
       },
       async (error) => {
         const originalRequest = error.config
-        if (
-          error.response.data.code === 425
-        ) {
+        if (error.response.data.code === 425) {
           localStorage.clear()
           return Promise.reject(error)
         }
 
         if (error.response.status === 421 && !originalRequest._retry) {
           originalRequest._retry = true
-          const refreshToken = localStorage.getItem('refresh-token')
-          const accessToken = localStorage.getItem('access-token')
+          const refreshToken = localStorage.getItem("refresh-token")
+          const accessToken = localStorage.getItem("access-token")
           return await this.instance
-            .post('/refreshToken', {
+            .post("/refreshToken", {
               refreshToken,
-              accessToken
+              accessToken,
             })
             .then((res) => {
               if (res.status === 200) {
-                localStorage.setItem('access-token', res.data.newAccessToken)
-                this.instance.defaults.headers['access-token'] = res.data.newAccessToken
+                localStorage.setItem("access-token", res.data.newAccessToken)
+                this.instance.defaults.headers["access-token"] =
+                  res.data.newAccessToken
                 return this.instance(originalRequest)
               }
             })
@@ -158,7 +157,7 @@ class API {
   // Check Backend
   checkActive = async () => {
     return await this.instance
-      .get('/')
+      .get("/")
       .then((res) => {
         console.log(res)
         return res
@@ -171,7 +170,7 @@ class API {
   // Lấy lại access-token
   checkActive = async () => {
     return await this.instance
-      .get('/')
+      .get("/")
       .then((res) => {
         console.log(res)
         return res
@@ -185,25 +184,25 @@ class API {
   login = async (email, password, remember) => {
     const currentUser = remember ? { email, password } : null
     return await this.instance
-      .post('/login', { email, password })
+      .post("/login", { email, password })
       .then((response) => {
         store.dispatch(setCurrentUser(currentUser))
-        localStorage.setItem('access-token', response.data.token)
+        localStorage.setItem("access-token", response.data.token)
         const { name, email, type } = response.data.user
-        localStorage.setItem('refresh-token', response.data.user.refreshToken)
+        localStorage.setItem("refresh-token", response.data.user.refreshToken)
         const userInfo = {
           name,
           email,
           loginAt: new Date(),
         }
-        localStorage.setItem('user-info', JSON.stringify(userInfo))
-        localStorage.setItem('loggedIn', true)
-        localStorage.setItem('type', type)
+        localStorage.setItem("user-info", JSON.stringify(userInfo))
+        localStorage.setItem("loggedIn", true)
+        localStorage.setItem("type", type)
         return response.data || error_exception()
       })
       .catch((error) => {
         if (error.response) {
-          localStorage.setItem('loggedIn', false)
+          localStorage.setItem("loggedIn", false)
           return error.response.data || error_exception()
         } else {
           console.log(error)
@@ -228,7 +227,7 @@ class API {
         }
       })
   }
-  //Lấy thông tin của người dùng 
+  //Lấy thông tin của người dùng
   getUserByEmail = async (email) => {
     return await this.instance
       .get(`/users/getUserByEmail?email=${email}`)
@@ -246,7 +245,7 @@ class API {
   }
   verifyOTP = async (email, code) => {
     return await this.instance
-      .post('/verifyOTP', { email, code })
+      .post("/verifyOTP", { email, code })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -279,13 +278,13 @@ class API {
 
   // Lấy mã OTP
   getCode = async (email) => {
-    localStorage.setItem('codeSent', false)
+    localStorage.setItem("codeSent", false)
     return await this.instance
-      .post('/getOTP', {
+      .post("/getOTP", {
         email,
       })
       .then((response) => {
-        localStorage.setItem('codeSent', true)
+        localStorage.setItem("codeSent", true)
         return response.data || error_exception()
       })
       .catch((error) => {
@@ -301,9 +300,9 @@ class API {
   // Đổi mật khẩu dùng OTP (quên mật khẩu)
   forgotPassword = async (email, code, new_password) => {
     return await this.instance
-      .post('/forgotPassword', { email, code, new_password })
+      .post("/forgotPassword", { email, code, new_password })
       .then((response) => {
-        localStorage.setItem('loggedIn', false)
+        localStorage.setItem("loggedIn", false)
         return response.data || error_exception()
       })
       .catch((error) => {
@@ -319,10 +318,10 @@ class API {
   //Đổi mật khẩu
   changePassword = async (old_password, new_password) => {
     return await this.instance
-      .post('/users/changePassword', { old_password, new_password })
+      .post("/users/changePassword", { old_password, new_password })
       .then((response) => {
-        localStorage.setItem('access-token', 'need login')
-        localStorage.setItem('loggedIn', false)
+        localStorage.setItem("access-token", "need login")
+        localStorage.setItem("loggedIn", false)
         return response.data || error_exception()
       })
       .catch((error) => {
@@ -338,7 +337,7 @@ class API {
   //Lấy danh sách người nhận (Bao gồm cả tài khoản nội bộ và liên ngân hàng)
   getReceivers = async () => {
     return await this.instance
-      .get('/users/receivers')
+      .get("/users/receivers")
       .then((response) => {
         return response.data || error_exception()
       })
@@ -355,7 +354,7 @@ class API {
   //Cập nhật danh sách người nhận (là mảng do FE tự check thông qua API)
   updateReceivers = async (receivers) => {
     return await this.instance
-      .post('users/receivers/update', { receivers })
+      .post("users/receivers/update", { receivers })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -372,7 +371,7 @@ class API {
   //Thêm một người nhận mới (hiện tại đang sử dụng trong lưu tài khoản lạ khi chuyển khoản)
   addReceiver = async (receiver) => {
     return await this.instance
-      .post('users/receivers/add', { receiver })
+      .post("users/receivers/add", { receiver })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -454,7 +453,7 @@ class API {
   sendDebt = async (info) => {
     console.log(info)
     return await this.instance
-      .post('users/sendDebt', { info })
+      .post("users/sendDebt", { info })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -486,7 +485,7 @@ class API {
 
   getDebt = async () => {
     return await this.instance
-      .get('users/getDebt')
+      .get("users/getDebt")
       .then((response) => {
         return response.data || error_exception()
       })
@@ -501,7 +500,7 @@ class API {
   }
   cancelDebt = async (info, email) => {
     return await this.instance
-      .post('users/cancelDebt', { info, email })
+      .post("users/cancelDebt", { info, email })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -517,7 +516,7 @@ class API {
   payDebt = async (info) => {
     console.log(info)
     return await this.instance
-      .post('users/payDebt', { info })
+      .post("users/payDebt", { info })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -532,7 +531,7 @@ class API {
   }
   getTransaction = async () => {
     return await this.instance
-      .get('users/getTransaction')
+      .get("users/getTransaction")
       .then((response) => {
         return response.data || error_exception()
       })
@@ -547,7 +546,7 @@ class API {
   }
   getNotification = async () => {
     return await this.instance
-      .get('notifications/all')
+      .get("notifications/all")
       .then((response) => {
         return response.data || error_exception()
       })
@@ -579,6 +578,21 @@ class API {
     console.log(email)
     return await this.instance
       .get(`admin/getEmployee`, { email })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getReportTransaction = async (dataInput) => {
+    return await this.instance
+      .post("users/getReportTransaction", { ...dataInput })
       .then((response) => {
         return response.data || error_exception()
       })
