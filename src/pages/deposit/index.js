@@ -21,7 +21,6 @@ const tailLayout =[ {
   const Deposit = () => {
    
       const [form] = Form.useForm()
-      const stk =form.getFieldValue("stk")
       const onFinish = async (values) => {
         const stk =form.getFieldValue("stk")
         const amount = form.getFieldValue("amount")

@@ -56,7 +56,7 @@ const tailLayout =[ {
    
     return(
       
-      
+      <div className="createFrame">
       <Form
           
           {...layout}
@@ -70,7 +70,9 @@ const tailLayout =[ {
          
           
         >
-          
+          <h1>
+            <b className='createUser_title'>Tạo tài khoản</b>
+          </h1>
           <Form.Item
             label="Name"
             name="name"
@@ -139,8 +141,10 @@ const tailLayout =[ {
               Submit
             </Button>
           </Form.Item>
-        </Form>
+        </Form> 
+        </div>
         )
+       
   }
   
 export default NewUser
