@@ -19,6 +19,8 @@ import SendHistory from '../pages/sendHistory/index'
 import ReceiveHistory from '../pages/receiveHistory/index'
 import DebtHistory from '../pages/debtHistory/index'
 import AboutUs from '../pages/aboutUs/index'
+import ReportTransacion from '../pages/reportTransaction'
+
 export {
   Navbar,
   GetCodeOTP,
@@ -40,5 +42,6 @@ export {
   SendHistory,
   ReceiveHistory,
   DebtHistory,
-  AboutUs
+  AboutUs,
+  ReportTransacion
 }

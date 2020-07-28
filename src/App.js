@@ -30,7 +30,8 @@ import {
   SendHistory,
   ReceiveHistory,
   DebtHistory,
-  AboutUs
+  AboutUs,
+  ReportTransacion
 } from './components/index'
 import ManageEmployee from './pages/Admin/employeeList'
 const { Header, Content, Footer } = Layout
@@ -244,6 +245,16 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
                     <DebtHistory {...props} />
+                  ) : (
+                      <LoginPage {...props} />
+                    )
+                }}
+              ></Route>
+              <Route
+                path='/reportTransaction'
+                render={(props) => {
+                  return localStorage.getItem('loggedIn') === 'true' ? (
+                    <ReportTransacion {...props} />
                   ) : (
                       <LoginPage {...props} />
                     )

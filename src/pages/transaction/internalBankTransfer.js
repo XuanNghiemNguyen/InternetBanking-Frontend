@@ -279,6 +279,7 @@ const InternalBankTransfer = (props) => {
       const number = form_data.numberReceiver.toString().split('_')[0]
       const bank_name = form_data.numberReceiver.toString().split('_')[1]
       form_data.numberReceiver = parseInt(number)
+      console.log(form_data)
       switch (bank_name.toUpperCase()) {
         case "HHBANK":
           data = await REST_API.transferToHHBank(form_data)
