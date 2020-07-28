@@ -19,7 +19,7 @@ const tailLayout =[ {
 }];
 
 
-  const CreateUser = () => {
+  const NewUser = () => {
     const [form] = Form.useForm()
     const onFinish = async (values) => {
       const email = form.getFieldValue("email")
@@ -79,7 +79,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Hãy nhập vào tên!',
+                message: 'Please input your name!',
               },
             ]}
             
@@ -93,7 +93,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Hãy nhập vào email!',
+                message: 'Please input your email!',
               },
             ]}
           >
@@ -105,7 +105,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Hãy nhập vào số điện thoại!',
+                message: 'Please input your phone!',
               },
             ]}
           >
@@ -117,7 +117,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Hãy nhập vào mã pin!',
+                message: 'Please input your pin!',
               },
             ]}
           >
@@ -129,7 +129,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Hãy nhập vào mật khẩu!',
+                message: 'Please input your password!',
               },
             ]}
           >
@@ -147,4 +147,4 @@ const tailLayout =[ {
        
   }
   
-export default CreateUser
+export default NewUser

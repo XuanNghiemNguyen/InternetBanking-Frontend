@@ -1,14 +1,18 @@
 #createuser {
     width: 610px;
-    margin: 70px;
+    margin: 50px;
     padding: 5px 20px !important;
     margin-left: 380px;
     border-style: outset;
-   
+    color: white;
   }
-  
+  .createFrame{
+    background-image: url('../../background/bg2.jpg');
+    min-height: 60vh;
+    padding: 10vh 2vw;
+  }
   .createUser_title {
-    color: blue;
+    color: whitesmoke;
     font-size: 25px;
     margin-bottom: 20px;
   }
