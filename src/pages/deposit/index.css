@@ -1,17 +1,23 @@
 #deposit {
     width: 600px;
     margin: 90px;
-    padding: 20px;
-    margin-left: 380px;
-   margin-top: 140px;
+    padding: 5px 20px !important;
+    margin-left: 390px;
+   margin-top: 100px;
+   border-style: outset;
   }
 #deposit_stk{
     width: 410px;
-    left:   1px
+    
 }
+.deposit_title {
+    color: blue;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 #deposit_amount{
     width: 411px;
-    left:   54px
+    left : 50px 
 }
 #deposit_btn{
     left:463px

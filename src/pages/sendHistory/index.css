@@ -5,6 +5,11 @@
     margin-left: 380px;
    margin-top: 40px;
   }
+  .sendHistory_title {
+    color: blue;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 #sendhistory_stk{
     width: 410px;
     left:   1px
@@ -14,13 +19,13 @@
     left: 487px;
 }
 .hide{
-    visibility: hidden;
+   display:none
 }
 .show{
-    visibility:1 ;
+        display:block ;
 }
 #senderListHistory{
     width:700px;
     margin-left: -40px;
-    margin-top: -30px;
+    margin-top: 40px;
 }
