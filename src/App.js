@@ -25,7 +25,7 @@ import {
   HistoryDebt,
   DebtReminder,
   DebtList,
-  CreateUser,
+  NewUser,
   Deposit,
   SendHistory,
   ReceiveHistory,
@@ -38,7 +38,7 @@ const { Header, Content, Footer } = Layout
 
 const App = () => {
   return (
-    <Router basename="/employee">
+    <Router>
       <div className='App'>
         <Layout>
           <Header className='header'>
@@ -201,11 +201,10 @@ const App = () => {
                 }}
               ></Route>
               <Route
-              basename="/employee"
                 path='/createUser'
                 render={(props) => {
                   return localStorage.getItem('loggedIn') === 'true' ? (
-                    <CreateUser {...props} />
+                    <NewUser {...props} />
                   ) : (
                       <LoginPage {...props} />
                     )

@@ -1,14 +1,9 @@
 #receivehistory {
     width: 600px;
     margin: 90px;
-    padding:  20px ;
+    padding: 20px;
     margin-left: 380px;
    margin-top: 40px;
-  }
-  .receiveHistory_title {
-    color: blue;
-    font-size: 25px;
-    margin-bottom: 20px;
   }
 #receivehistory_stk{
     width: 410px;
@@ -27,5 +22,5 @@
 #receiverListHistory{
     width:800px;
     margin-left: -95px;
-    margin-top: 40px;
+    margin-top: -30px;
 }
