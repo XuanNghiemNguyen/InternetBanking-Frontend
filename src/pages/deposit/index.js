@@ -3,6 +3,7 @@ import React from 'react'
 import { REST_API } from '../../config/api'
 import './index.css'
 import { openNotification } from '../common/index'
+import 'antd/dist/antd.css';
 const layout = [{
   labelCol: {
     span: 8,
@@ -55,22 +56,21 @@ const tailLayout =[ {
       <Form
           
           {...layout}
-          form={form}
           name="deposit"
-          initialValues={{
-            remember: true,
-          }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-         
+          form={form}
         >
+          <h1>
+            <b className='deposit_title'>Nạp tiền nội bộ</b>
+          </h1>
           <Form.Item
             label="idAccount/Email"
             name="stk"
             rules={[
               {
                 required: true,
-                message: 'Please input your id account or email!',
+                message: 'Hãy nhập vào số tài khoản hoặc email!',
               },
             ]}
             
@@ -84,7 +84,7 @@ const tailLayout =[ {
             rules={[
               {
                 required: true,
-                message: 'Please fill the amount of money!',
+                message: 'Hãy nhập vào số tiền!',
               },
             ]}
           >

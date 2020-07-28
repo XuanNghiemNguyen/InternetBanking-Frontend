@@ -9,6 +9,17 @@
     width: 410px;
     left:   1px
 }
+.outset{
+    width:600px;
+    border-style: outset;
+    padding: 10px;
+    height: 150px;
+}
+.debtHistory_title {
+    color: blue;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 #debthistory_btn{
     top: -55px;
     left: 487px;
@@ -18,9 +29,10 @@
 }
 .show{
     visibility:1 ;
+ 
 }
 #debtListHistory{
     width:800px;
     margin-left: -95px;
-    margin-top: -30px;
+    margin-top: 40px
 }

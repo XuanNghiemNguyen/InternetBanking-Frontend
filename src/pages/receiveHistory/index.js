@@ -102,13 +102,17 @@ const tailLayout =[ {
           onFinishFailed={onFinishFailed}
          
         >  
+         <div className='outset'>
+         <h1>
+            <b className='receiveHistory_title'>Lịch sử nhận tiền</b>
+          </h1>
         <Form.Item
             label="STK"
             name="stk"
             rules={[
               {
                 required: true,
-                message: 'Please input your id account !',
+                message: 'Hãy nhập vào số tài khoản!',
               },
             ]}
             
@@ -120,7 +124,7 @@ const tailLayout =[ {
             <Button type="primary" htmlType="submit" id="receivehistory_btn">
               Submit
             </Button>
-          </Form.Item>
+          </Form.Item></div>
           <div id='receiverListHistory' className="hide">
       <Table
         scroll={{ y: '80vh' }}
