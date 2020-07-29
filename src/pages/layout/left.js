@@ -23,40 +23,27 @@ const LeftMenu = () => {
   ) : localStorage.getItem("loggedIn") === "true" &&
     localStorage.getItem("type") === "employee" ? (
         <Menu mode='horizontal'>
-          <Menu.Item key='mail'>
+          <Menu.Item key='em-home'>
             <Link className='nav-link' to={"/home"}>
               <b>TRANG CHỦ</b>
             </Link>
           </Menu.Item>
-
-          <SubMenu
-            title={
-              <span>
-                <b>DỊCH VỤ</b>
-              </span>
-            }>
-            <MenuItemGroup title='Nạp tiền'>
-              <Menu.Item key='setting:1'>
-                <Link to={"/deposit"}>Nạp tiền nội bộ</Link>
-              </Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup title='Tạo tài khoản'>
-              <Menu.Item key='setting:2'>
-                <Link to={"/createUser"}>Tạo tài khoản</Link>
-              </Menu.Item>
-            </MenuItemGroup>
-            <MenuItemGroup title='Lịch sử giao dịch'>
-              <Menu.Item key='setting:3'>
-                <Link to={"/receiveHistory"}>Nhận Tiền</Link>
-              </Menu.Item>
-              <Menu.Item key='setting:4'>
-                <Link to={"/sendHistory"}>Chuyển khoản</Link>
-              </Menu.Item>
-              <Menu.Item key='setting:5'>
-                <Link to={"/debtHistory"}>Thanh toán nhắc nợ</Link>
-              </Menu.Item>
-            </MenuItemGroup>
-          </SubMenu>
+          <Menu.Item key='em-createCus'>
+            <Link className='nav-link' to={"/em-createCustomer"}>
+              <b>TẠO TÀI KHOẢN</b>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key='em-depositCus'>
+            <Link className='nav-link' to={"/em-depositCustomer"}>
+              <b>NẠP TIỀN</b>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key='em-historyCus'>
+            <Link className='nav-link' to={"/em-historyCustomer"}>
+              <b>LỊCH SỬ GIAO DỊCH</b>
+            </Link>
+          </Menu.Item>
+          
         </Menu>
       ) : localStorage.getItem("type") === "admin" ? (
         <Menu mode='horizontal'>

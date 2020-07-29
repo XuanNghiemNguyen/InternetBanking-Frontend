@@ -13,11 +13,16 @@ const ManageEmployee = (props) => {
     const [editingEmpName, setEditingEmpName] = useState('')
     const [editingEmpEmail, setEditingEmpEmail] = useState('')
     const [editingEmpPhone, setEditingEmpPhone] = useState('')
-    const [addEmpName, setAddEmpName] = useState('')
-    const [addEmpEmail, setAddEmpEmail] = useState('')
-    const [addEmpPhone, setAddEmpPhone] = useState('')
-    const [addEmpPIN, setAddEmpPIN] = useState('')
-    const [addEmpPassword, setAddEmpPassword] = useState('')
+    const [lockEmpName, setLockEmpName] = useState('')
+    const [lockEmpEmail, setLockEmpEmail] = useState('')
+    const [lockEmpPhone, setLockEmpPhone] = useState('')
+    const [lockEmpEnable, setLockEmpEnable] = useState()
+    const [lockEmpId, setLockEmpId] = useState('')
+    const [addEmpName, setAddEmpName] = useState('TEST')
+    const [addEmpEmail, setAddEmpEmail] = useState('test@gmail.com')
+    const [addEmpPhone, setAddEmpPhone] = useState('0909090909')
+    const [addEmpPIN, setAddEmpPIN] = useState('123456')
+    const [addEmpPassword, setAddEmpPassword] = useState('12345678')
     const [canSubmit, setCanSubmit] = useState(false)
     const edit = async (data) => {
         const results = await REST_API.editEmployee(data)
@@ -70,12 +75,19 @@ const ManageEmployee = (props) => {
                 }))
                 setEmp(table)
             }
+            setAddEmpName('')
+            setAddEmpEmail('')
+            setAddEmpPhone('')
+            setAddEmpPIN('')
+            setAddEmpPassword('')
+        }
+        else {
+            message.info(results.message)
         }
     }
     useEffect(() => {
         ; (async () => {
             const getEmp = await REST_API.getEmployeeList(email)
-            console.log(getEmp)
             if (getEmp && getEmp.results) {
                 const table = getEmp.results.map((element, index) => ({
                     key: index,
@@ -112,13 +124,6 @@ const ManageEmployee = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size='middle'>
-                    {/* <Button
-                        onClick={() => {
-
-                        }}
-                    >
-                        {text.isEnabled ? 'Khóa' : 'Mở khóa'}
-                    </Button> */}
                     <Button
                         onClick={() => {
                             setModalVisibility(true)
@@ -132,18 +137,23 @@ const ManageEmployee = (props) => {
                     <Button
                         onClick={() => {
                             setModalConfirmLock(true)
+                            setLockEmpName(text.name)
+                            setLockEmpPhone(text.phone)
+                            setLockEmpEmail(text.email)
+                            setLockEmpEnable(text.isEnabled)
+                            setLockEmpId(text.id)
                         }}
                     >
                         {text.isEnabled ? 'Khóa' : 'Mở khóa'}
                     </Button>
                     <Modal
-                        title={<h2 style={{ width: '80%' }}>Bạn có chắc chắn muốn {text.isEnabled === true ? 'khóa' : 'mở khóa cho'} nhân viên này?</h2>
+                        title={<h2 style={{ width: '80%' }}>Bạn có chắc chắn muốn {lockEmpEnable === true ? 'khóa' : 'mở khóa cho'} nhân viên này?</h2>
                         }
                         visible={confirmLock}
                         onOk={() => {
                             setModalConfirmLock(false)
                             const data = {
-                                id: text.id
+                                id: lockEmpId
                             }
                             lockEmp(data)
                         }}
@@ -158,7 +168,7 @@ const ManageEmployee = (props) => {
                             alignItems: 'baseline',
                         }}>
                             <p style={{ marginRight: 10 }}>Họ và tên:</p>
-                            <p>{text.name}</p>
+                            <p>{lockEmpName}</p>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -167,7 +177,7 @@ const ManageEmployee = (props) => {
                             alignItems: 'baseline',
                         }}>
                             <p style={{ marginRight: 10 }}>Email:</p>
-                            <p>{text.email}</p>
+                            <p>{lockEmpEmail}</p>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -176,7 +186,7 @@ const ManageEmployee = (props) => {
                             alignItems: 'baseline',
                         }}>
                             <p style={{ marginRight: 10 }}>Số điện thoại:</p>
-                            <p>{text.phone}</p>
+                            <p>{lockEmpPhone}</p>
                         </div>
 
                     </Modal>
@@ -253,11 +263,7 @@ const ManageEmployee = (props) => {
                         }
                         AddEmployee(data)
                         setCanSubmit(false)
-                        setAddEmpName('')
-                        setAddEmpEmail('')
-                        setAddEmpPhone('')
-                        setAddEmpPIN('')
-                        setAddEmpPassword('')
+
                     }}
                     onCancel={() => {
                         setModalAddEmployee(false)

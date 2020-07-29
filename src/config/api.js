@@ -71,6 +71,8 @@ class API {
     this.cancelDebt = this.cancelDebt.bind(this)
     this.deposit = this.deposit.bind(this)
     this.createUser = this.createUser.bind(this)
+    this.getAccountByEmailOrNumber = this.getAccountByEmailOrNumber.bind(this)
+    this.depositCustomer = this.depositCustomer.bind(this)
     this.sendHistory = this.sendHistory.bind(this)
     this.receiveHistory = this.receiveHistory.bind(this)
     this.debtHistory = this.debtHistory.bind(this)
@@ -80,6 +82,89 @@ class API {
     this.editEmployee = this.editEmployee.bind(this)
     this.lockEmployee = this.lockEmployee.bind(this)
     this.AddEmployee = this.AddEmployee.bind(this)
+    this.getHistorySend = this.getHistorySend.bind(this)
+    this.getHistoryReceive = this.getHistoryReceive.bind(this)
+    this.getHistoryDept = this.getHistoryDept.bind(this)
+  }
+  getAccountByEmailOrNumber = async (info) => {
+    console.log(info)
+    return await this.instance
+      .post(`/employee/getAccount`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getHistorySend = async (info) => {
+    console.log(info)
+    return await this.instance
+      .post(`/employee/historySend`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getHistoryReceive = async (info) => {
+    console.log(info)
+    return await this.instance
+      .post(`/employee/historyReceive`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  getHistoryDept = async (info) => {
+    console.log(info)
+    return await this.instance
+      .post(`/employee/historyDept`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  depositCustomer = async (info) => {
+    console.log(info)
+    return await this.instance
+      .post(`/employee/deposit`, info)
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
   }
   createUser = async (info) => {
     console.log(info)
