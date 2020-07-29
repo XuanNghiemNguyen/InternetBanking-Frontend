@@ -49,7 +49,7 @@ const InterbankTransfer = (props) => {
         const { number } =
           data.results.find((item) => item.isPayment) ||
           data.results.filter((item) => !item.isPayment)[0]
-        form.setFieldsValue({ numberResource: number })
+        form.setFieldsValue({ numberSender: number })
         setListAccount(data.results)
       }
       const _data = await REST_API.getReceivers()
@@ -66,7 +66,7 @@ const InterbankTransfer = (props) => {
   }, [email])
 
   const onChangeAccountResource = (value) => {
-    form.setFieldsValue({ numberResource: value })
+    form.setFieldsValue({ numberSender: value })
   }
   const onChangeAccountReceiver = (value) => {
     form.setFieldsValue({ numberReceiver: value })
@@ -202,7 +202,7 @@ const InterbankTransfer = (props) => {
       return
     }
     const {
-      numberResource,
+      numberSender,
       numberReceiver,
       newNumberReceiver,
       amount,
@@ -219,7 +219,7 @@ const InterbankTransfer = (props) => {
       return
     }
     form_data = {
-      numberResource,
+      numberSender,
       numberReceiver: numberReceiver || newNumberReceiver,
       amount,
       isSenderPaidFee: !!isSenderPaidFee,
@@ -245,6 +245,7 @@ const InterbankTransfer = (props) => {
       return
     }
     form_data.code = otp
+    console.log(form_data)
     const data = await REST_API.internalTransfer(form_data)
     if (data && data.success) {
       openNotification('Thông báo từ hệ thống', 'Chuyển khoản thành công!')
@@ -317,7 +318,7 @@ const InterbankTransfer = (props) => {
                 <div className='form_info'>
                   <Form {...layout} name='transfer-form' form={form}>
                     <Form.Item
-                      name='numberResource'
+                      name='numberSender'
                       label={<b>Tài khoản nguồn</b>}
                     >
                       <AccountSelect arr={listAccount} />
