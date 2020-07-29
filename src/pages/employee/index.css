@@ -1,0 +1,29 @@
+.em_form {
+  background: white;
+  padding: 5px 30px !important;
+  border-style: outset;
+}
+.em_frame {
+  background-image: url('../../background/bg1.jpg');
+  min-height: 90vh;
+  padding: 15vh 30vw;
+}
+.title {
+  color: #004997;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.emForm_footer {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+}
+.em-form-button {
+  width: 100%;
+}
+.historyCustomer_frame {
+  min-height: 90vh;
+  margin: 10px;
+  padding: 20px;
+  border-style: outset;
+}
