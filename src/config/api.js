@@ -79,6 +79,9 @@ class API {
     this.getNotification = this.getNotification.bind(this)
     this.readNotification = this.readNotification.bind(this)
     this.getEmployeeList = this.getEmployeeList.bind(this)
+    this.editEmployee = this.editEmployee.bind(this)
+    this.lockEmployee = this.lockEmployee.bind(this)
+    this.AddEmployee = this.AddEmployee.bind(this)
     this.getHistorySend = this.getHistorySend.bind(this)
     this.getHistoryReceive = this.getHistoryReceive.bind(this)
     this.getHistoryDept = this.getHistoryDept.bind(this)
@@ -660,9 +663,38 @@ class API {
       })
   }
   getEmployeeList = async (email) => {
-    console.log(email)
     return await this.instance
       .get(`admin/getEmployee`, { email })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  editEmployee = async (data) => {
+    return await this.instance
+      .post(`admin/editEmployee`, { data })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
+  lockEmployee = async (data) => {
+    return await this.instance
+      .post(`admin/lockEmployee`, { data })
       .then((response) => {
         return response.data || error_exception()
       })
@@ -690,7 +722,23 @@ class API {
         }
       })
   }
+  AddEmployee = async (data) => {
+    return await this.instance
+      .post(`admin/addEmployee`, { data })
+      .then((response) => {
+        return response.data || error_exception()
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response.data || error_exception()
+        } else {
+          console.log(error)
+          return error_exception()
+        }
+      })
+  }
 }
+
 const REST_API = new API()
 
 export { REST_API }
