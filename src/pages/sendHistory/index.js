@@ -1,7 +1,7 @@
 import { Form,Input, Button } from 'antd';
 import React,{  useState } from 'react'
 import { REST_API } from '../../config/api'
-import { Table, Tag } from 'antd'
+import { Table } from 'antd'
 import './index.css'
 import { openNotification } from '../common/index'
 const columns = [
@@ -48,13 +48,13 @@ const tailLayout =[ {
       const [form] = Form.useForm()
       const onFinish = async (values) => {
         const stk =form.getFieldValue("stk")
-          if(parseFloat(stk)==stk && stk.length!=10){
+          if(parseFloat(stk)===stk && stk.length!=10){
             openNotification('Thất bại!','STK không hợp lệ, hãy nhập lại!')
             form.resetFields()
           }
         else{
         const data=await REST_API.sendHistory(values);
-        if(data.success==false){
+        if(data.success===false){
           openNotification('Thất bại!',data.message)
           form.resetFields()
         } else{

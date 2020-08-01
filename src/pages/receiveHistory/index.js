@@ -57,13 +57,13 @@ const tailLayout =[ {
       const [form] = Form.useForm()
       const onFinish = async (values) => {
         const stk =form.getFieldValue("stk")
-          if(parseFloat(stk)==stk && stk.length!=10){
+          if(parseFloat(stk)===stk && stk.length!=10){
             openNotification('Thất bại!','STK không hợp lệ, hãy nhập lại!')
             form.resetFields()
           }
         else{
         const data=await REST_API.receiveHistory(values);
-        if(data.success==false){
+        if(data.success===false){
         openNotification('Thất bại!',data.message)
           form.resetFields()
         } else{

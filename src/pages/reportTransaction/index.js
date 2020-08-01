@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import "./index.css"
-import { DatePicker, Select, Table, Tag, Typography } from "antd"
+import { DatePicker, Select, Table, Typography } from "antd"
 import { REST_API } from "../../config/api"
 
 const { Text } = Typography
