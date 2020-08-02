@@ -2,6 +2,10 @@
   "name": "internetbanking-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "12.18.2",
+    "npm": "6.14.5"
+  },
   "dependencies": {
     "antd": "^4.2.0",
     "axios": "^0.19.2",
