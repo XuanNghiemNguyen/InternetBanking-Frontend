@@ -6,7 +6,7 @@ import { openNotification } from '../../common/index'
 import { REST_API } from '../../../config/api'
 
 // const { Text } = Typography
-var onProcess = false
+let onProcess = false
 
 const GetOTPTransfer = (props) => {
   const currentDebt = props.data

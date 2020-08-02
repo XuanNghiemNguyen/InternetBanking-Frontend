@@ -13,13 +13,9 @@ import DebtList from "../pages/debtReminderManagement/debtList/index"
 import HistoryReceive from "../pages/transactionHistory/receive/index"
 import HistorySend from "../pages/transactionHistory/send"
 import HistoryDebt from "../pages/transactionHistory/paidDebt"
-import NewUser from "../pages/createUser/index"
-import Deposit from "../pages/deposit/index"
-import SendHistory from "../pages/sendHistory/index"
 import ReceiveHistory from "../pages/receiveHistory/index"
-import DebtHistory from "../pages/debtHistory/index"
 import AboutUs from "../pages/aboutUs/index"
-import ReportTransacion from "../pages/reportTransaction"
+import ReportTransacion from "../pages/Admin/reportTransaction"
 import CreateCustomer from "../pages/employee/createCustomer"
 import DepositCustomer from "../pages/employee/depositCustomer"
 import HistoryCustomer from "../pages/employee/historyCustomer"
@@ -40,11 +36,7 @@ export {
   HistoryDebt,
   HistorySend,
   HistoryReceive,
-  NewUser,
-  Deposit,
-  SendHistory,
   ReceiveHistory,
-  DebtHistory,
   AboutUs,
   ReportTransacion,
   CreateCustomer,

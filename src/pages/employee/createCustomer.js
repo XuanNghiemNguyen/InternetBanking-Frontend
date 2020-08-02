@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import "./index.css"
 import { Form, Input, Button } from "antd"
 import { UserOutlined, LockOutlined, PhoneOutlined, MailOutlined } from "@ant-design/icons"
 import { REST_API } from "../../config/api"
 import { openNotification } from "../common/index"
+/* eslint-disable */
 
 const phoneNumberVerify = new RegExp(
   /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
   'im'
 )
 
-var onProcess = false
+let onProcess = false
 const CreateCustomer = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [form] = Form.useForm()
