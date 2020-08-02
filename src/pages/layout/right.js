@@ -18,6 +18,8 @@ import {
   LoginOutlined
 } from "@ant-design/icons"
 import { REST_API } from "../../config/api"
+
+/* eslint-disable */
 const { Paragraph } = Typography
 
 let onProcess = false

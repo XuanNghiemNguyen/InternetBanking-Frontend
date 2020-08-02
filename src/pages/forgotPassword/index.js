@@ -5,7 +5,7 @@ import { Form, Input, Button } from 'antd';
 import { FieldNumberOutlined, LockOutlined } from '@ant-design/icons';
 import { REST_API } from '../../config/api';
 
-var onProcess = false;
+let onProcess = false;
 
 const ForgotPassword = (props) => {
 	const [isLoading, setIsLoading] = useState(false);

@@ -7,7 +7,7 @@ import { REST_API } from '../../config/api'
 import store from '../../redux'
 import { openNotification } from '../common/index'
 
-var onProcess = false
+let onProcess = false
 
 const LoginPage = (props) => {
   const [isLoading, setIsLoading] = useState(false)

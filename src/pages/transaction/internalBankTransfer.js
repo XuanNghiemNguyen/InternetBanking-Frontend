@@ -43,6 +43,7 @@ const InternalBankTransfer = (props) => {
   const [isSearching, setIsSearching] = useState(false)
   const [form] = Form.useForm()
   const [isDone, setIsDone] = useState(false)
+  /* eslint-disable */
   useEffect(() => {
     const getAccount = async () => {
       const data = await REST_API.getListAccount(email)
@@ -70,7 +71,7 @@ const InternalBankTransfer = (props) => {
     }
     getAccount()
   }, [email])
-
+  /* eslint-disable */
   const onChangeAccountResource = (value) => {
     form.setFieldsValue({ numberSender: value })
   }
@@ -186,12 +187,9 @@ const InternalBankTransfer = (props) => {
         <Select
           onChange={(value) => {
             onChangeAccountReceiver(value)
-          }}
-          >
+          }}>
           {arr.map((item, idx) => (
-            <Option
-              value={`${item.number}_${item.bank_name}`}
-              key={idx}>
+            <Option value={`${item.number}_${item.bank_name}`} key={idx}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span>
                   <b>{item.reminiscent_name}</b>
@@ -269,15 +267,15 @@ const InternalBankTransfer = (props) => {
     form_data.code = otp
     let data = {}
     if (form_data.receiverOption === "HHBANK") {
-      console.log('transfer to new acc of HHBANK')
+      console.log("transfer to new acc of HHBANK")
       data = await REST_API.transferToHHBank(form_data)
     } else if (form_data.receiverOption === "AGRIBANK") {
-      console.log('transfer to new acc of AGRIBANK')
+      console.log("transfer to new acc of AGRIBANK")
       data = await REST_API.transferToAgribank(form_data)
     } else if (form_data && isNaN(form_data.numberReceiver)) {
-      console.log('transfer to element in list ACC')
-      const number = form_data.numberReceiver.toString().split('_')[0]
-      const bank_name = form_data.numberReceiver.toString().split('_')[1]
+      console.log("transfer to element in list ACC")
+      const number = form_data.numberReceiver.toString().split("_")[0]
+      const bank_name = form_data.numberReceiver.toString().split("_")[1]
       form_data.numberReceiver = parseInt(number)
       console.log(form_data)
       switch (bank_name.toUpperCase()) {

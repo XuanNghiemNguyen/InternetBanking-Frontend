@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "./index.css"
 import { DatePicker, Select, Table, Typography } from "antd"
-import { REST_API } from "../../config/api"
+import { REST_API } from "../../../config/api"
 
 const { Text } = Typography
 const { RangePicker } = DatePicker
@@ -20,8 +20,8 @@ const ReportTransacion = () => {
         const items = data.results.map((element, index) => ({
           stt: index + 1,
           amount: element.amount.toLocaleString().concat(" (VND)"),
-          numberSender: element.sender.number,
-          numberReceiver: element.receiver.number,
+          numberSender: `${element.sender.bank_name} (${element.sender.number})`,
+          numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
           createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
         }))
         setDataSource(items)
@@ -40,8 +40,8 @@ const ReportTransacion = () => {
       const items = data.results.map((element, index) => ({
         stt: index + 1,
         amount: element.amount.toLocaleString().concat(" (VND)"),
-        numberSender: element.sender.number,
-        numberReceiver: element.receiver.number,
+        numberSender: `${element.sender.bank_name} (${element.sender.number})`,
+        numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
         createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
       }))
       setDataSource(items)
@@ -58,8 +58,8 @@ const ReportTransacion = () => {
       const items = data.results.map((element, index) => ({
         stt: index + 1,
         amount: element.amount.toLocaleString().concat(" (VND)"),
-        numberSender: element.sender.number,
-        numberReceiver: element.receiver.number,
+        numberSender: `${element.sender.bank_name} (${element.sender.number})`,
+        numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
         createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
       }))
       setDataSource(items)
@@ -122,13 +122,11 @@ const ReportTransacion = () => {
       <br />
       <Table
         key='table'
-        scroll={{ y: "80vh" }}
         bordered
         className='table-data'
         columns={columns}
         dataSource={dataSource}
-        pagination={true}
-        bordered
+        pagination={false}
         summary={(pageData) => {
           let totalAmount = 0
 

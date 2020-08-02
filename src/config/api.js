@@ -710,7 +710,7 @@ class API {
   };
   getReportTransaction = async (dataInput) => {
     return await this.instance
-      .post("users/getReportTransaction", { ...dataInput })
+      .post("admin/getReportTransaction", { ...dataInput })
       .then((response) => {
         return response.data || error_exception();
       })

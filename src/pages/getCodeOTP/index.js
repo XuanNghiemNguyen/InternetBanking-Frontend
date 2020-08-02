@@ -6,7 +6,7 @@ import { UserOutlined } from '@ant-design/icons'
 import { REST_API } from '../../config/api'
 
 const { Text } = Typography
-var onProcess = false
+let onProcess = false
 
 const GetCodeOTP = (props) => {
   console.log(props)

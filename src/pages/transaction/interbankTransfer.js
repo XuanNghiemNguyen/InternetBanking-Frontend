@@ -21,6 +21,8 @@ import { openNotification } from '../common/index'
 import OtpConfirm from './otpConfirm'
 
 import './index.css'
+
+/* eslint-disable */
 const { Text } = Typography
 const { Step } = Steps
 const { Option, OptGroup } = Select

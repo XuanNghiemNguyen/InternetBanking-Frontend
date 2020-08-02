@@ -6,8 +6,6 @@ import { REST_API } from "../../../config/api";
 // import { OmitProps } from 'antd/lib/transfer/ListBody'
 
 const HistoryDebt = (props) => {
-  const [myAccounts, setMyAccounts] = useState([]);
-
   const [transaction, setTransaction] = useState([]);
   const { email } = JSON.parse(localStorage.getItem("user-info"));
   function convert(a) {
@@ -46,9 +44,7 @@ const HistoryDebt = (props) => {
   }
   useEffect(() => {
     (async () => {
-      const myAccs = await REST_API.getListAccount(email);
       const myNumber = await REST_API.getUserByEmail(email);
-      setMyAccounts(myAccs.results);
       const data = await REST_API.getDebt();
       if (data && data.debt) {
         const table = data.debt

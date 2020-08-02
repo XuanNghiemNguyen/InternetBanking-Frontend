@@ -25,11 +25,7 @@ import {
   HistoryDebt,
   DebtReminder,
   DebtList,
-  NewUser,
-  Deposit,
-  SendHistory,
   ReceiveHistory,
-  DebtHistory,
   AboutUs,
   ReportTransacion,
   CreateCustomer,
@@ -213,15 +209,6 @@ const App = () => {
                 render={(props) => {
                   return localStorage.getItem("loggedIn") === "true" ? (
                     <ReceiveHistory {...props} />
-                  ) : (
-                    <LoginPage {...props} />
-                  )
-                }}></Route>
-              <Route
-                path='/debtHistory'
-                render={(props) => {
-                  return localStorage.getItem("loggedIn") === "true" ? (
-                    <DebtHistory {...props} />
                   ) : (
                     <LoginPage {...props} />
                   )

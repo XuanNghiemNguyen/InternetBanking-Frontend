@@ -4,6 +4,7 @@ import { Button, Modal, Table, Space } from "antd";
 import { REST_API } from "../../../config/api";
 import GetOTPTransfer from "../getOTPTransfer";
 
+/* eslint-disable */
 const DebtList = (props) => {
   const [currentDebt, setCurrentDebt] = useState({
     fromAccount: "",
