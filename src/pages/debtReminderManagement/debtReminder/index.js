@@ -110,7 +110,7 @@ const DebtReminder = () => {
 
           rules={[{ required: true, message: 'Please input amount!' }]}
         >
-          <Input style={{ width: '100%' }} value={amount} type="number" onChange={(e) => { setAmount(e.target.value) }} />
+          <Input style={{ width: '100%' }} min={10000} step={5000} value={amount} type="number" onChange={(e) => { setAmount(e.target.value) }} />
         </Form.Item>
         <Form.Item
           label="Lời nhắn"

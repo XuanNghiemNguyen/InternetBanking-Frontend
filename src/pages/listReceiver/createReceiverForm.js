@@ -12,7 +12,7 @@ const layout = {
 	}
 }
 
-var onProcess = false
+let onProcess = false
 
 const CreateReceiverForm = (props) => {
 	const [form] = Form.useForm()

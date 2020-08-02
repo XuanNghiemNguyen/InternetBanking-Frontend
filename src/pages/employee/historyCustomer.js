@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import "./index.css"
 import { Table, Input, Tag } from "antd"
 import { openNotification } from "../common/index"
 import { REST_API } from "../../config/api"
-
+/* eslint-disable */
 const { Search } = Input
 
 function convert(a) {
@@ -45,7 +45,7 @@ const validateEmail = (email) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(email.toString().toLowerCase())
 }
-var onProcess = false
+let onProcess = false
 const HistoryCustomer = () => {
   const [customer, setCustomer] = useState(null)
   const [dataSend, setDataSend] = useState([])

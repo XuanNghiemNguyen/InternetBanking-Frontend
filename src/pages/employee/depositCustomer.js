@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import "./index.css"
 import { Form, Input, Button } from "antd"
 import { CodeOutlined, FieldNumberOutlined } from "@ant-design/icons"
 import { REST_API } from "../../config/api"
 import { openNotification } from "../common/index"
+/* eslint-disable */
 
-var onProcess = false
+let onProcess = false
 const DepositCustomer = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isFinding, setIsFinding] = useState(false)
