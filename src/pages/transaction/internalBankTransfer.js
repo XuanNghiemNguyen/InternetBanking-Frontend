@@ -60,12 +60,6 @@ const InternalBankTransfer = (props) => {
           (i) => i.bank_name !== "SACOMBANK"
         )
         setListAccountReceiver([...externalReceiver])
-        form.setFieldsValue({
-          numberReceiver: JSON.stringify({
-            number: externalReceiver[0].number,
-            bank_name: externalReceiver[0].bank_name,
-          }),
-        })
       }
       form.setFieldsValue({ receiverOption: "Danh sách đã lưu" })
     }
