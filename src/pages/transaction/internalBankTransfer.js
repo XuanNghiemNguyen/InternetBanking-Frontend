@@ -6,7 +6,6 @@ import {
   Input,
   Button,
   Steps,
-  InputNumber,
   Row,
   Col,
   Tooltip,
@@ -78,7 +77,7 @@ const InternalBankTransfer = (props) => {
     const number = form.getFieldValue("newNumberReceiver")
     if (!number || isNaN(number)) {
       setValidateStatus("error")
-      openNotification("Truy vấn thất bại", "Xin vui lòng nhập số tài khoản!")
+      openNotification("Truy vấn thất bại", "Số tài khoản có vẻ không đúng!")
       return
     }
     const option = form.getFieldValue("receiverOption")
@@ -381,9 +380,7 @@ const InternalBankTransfer = (props) => {
                               name='newNumberReceiver'
                               hasFeedback
                               validateStatus={validateStatus}>
-                              <InputNumber
-                                type='number'
-                                min={1}
+                              <Input
                                 style={{ width: "100%" }}
                               />
                             </Form.Item>
