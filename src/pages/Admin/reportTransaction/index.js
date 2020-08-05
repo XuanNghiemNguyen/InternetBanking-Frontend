@@ -23,6 +23,7 @@ const ReportTransacion = () => {
           numberSender: `${element.sender.bank_name} (${element.sender.number})`,
           numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
           createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
+          createAtUNIX: element.createdAt
         }))
         setDataSource(items)
       }
@@ -43,6 +44,7 @@ const ReportTransacion = () => {
         numberSender: `${element.sender.bank_name} (${element.sender.number})`,
         numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
         createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
+        createAtUNIX: element.createdAt
       }))
       setDataSource(items)
     }
@@ -61,6 +63,7 @@ const ReportTransacion = () => {
         numberSender: `${element.sender.bank_name} (${element.sender.number})`,
         numberReceiver: `${element.receiver.bank_name} (${element.receiver.number})`,
         createdAt: new Date(element.createdAt).toLocaleString("vi-VI"),
+        createAtUNIX: element.createdAt
       }))
       setDataSource(items)
     }
@@ -90,6 +93,7 @@ const ReportTransacion = () => {
       title: "Thời gian",
       dataIndex: "createdAt",
       key: "createdAt",
+      sorter: (a, b) => a.createAtUNIX - b.createAtUNIX,
     },
   ]
   return (
