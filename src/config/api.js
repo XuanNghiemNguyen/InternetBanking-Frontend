@@ -36,12 +36,12 @@ class API {
       },
       async (error) => {
         const originalRequest = error.config;
-        if (error.response.data.code === 425) {
+        if ([425, 411].includes(parseInt(error.response.data.code))) {
           localStorage.clear();
           return Promise.reject(error);
         }
 
-        if (error.response.status === 421 && !originalRequest._retry) {
+        if (error.response.data.code === 421 && !originalRequest._retry) {
           originalRequest._retry = true;
           const refreshToken = localStorage.getItem("refresh-token");
           const accessToken = localStorage.getItem("access-token");
