@@ -1,37 +1,42 @@
-import React, { useState, useEffect } from "react";
-import "./index.css";
-import { Table, Input, Button, Space, Modal, message } from "antd";
-import { REST_API } from "../../../config/api";
-import { UserAddOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react"
+import "./index.css"
+import { Table, Input, Button, Space, Modal, message } from "antd"
+import { REST_API } from "../../../config/api"
+import { UserAddOutlined } from "@ant-design/icons"
+/* eslint-disable */
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(String(email).toLowerCase())
+}
 const ManageEmployee = (props) => {
-  const [emp, setEmp] = useState();
-  const { email } = JSON.parse(localStorage.getItem("user-info"));
-  const [modalVisibility, setModalVisibility] = useState(false);
-  const [confirmLock, setModalConfirmLock] = useState(false);
-  const [modalAddEmployee, setModalAddEmployee] = useState(false);
-  const [editingEmpName, setEditingEmpName] = useState("");
-  const [editingEmpEmail, setEditingEmpEmail] = useState("");
-  const [editingEmpPhone, setEditingEmpPhone] = useState("");
-  const [lockEmpName, setLockEmpName] = useState("");
-  const [lockEmpEmail, setLockEmpEmail] = useState("");
-  const [lockEmpPhone, setLockEmpPhone] = useState("");
-  const [lockEmpEnable, setLockEmpEnable] = useState();
-  const [lockEmpId, setLockEmpId] = useState("");
-  const [addEmpName, setAddEmpName] = useState("");
-  const [addEmpEmail, setAddEmpEmail] = useState("");
-  const [addEmpPhone, setAddEmpPhone] = useState("");
-  const [addEmpPIN, setAddEmpPIN] = useState("");
-  const [addEmpPassword, setAddEmpPassword] = useState("");
-  const [changePassword, setChangePassword] = useState("");
-  const [reChangePassword, setReChangePassword] = useState("");
-  const [changePasswordModal, setChangePasswordModal] = useState(false);
-  const [warningPassword, setWarningPassword] = useState("none");
-  const [changePassEmpId, setChangePassEmpId] = useState("");
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [emp, setEmp] = useState()
+  const { email } = JSON.parse(localStorage.getItem("user-info"))
+  const [modalVisibility, setModalVisibility] = useState(false)
+  const [confirmLock, setModalConfirmLock] = useState(false)
+  const [modalAddEmployee, setModalAddEmployee] = useState(false)
+  const [editingEmpName, setEditingEmpName] = useState("")
+  const [editingEmpEmail, setEditingEmpEmail] = useState("")
+  const [editingEmpPhone, setEditingEmpPhone] = useState("")
+  const [lockEmpName, setLockEmpName] = useState("")
+  const [lockEmpEmail, setLockEmpEmail] = useState("")
+  const [lockEmpPhone, setLockEmpPhone] = useState("")
+  const [lockEmpEnable, setLockEmpEnable] = useState()
+  const [lockEmpId, setLockEmpId] = useState("")
+  const [addEmpName, setAddEmpName] = useState("")
+  const [addEmpEmail, setAddEmpEmail] = useState("")
+  const [addEmpPhone, setAddEmpPhone] = useState("")
+  const [addEmpPIN, setAddEmpPIN] = useState("")
+  const [addEmpPassword, setAddEmpPassword] = useState("")
+  const [changePassword, setChangePassword] = useState("")
+  const [reChangePassword, setReChangePassword] = useState("")
+  const [changePasswordModal, setChangePasswordModal] = useState(false)
+  const [warningPassword, setWarningPassword] = useState("none")
+  const [changePassEmpId, setChangePassEmpId] = useState("")
+  const [canSubmit, setCanSubmit] = useState(false)
   const edit = async (data) => {
-    const results = await REST_API.editEmployee(data);
+    const results = await REST_API.editEmployee(data)
     if (results.success === true) {
-      const getEmp = await REST_API.getEmployeeList(email);
+      const getEmp = await REST_API.getEmployeeList(email)
       if (getEmp && getEmp.results) {
         const table = getEmp.results.map((element, index) => ({
           key: index,
@@ -40,17 +45,17 @@ const ManageEmployee = (props) => {
           phone: element.phone,
           id: element._id,
           isEnabled: element.isEnabled,
-        }));
-        setEmp(table);
+        }))
+        setEmp(table)
       }
     } else {
-      message.info("Email này đã được sử dụng, vui lòng nhập email khác!");
+      message.info("Email này đã được sử dụng, vui lòng nhập email khác!")
     }
-  };
+  }
   const lockEmp = async (data) => {
-    const results = await REST_API.lockEmployee(data);
+    const results = await REST_API.lockEmployee(data)
     if (results.success === true) {
-      const getEmp = await REST_API.getEmployeeList(email);
+      const getEmp = await REST_API.getEmployeeList(email)
       if (getEmp && getEmp.results) {
         const table = getEmp.results.map((element, index) => ({
           key: index,
@@ -59,16 +64,16 @@ const ManageEmployee = (props) => {
           phone: element.phone,
           id: element._id,
           isEnabled: element.isEnabled,
-        }));
-        setEmp(table);
+        }))
+        setEmp(table)
       }
     }
-  };
+  }
 
   const changePassEmp = async (data) => {
-    const results = await REST_API.changePasswordEmployee(data);
+    const results = await REST_API.changePasswordEmployee(data)
     if (results.success === true) {
-      const getEmp = await REST_API.getEmployeeList(email);
+      const getEmp = await REST_API.getEmployeeList(email)
       if (getEmp && getEmp.results) {
         const table = getEmp.results.map((element, index) => ({
           key: index,
@@ -77,16 +82,16 @@ const ManageEmployee = (props) => {
           phone: element.phone,
           id: element._id,
           isEnabled: element.isEnabled,
-        }));
-        setEmp(table);
+        }))
+        setEmp(table)
       }
     }
-  };
+  }
   const AddEmployee = async (data) => {
-    const results = await REST_API.AddEmployee(data);
-    console.log(results);
+    const results = await REST_API.AddEmployee(data)
+    console.log(results)
     if (results.success === true) {
-      const getEmp = await REST_API.getEmployeeList(email);
+      const getEmp = await REST_API.getEmployeeList(email)
       if (getEmp && getEmp.results) {
         const table = getEmp.results.map((element, index) => ({
           key: index,
@@ -95,21 +100,21 @@ const ManageEmployee = (props) => {
           phone: element.phone,
           id: element._id,
           isEnabled: element.isEnabled,
-        }));
-        setEmp(table);
+        }))
+        setEmp(table)
       }
-      setAddEmpName("");
-      setAddEmpEmail("");
-      setAddEmpPhone("");
-      setAddEmpPIN("");
-      setAddEmpPassword("");
+      setAddEmpName("")
+      setAddEmpEmail("")
+      setAddEmpPhone("")
+      setAddEmpPIN("")
+      setAddEmpPassword("")
     } else {
-      message.info(results.message);
+      message.info(results.message)
     }
-  };
+  }
   useEffect(() => {
-    (async () => {
-      const getEmp = await REST_API.getEmployeeList(email);
+    ;(async () => {
+      const getEmp = await REST_API.getEmployeeList(email)
       if (getEmp && getEmp.results) {
         const table = getEmp.results.map((element, index) => ({
           key: index,
@@ -118,11 +123,11 @@ const ManageEmployee = (props) => {
           phone: element.phone,
           id: element._id,
           isEnabled: element.isEnabled,
-        }));
-        setEmp(table);
+        }))
+        setEmp(table)
       }
-    })();
-  }, [email]);
+    })()
+  }, [email])
   const columns = [
     {
       title: "Họ và tên",
@@ -143,70 +148,64 @@ const ManageEmployee = (props) => {
       title: "Hành động",
       key: "action",
       render: (text, record) => (
-        <Space size="middle">
+        <Space size='middle'>
           <Button
             onClick={() => {
-              setModalVisibility(true);
-              setEditingEmpName(text.name);
-              setEditingEmpPhone(text.phone);
-              setEditingEmpEmail(text.email);
-            }}
-          >
+              setModalVisibility(true)
+              setEditingEmpName(text.name)
+              setEditingEmpPhone(text.phone)
+              setEditingEmpEmail(text.email)
+            }}>
             Sửa thông tin
           </Button>
           <Button
             onClick={() => {
-              setModalConfirmLock(true);
-              setLockEmpName(text.name);
-              setLockEmpPhone(text.phone);
-              setLockEmpEmail(text.email);
-              setLockEmpEnable(text.isEnabled);
-              setLockEmpId(text.id);
-            }}
-          >
+              setModalConfirmLock(true)
+              setLockEmpName(text.name)
+              setLockEmpPhone(text.phone)
+              setLockEmpEmail(text.email)
+              setLockEmpEnable(text.isEnabled)
+              setLockEmpId(text.id)
+            }}>
             {text.isEnabled ? "Khóa" : "Mở khóa"}
           </Button>
           <Button
             onClick={() => {
-              setChangePasswordModal(true);
-              setChangePassEmpId(text.id);
-            }}
-          >
+              setChangePasswordModal(true)
+              setChangePassEmpId(text.id)
+            }}>
             Đổi mật khẩu
           </Button>
           <Modal
             title={<h2 style={{ width: "80%" }}>Đổi mật khẩu cho nhân viên</h2>}
             visible={changePasswordModal}
             onCancel={() => {
-              setChangePasswordModal(false);
+              setChangePasswordModal(false)
             }}
             onOk={() => {
-              setChangePasswordModal(false);
-              setChangePassword("");
-              setReChangePassword("");
+              setChangePasswordModal(false)
+              setChangePassword("")
+              setReChangePassword("")
               const data = {
                 id: changePassEmpId,
                 newPassword: changePassword,
-              };
-              changePassEmp(data);
-            }}
-          >
+              }
+              changePassEmp(data)
+            }}>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10, width: "50%" }}>Mật khẩu mới:</p>
               <Input
-                type="password"
+                type='password'
                 value={changePassword}
                 onChange={(e) => {
-                  setChangePassword(e.target.value);
-                }}
-              ></Input>
+                  setChangePassword(e.target.value)
+                }}></Input>
             </div>
             <div
               style={{
@@ -214,23 +213,21 @@ const ManageEmployee = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10, width: "50%" }}>
                 Nhập lại mật khẩu mới:
               </p>
               <Input
-                type="password"
+                type='password'
                 value={reChangePassword}
                 onChange={(e) => {
-                  setReChangePassword(e.target.value);
+                  setReChangePassword(e.target.value)
                   if (e.target.value !== changePassword) {
-                    setWarningPassword("flex");
+                    setWarningPassword("flex")
                   } else {
-                    setWarningPassword("none");
+                    setWarningPassword("none")
                   }
-                }}
-              ></Input>
+                }}></Input>
             </div>
             <div
               style={{
@@ -238,8 +235,7 @@ const ManageEmployee = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-end",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10, color: "red", fontSize: 11 }}>
                 Nhập lại mật khẩu không trùng khớp
               </p>
@@ -254,24 +250,22 @@ const ManageEmployee = (props) => {
             }
             visible={confirmLock}
             onOk={() => {
-              setModalConfirmLock(false);
+              setModalConfirmLock(false)
               const data = {
                 id: lockEmpId,
-              };
-              lockEmp(data);
+              }
+              lockEmp(data)
             }}
             onCancel={() => {
-              setModalConfirmLock(false);
-            }}
-          >
+              setModalConfirmLock(false)
+            }}>
             <div
               style={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10 }}>Họ và tên:</p>
               <p>{lockEmpName}</p>
             </div>
@@ -281,8 +275,7 @@ const ManageEmployee = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10 }}>Email:</p>
               <p>{lockEmpEmail}</p>
             </div>
@@ -292,8 +285,7 @@ const ManageEmployee = (props) => {
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "baseline",
-              }}
-            >
+              }}>
               <p style={{ marginRight: 10 }}>Số điện thoại:</p>
               <p>{lockEmpPhone}</p>
             </div>
@@ -307,152 +299,138 @@ const ManageEmployee = (props) => {
                 name: editingEmpName,
                 email: editingEmpEmail,
                 phone: editingEmpPhone,
-              };
-              setModalVisibility(false);
-              edit(data);
+              }
+              setModalVisibility(false)
+              edit(data)
             }}
             onCancel={() => {
-              setModalVisibility(false);
-            }}
-          >
-            <div className="input-field">
+              setModalVisibility(false)
+            }}>
+            <div className='input-field'>
               <p style={{ width: "30%" }}>Họ và tên: </p>
               <Input
                 value={editingEmpName}
                 onChange={(e) => {
-                  setEditingEmpName(e.target.value);
-                }}
-              ></Input>
+                  setEditingEmpName(e.target.value)
+                }}></Input>
             </div>
-            <div className="input-field">
+            <div className='input-field'>
               <p style={{ width: "30%" }}>Email: </p>
               <Input
                 value={editingEmpEmail}
                 onChange={(e) => {
-                  setEditingEmpEmail(e.target.value);
-                }}
-              ></Input>
+                  setEditingEmpEmail(e.target.value)
+                }}></Input>
             </div>
-            <div className="input-field">
+            <div className='input-field'>
               <p style={{ width: "30%" }}>Số điện thoại: </p>
               <Input
                 value={editingEmpPhone}
                 onChange={(e) => {
-                  setEditingEmpPhone(e.target.value);
-                }}
-              ></Input>
+                  setEditingEmpPhone(e.target.value)
+                }}></Input>
             </div>
           </Modal>
         </Space>
       ),
     },
-  ];
+  ]
   return (
-    <div className="manage-employee">
+    <div className='manage-employee'>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h2>DANH SÁCH NHÂN VIÊN</h2>
         <Button
           style={{ marginRight: 10 }}
           icon={<UserAddOutlined />}
           onClick={() => {
-            setModalAddEmployee(true);
-          }}
-        >
+            setModalAddEmployee(true)
+          }}>
           Thêm mới
         </Button>
         <Modal
-          title="Thêm mới nhân viên "
+          title='Thêm mới nhân viên '
           visible={modalAddEmployee}
           okButtonProps={{ disabled: !canSubmit }}
           onOk={() => {
-            setModalAddEmployee(false);
+            setModalAddEmployee(false)
             const data = {
               name: addEmpName,
               email: addEmpEmail,
               phone: addEmpPhone,
               pin: addEmpPIN,
               password: addEmpPassword,
-            };
-            AddEmployee(data);
-            setCanSubmit(false);
+            }
+            AddEmployee(data)
+            setCanSubmit(false)
           }}
           onCancel={() => {
-            setModalAddEmployee(false);
-          }}
-        >
-          <div className="input-field">
+            setModalAddEmployee(false)
+          }}>
+          <div className='input-field'>
             <p style={{ width: "30%" }}>Họ và tên: </p>
             <Input
               value={addEmpName}
               onChange={(e) => {
-                setAddEmpName(e.target.value);
-              }}
-            ></Input>
+                setAddEmpName(e.target.value)
+              }}></Input>
           </div>
-          <div className="input-field">
+          <div className='input-field'>
             <p style={{ width: "30%" }}>Email: </p>
             <Input
+              type='email'
+              rule
               value={addEmpEmail}
               onChange={(e) => {
-                setAddEmpEmail(e.target.value);
-              }}
-            ></Input>
+                setAddEmpEmail(e.target.value)
+              }}></Input>
           </div>
-          <div className="input-field">
+          <div className='input-field'>
             <p style={{ width: "30%" }}>Số điện thoại: </p>
             <Input
               value={addEmpPhone}
-              type="number"
+              type='number'
               onChange={(e) => {
-                setAddEmpPhone(e.target.value);
-              }}
-            ></Input>
+                setAddEmpPhone(e.target.value)
+              }}></Input>
           </div>
-          <div className="input-field">
+          <div style={{ display: "none" }} className='input-field'>
             <p style={{ width: "30%" }}>PIN: </p>
             <Input
-              value={addEmpPIN}
-              type="number"
+              value={111111 || addEmpPIN}
+              type='number'
               onChange={(e) => {
-                setAddEmpPIN(e.target.value);
-              }}
-            ></Input>
+                setAddEmpPIN(e.target.value)
+              }}></Input>
           </div>
-          <div className="input-field">
+          <div className='input-field'>
             <p style={{ width: "30%" }}>Mật khẩu: </p>
             <Input
               value={addEmpPassword}
-              type="password"
+              type='password'
               onChange={(e) => {
-                setAddEmpPassword(e.target.value);
-              }}
-            ></Input>
+                setAddEmpPassword(e.target.value)
+              }}></Input>
           </div>
           <div style={{ display: "flex", flexDirection: "row-reverse" }}>
             <Button
               onClick={() => {
-                if (
-                  addEmpName !== "" &&
-                  addEmpEmail !== "" &&
-                  addEmpPhone !== "" &&
-                  addEmpPIN.length === 6 &&
-                  addEmpPassword !== ""
-                ) {
-                  message.info("Thông tin hợp lệ!");
-                  setCanSubmit(true);
-                } else {
-                  message.info("Thông tin không hợp lệ");
+                if (!addEmpEmail || !addEmpName || !addEmpPhone || !addEmpPassword) {
+                  return message.info("Vui lòng điền đầy đủ thông tin!")
                 }
-              }}
-            >
+                if (!validateEmail(addEmpEmail)) {
+                  return message.info("Email không đúng định dạng!")
+                }
+                message.info("Thông tin hợp lệ")
+                return setCanSubmit(true)
+              }}>
               Kiểm tra
             </Button>
           </div>
         </Modal>
       </div>
 
-      <Table className="table" dataSource={emp} columns={columns}></Table>
+      <Table className='table' dataSource={emp} columns={columns}></Table>
     </div>
-  );
-};
-export default ManageEmployee;
+  )
+}
+export default ManageEmployee
