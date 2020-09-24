@@ -9,8 +9,7 @@ const error_exception = (err) => ({
   message: err || "Lỗi không xác định!",
 });
 
-const HOST_URL =
-  "http://127.0.0.1:8080" || "https://sacombank-internet-banking.herokuapp.com";
+const HOST_URL = "https://sacombank-internet-banking.herokuapp.com";
 class API {
   constructor() {
     this.instance = axios.create({
