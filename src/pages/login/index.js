@@ -92,7 +92,7 @@ const LoginPage = (props) => {
             name='captcha'
             rules={[{ required: true, message: 'Bạn phải xác thực reCatcha!' }]}
           >
-            <ReCAPTCHA sitekey='6LfAXP4UAAAAAISw6aIjaLk8MupZs0yOkYbUPfR9' />
+            <ReCAPTCHA sitekey='6Le8XP4UAAAAAOP7ivhBjE9TJs-rOpbuX2IyRs8R' />
           </Form.Item>
           <Form.Item>
             <Button
